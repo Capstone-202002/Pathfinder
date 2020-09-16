@@ -1,0 +1,63 @@
+{
+  "name": "pathfinder",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.2",
+    "electron-is-dev": "^1.2.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.3",
+    "wait-on": "^5.2.0"
+  },
+  "devDependencies": {
+    "electron": "^10.1.1",
+    "electron-builder": "^22.8.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start-interface": "cross-env BROWSER=none npm run start",
+    "start-electron": "electron .",
+    "start-electron-after-interface": "wait-on http://localhost:3000 && npm run start-electron",
+    "dev": "concurrently -n interface,app 'npm:start-interface' 'npm:start-electron-after-interface'",
+    "dist": "npm run build && electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "main": "./build/index.html",
+  "build": {
+    "appId": "Pathfinder",
+    "copyright": "Copyright 2020 Flatline All rights reserved.",
+    "npmRebuild": true,
+    "files": [
+      "app/**/*",
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
