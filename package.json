@@ -32,24 +32,25 @@
     "start-electron-after-interface": "wait-on http://localhost:3000 && npm run start-electron",
     "dev": "concurrently -n interface,app 'npm:start-interface' 'npm:start-electron-after-interface'",
     "dist": "npm run build && electron-builder --dir",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "release": "npm run build && electron-builder --publish=always"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
-  "main": "./build/index.html",
+  "main": "./public/electron.js",
+  "homepage": "./",
   "build": {
     "appId": "Pathfinder",
     "copyright": "Copyright 2020 Flatline All rights reserved.",
     "npmRebuild": true,
     "files": [
-      "app/**/*",
       "build/**/*",
       "node_modules/**/*",
       "package.json"
     ],
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "public"
     }
   },
   "browserslist": {
