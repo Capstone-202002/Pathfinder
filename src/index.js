@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./index.css";
 //import Dashboard from "./component/Dashboard";
 import TensorflowExample from "./component/TensorflowExample";
 import * as serviceWorker from "./serviceWorker";
