@@ -1,6 +1,7 @@
 const {
     app,
-    BrowserWindow
+    BrowserWindow,
+    ipcMain
 } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
@@ -20,7 +21,7 @@ const createWindow = () => {
         width: 350,
         height: 600,
         webPreferences: {
-            nodeIntegration: false
+            nodeIntegration: true
         }
     })
     if (isDev) {
@@ -53,4 +54,9 @@ app.on('activate', () => {
     if (mainWindow === null) {
         createWindow()
     }
+})
+
+ipcMain.on('test', (event, arg) => {
+    console.log("전송이 되었음!")
+    console.log(arg)
 })
