@@ -18,11 +18,13 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "recharts": "^1.8.5",
+    "sqlite3": "^5.0.0",
     "wait-on": "^5.2.0"
   },
   "devDependencies": {
     "electron": "^10.1.1",
-    "electron-builder": "^22.8.0"
+    "electron-builder": "^22.8.0",
+    "electron-rebuild": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

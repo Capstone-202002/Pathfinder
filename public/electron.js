@@ -4,6 +4,14 @@ const {
 } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
+const sqlite = require('sqlite3').verbose()
+let db = new sqlite.Database(':memory:', (err) => {
+    if (err) {
+        return console.error("연결 불가")
+    }
+    console.log("데이터베이스 연결성공")
+})
+
 
 let mainWindow
 
