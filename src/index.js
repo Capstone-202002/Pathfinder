@@ -1,13 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-//import Dashboard from "./component/Dashboard";
-import TensorflowExample from "./component/TensorflowExample";
+import HookTest from "./hooktest";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <TensorflowExample />
+    <HookTest />
   </React.StrictMode>,
   document.getElementById("root")
 );
