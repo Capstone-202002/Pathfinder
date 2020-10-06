@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Visualization from "./Component/Visualization/Visualization";
 
 // function 컴포넌트에서 state, effect 를 사용하기 위해 Hook을 사용합니다
 function HookTest() {
@@ -15,8 +16,7 @@ function HookTest() {
 
   return (
     <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>Click me</button>
+      <Visualization />
     </div>
   );
 }
