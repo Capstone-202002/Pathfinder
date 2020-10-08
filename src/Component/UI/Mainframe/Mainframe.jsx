@@ -24,9 +24,11 @@ const useStyles = makeStyles((theme) => ({
     },
     //App's Left Side
     menu: {
+        display: 'flex',
+        flexDirection: 'column',
         width : 250,
         minHeight:500,
-        marginBottom: 110                
+        height: "100%"
     },
     //App's Right Side
     right: {
@@ -39,12 +41,14 @@ const useStyles = makeStyles((theme) => ({
     //Top title Area
     title: {
         height: 60,
-        width : "100%" 
+        width : "100%",
+        WebkitUserSelect : "none",
+        WebkitAppRegion : "drag"
     },
     //Main function area
     display: {
         width : "100%",
-        height : "100%"
+        height : "calc(100%-60px)"
     },
     //System Message area
     message:{
