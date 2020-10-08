@@ -5,6 +5,7 @@ const {
 } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
+const { Hidden } = require('@material-ui/core')
 const sqlite = require('sqlite3').verbose()
 let db = new sqlite.Database(':memory:', (err) => {
     if (err) {
@@ -18,12 +19,16 @@ let mainWindow
 
 const createWindow = () => {
     mainWindow = new BrowserWindow({
-        width: 350,
-        height: 600,
+        width : 1366,
+        height : 768,
+        minHeight : 600,
+        minWidth : 940,
+        frame:false,
+        titleBarStyle : 'hidden',
         webPreferences: {
             nodeIntegration: true
         }
-    })
+    });
     if (isDev) {
         // 개발 중에는 개발 도구에서 호스팅하는 주소에서 로드
         mainWindow.loadURL('http://localhost:3000');
