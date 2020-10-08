@@ -1,5 +1,6 @@
 import React, { useState, useEffecct } from "react";
 import Base from "../Base/Base";
+import Mainframe from "../UI/Mainframe/Mainframe"
 import Section from "./Section";
 
 function Visualization() {
@@ -20,7 +21,7 @@ function Visualization() {
 
   return (
     <>
-      <Base contents={contents} title={title}></Base>
+      <Mainframe contents={contents} title={title}></Mainframe>
     </>
   );
 }
