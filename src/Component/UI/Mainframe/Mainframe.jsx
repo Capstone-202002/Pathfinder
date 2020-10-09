@@ -2,7 +2,7 @@ import React from "react";
 import Box from '@material-ui/core/Box';
 import {sizing} from '@material-ui/system';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
-import { CssBaseline } from "@material-ui/core";
+import { CssBaseline, Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     spacing : 10,
@@ -11,16 +11,22 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         verticalAlign: 'middle',
         flexDirection: 'column',
-        width : 1366,
-        height : 768,
+        width : "100%",
+        height : "100%",
         minWidth: 940,
         minHeight: 600,
+        color : '#0090FF',
+        backgroundColor : '#0090FF'
+        
     },
     //except system message
     app:{
         display: 'flex',
+        height: "100%",
         width: '100%',
-        height:'calc(100% - 20px)'
+        height:'calc(100% - 20px)',
+        color: theme.palette.background.default,
+        backgroundColor : theme.palette.background.default
     },
     //App's Left Side
     menu: {
@@ -34,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     right: {
         display: 'flex',
         flexDirection: 'column',
+        height : "100%",
         width : 'calc(100% - 250px)',
         minWidth : 690,
         minHeight : 580
@@ -54,6 +61,11 @@ const useStyles = makeStyles((theme) => ({
     message:{
         width : "100%",
         height : 20
+    },
+    inner:{
+        flexBasis: "auto",
+        width : "100%",
+        height : "100%"
     }
 }))
 
@@ -61,13 +73,14 @@ export default function Mainframe(props){
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-
+    document.body.style.backgroundColor = "transparent";
+    document.body.style.color = "transparent";
     return(
-        <div className={classes.root}>
+        <Paper className={classes.root} color="#0090FF" style={{borderBottomLeftRadius : '160px'}}>
             <CssBaseline />
-            <div className={classes.app}>
+            
+            <Paper className={classes.app} style={{borderBottomLeftRadius : '140px'}}>
                 {/* application space*/}
-
                 <div className={classes.menu}>
                     {/*App's Left Menu Section*/}
 
@@ -85,10 +98,10 @@ export default function Mainframe(props){
 
 
                 </div>
-            </div>
+            </Paper>
             <div className={classes.message}>
                 {/*system message space*/}
             </div>
-        </div>
+        </Paper>
     );
 }

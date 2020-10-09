@@ -2,10 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import HookTest from "./hooktest";
 import * as serviceWorker from "./serviceWorker";
+import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles"
+
+const theme = createMuiTheme({
+  palette: {
+    type : "dark"
+  }
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <HookTest />
+    <ThemeProvider theme={theme}>
+      <HookTest />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

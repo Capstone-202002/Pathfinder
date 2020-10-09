@@ -23,6 +23,7 @@ const createWindow = () => {
         height : 768,
         minHeight : 600,
         minWidth : 940,
+        //transparent : true,
         frame:false,
         titleBarStyle : 'hidden',
         webPreferences: {
