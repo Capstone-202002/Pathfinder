@@ -1,11 +1,11 @@
-import React, { useState, useEffecct } from "react";
+import React, { useState, useEffect } from "react";
 import Base from "../Base/Base";
 import Mainframe from "../UI/Mainframe/Mainframe"
 import Section from "./Section";
 
 function Visualization() {
   var gridStyle = {
-    display: "grid",
+    display: "flex",
     gridTemplateColumns: "1fr 1fr 1fr",
   };
 

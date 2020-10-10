@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         width : "100%",
         height : "100%",
         minWidth: 940,
-        minHeight: 600,
+        //minHeight: 600,
         color : '#0090FF',
         backgroundColor : '#0090FF'
         
@@ -54,8 +54,10 @@ const useStyles = makeStyles((theme) => ({
     },
     //Main function area
     display: {
+        display: 'flex',
         width : "100%",
-        height : "calc(100%-60px)"
+        height : 'calc(100% - 60px)',
+        backgroundColor: theme.palette.background.paper
     },
     //System Message area
     message:{
