@@ -1,6 +1,5 @@
-const fs = require('fs')
-const path = require('path')
-
+const fs = window.require('fs')
+const path = window.require('path')
 function getFileDataofDirectory(baseurl) {
     var filelist = fs.readdirSync(baseurl)
     var totalSize = 0
@@ -37,4 +36,4 @@ function getFileDataofDirectory(baseurl) {
 exports.getFileDataofDirectory = getFileDataofDirectory
 // TEST
 
-var a = getFileDataofDirectory("C:\\Users\\Jun\\Documents\\Heroes of the Storm")
+// var a = getFileSizeofDirectory("C:\\Users\\Jun\\Documents\\Heroes of the Storm")

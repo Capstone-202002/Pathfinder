@@ -1,9 +1,8 @@
-const fs = require('fs')
-const path = require('path')
+const fs = window.require('fs')
+const path = window.require('path')
 const recursive = require('./recursiveSearch')
 
-
-function getFileList(baseurl) {
+export function getFileList(baseurl) {
     var filelist = fs.readdirSync(baseurl)
     var fileinfolist = []
 
@@ -41,6 +40,5 @@ function getFileList(baseurl) {
 
 // TEST
 
-var a = getFileList("C:\\Program Files (x86)")
-
-console.log(a)
+// var a = getFileList("C:\\Users\\Jun\\Documents\\Heroes of the Storm")
+// console.log(a)
