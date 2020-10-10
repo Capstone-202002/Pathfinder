@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         width : "100%",
         height : "100%",
         minWidth: 940,
-        minHeight: 600,
+        //minHeight: 600,
         color : '#0090FF',
         backgroundColor : '#0090FF'
         
