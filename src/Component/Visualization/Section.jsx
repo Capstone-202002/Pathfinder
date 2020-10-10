@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Element from "./Element";
+import {makeStyles} from  '@material-ui/core/styles';
+
+
+const useStyles = makeStyles((theme) => ({
+  wrapper:{
+    height : "100%",
+    width : "210px"
+  }
+
+}))
 
 function Section(props) {
+  const classes = useStyles();
   const name_list = [
     "예시폴더1",
     "예시폴더2",
@@ -17,16 +28,12 @@ function Section(props) {
       <Element name={name} isFolder={folder_list[index]} />
     </div>
   ));
-
-  var sectionStyle = {
-    marginRight: "10px",
-    padding: "5px",
-    border: "7px solid #77beed",
-  };
-
   return (
     <>
-      <div style={sectionStyle}>{contentsList}</div>
+      {/*<div style={sectionStyle}>{contentsList}</div>*/}
+      <div className={classes.wrapper}>
+        {contentsList}
+      </div>
     </>
   );
 }
