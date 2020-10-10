@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {makeStyles} from  '@material-ui/core/styles';
+import {makeStyles, useTheme} from  '@material-ui/core/styles';
 import { InsertDriveFileSharp } from "@material-ui/icons";
 import { Typography } from "@material-ui/core";
+import {motion} from "framer-motion";
 const useStyles = makeStyles((theme) => ({
   fileDiv:{
     display: 'flex',
     width: "170px",
-    height : "40px"
+    height : "40px",
+    paddingLeft : "20px"
   },
   fileIcon:{
     width : "20px",
@@ -27,12 +29,21 @@ function File(props) {
   return (
     <>
       {/*<div style={divStyle}>이름: {name}, 파일임</div>*/}
-      <div className={classes.fileDiv}>
+      <motion.div className={classes.fileDiv}
+        whileHover = {{scale : 1.2}}
+      >
         <InsertDriveFileSharp className={classes.fileIcon}/>
-        <Typography className={classes.fileName}>이름 : {name}, 파일임</Typography>
-      </div>
+        <Typography className={classes.fileName}>{name}</Typography>
+      </motion.div>
     </>
   );
 }
 
 export default File;
+
+
+function ChangeFileNameColor(){
+  //ChangeFileName's Color by here
+  const theme = useTheme();
+  return theme.palette.text.primary;
+}
