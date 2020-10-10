@@ -25,7 +25,8 @@ const createWindow = () => {
         minWidth : 940,
         transparent : true,
         frame:false,
-        //titleBarStyle : 'hidden',
+        titleBarStyle : 'hidden',
+
         webPreferences: {
             nodeIntegration: true
         }
