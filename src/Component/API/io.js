@@ -30,12 +30,18 @@ export function getFileList(baseurl) {
             is_dir: is_dir,
             size: size,
             numOfFiles: numOfFiles,
+            absPath: path.join(baseurl, element),
             extension: path.extname(element),
         })
     });
     return fileinfolist
 }
 
+export function changeFileName(dir, oldname, newname, callback) {
+    fs.rename(path.join(dir, oldname), path.join(dir, newname), (err) => {
+        callback(err)
+    })
+}
 
 
 // TEST

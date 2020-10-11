@@ -31,16 +31,34 @@ function getFileList(baseurl) {
             is_dir: is_dir,
             size: size,
             numOfFiles: numOfFiles,
+            absPath: path.join(baseurl, element),
             extension: path.extname(element),
         })
     });
     return fileinfolist
 }
 
+function changeFileName(dir, oldname, newname, callback) {
+    fs.rename(path.join(dir, oldname), path.join(dir, newname), (err) => {
+        callback(err)
+    })
+}
 
+function changeFileDirectory(olddir, newdir, callback) {
+    fs.rename(path.join(dir, oldname), path.join(dir, newname), (err) => {
+        callback(err)
+    })
+}
 
 // TEST
 
-var a = getFileList("C:\\Program Files (x86)")
-
-console.log(a)
+changeFileName("C:\\Users\\Jun\\Desktop\\Temp", "Release", "Release2", (err) => {
+    if (err) {
+        console.log(err)
+        console.log("파일 이름을 바꾸는 중 에러가 발생했습니다. io.js를 확인하세요.")
+    }
+    else {
+        console.log("성공")
+        console.log(err)
+    }
+})
