@@ -33,7 +33,7 @@ function File(props) {
         whileHover = {{scale : 1.2}}
       >
         <InsertDriveFileSharp className={classes.fileIcon}/>
-        <Typography className={classes.fileName}>info.name}</Typography>
+        <Typography className={classes.fileName}>{info.name}</Typography>
       </motion.div>
     </>
   );
