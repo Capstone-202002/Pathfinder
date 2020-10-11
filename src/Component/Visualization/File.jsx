@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 function File(props) {
   const classes = useStyles();
-  const name = props.name;
+  const info = props.info;
   // 기타 정보들이
 
   return (
@@ -33,7 +33,7 @@ function File(props) {
         whileHover = {{scale : 1.2}}
       >
         <InsertDriveFileSharp className={classes.fileIcon}/>
-        <Typography className={classes.fileName}>{name}</Typography>
+        <Typography className={classes.fileName}>info.name}</Typography>
       </motion.div>
     </>
   );

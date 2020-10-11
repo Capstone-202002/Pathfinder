@@ -80,9 +80,10 @@ function Folder(props) {
     setFolderClicked(true);
     }
   }
-  const name = props.name;
+  const info = props.info;
   const classes = useStyles();
   // 기타 정보들이
+
   return (
     <>
       {/*<div style={divStyle}>이름: {name}, 폴더임</div>*/}
@@ -90,7 +91,7 @@ function Folder(props) {
         <motion.div className={classes.folderDiv}
           whileHover={{ scale : 1.2,
           }}
-          onClick={isFolderClicked}        
+          onClick={() => { props.folderClicked(info); isFolderClicked() }}
         >
           {folderClicked
           ?<>
@@ -106,7 +107,7 @@ function Folder(props) {
           </Paper>
           </>
           }
-          <Typography variant="body2" className={classes.folderNameText}>{name}</Typography>
+          <Typography variant="body2" className={classes.folderNameText}>{info.name}</Typography>
         </motion.div>
         <div className={classes.rightArrowDiv}>
           {folderClicked

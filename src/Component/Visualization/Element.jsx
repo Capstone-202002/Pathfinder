@@ -3,14 +3,11 @@ import File from "./File";
 import Folder from "./Folder";
 
 function Element(props) {
-  const name = props.name;
-  const isFolder = props.isFolder;
   // 기타 정보들이
-
-  if (isFolder) {
-    return <Folder name={name} />;
+  if (props.info.is_dir) {
+    return <Folder info={props.info} folderClicked={props.folderClicked}/>;
   }
-  return <File name={name} />;
+  return <File info={props.info} />;
 }
 
 export default Element;
