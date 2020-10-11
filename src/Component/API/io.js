@@ -30,6 +30,7 @@ export function getFileList(baseurl) {
             is_dir: is_dir,
             size: size,
             numOfFiles: numOfFiles,
+            currentPath: path.join(baseurl),
             absPath: path.join(baseurl, element),
             extension: path.extname(element),
         })
