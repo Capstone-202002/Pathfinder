@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 function File(props) {
   const classes = useStyles();
-  const name = props.name;
+  const info = props.info;
   // 기타 정보들이
 
   return (
@@ -29,7 +29,7 @@ function File(props) {
       {/*<div style={divStyle}>이름: {name}, 파일임</div>*/}
       <div className={classes.fileDiv}>
         <InsertDriveFileSharp className={classes.fileIcon}/>
-        <Typography className={classes.fileName}>이름 : {name}, 파일임</Typography>
+        <Typography className={classes.fileName}>이름 : {info.name}, 파일임</Typography>
       </div>
     </>
   );

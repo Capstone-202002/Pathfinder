@@ -13,26 +13,21 @@ const useStyles = makeStyles((theme) => ({
 
 function Section(props) {
   const classes = useStyles();
-  const name_list = [
-    "예시폴더1",
-    "예시폴더2",
-    "예시파일1",
-    "예시파일2",
-    "예시파일3",
-    "예시파일4",
-  ];
-  const folder_list = [true, true, false, false, false, false];
 
-  var contentsList = name_list.map((name, index) => (
+  var sectionInfo = props.sectionInfo;
+  
+  var section = sectionInfo.map((file, index) => (
     <div>
-      <Element name={name} isFolder={folder_list[index]} />
+      <Element info={file} name={file.name} isDir={file.is_dir} folderClicked={props.folderClicked} />
     </div>
   ));
+
+
   return (
     <>
-      {/*<div style={sectionStyle}>{contentsList}</div>*/}
+      {/*<div style={sectionStyle}>{section}</div>*/}
       <div className={classes.wrapper}>
-        {contentsList}
+        {section}
       </div>
     </>
   );

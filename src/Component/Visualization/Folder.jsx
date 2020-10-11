@@ -36,18 +36,21 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Folder(props) {
-  const name = props.name;
+  const [dirExpended, setDirExpended] = useState(false);
+  
+  const info = props.info;
   const classes = useStyles();
   // 기타 정보들이
+
   return (
     <>
       {/*<div style={divStyle}>이름: {name}, 폴더임</div>*/}
       <div className={classes.wrapper}>
         <div className={classes.folderDiv}>
-          <IconButton className={classes.folderButton}>
+          <IconButton className={classes.folderButton} onClick={() => props.folderClicked(info)}>
             <FolderSharp className={classes.folderIcon}/>
           </IconButton>
-          <Typography variant="body2" className={classes.folderNameText}>이름 : {name}, 폴더임</Typography>
+          <Typography variant="body2" className={classes.folderNameText}>이름 : {info.name}, 폴더임</Typography>
         </div>
         <div className={classes.rightArrowDiv}>
 
@@ -64,3 +67,6 @@ function setFolderHeight(){
   //Calculate folder's height
   return folderMinHeight;
 }
+
+//여기에 다음 section 만드는 로직을 onclick 로 만들고
+// 다음 section 정보를 props로 내려받자
