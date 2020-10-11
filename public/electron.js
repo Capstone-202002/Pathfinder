@@ -6,26 +6,32 @@ const {
 const path = require('path')
 const isDev = require('electron-is-dev')
 const { Hidden } = require('@material-ui/core')
-const sqlite = require('sqlite3').verbose()
-let db = new sqlite.Database(':memory:', (err) => {
-    if (err) {
-        return console.error("연결 불가")
-    }
-    console.log("데이터베이스 연결성공")
-})
 
+
+// db initialize
+var dbPath = path.join(app.getPath('userData'), 'data.db')
+console.log(app.getPath('userData'))
+
+var Datastore = require('nedb')
+var db = new Datastore({ filename: dbPath, autoload: true });
+
+// DB 테스트
+db.insert({ name: 'test' }, (err, newrec) => {
+    console.log(err)
+    console.log(newrec)
+})
 
 let mainWindow
 
 const createWindow = () => {
     mainWindow = new BrowserWindow({
-        width : 1366,
-        height : 768,
-        minHeight : 600,
-        minWidth : 940,
-        transparent : true,
-        frame:false,
-        titleBarStyle : 'hidden',
+        width: 1366,
+        height: 768,
+        minHeight: 600,
+        minWidth: 940,
+        transparent: true,
+        frame: false,
+        titleBarStyle: 'hidden',
 
         webPreferences: {
             nodeIntegration: true
