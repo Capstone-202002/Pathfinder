@@ -40,7 +40,9 @@ function Folder(props) {
       //marginBottom : "10px",
       paddingTop : "10px",
       paddingBottom:"10px",
-      marginLeft : '5px'
+      marginLeft : '5px',
+      webkitJustifyContent : 'flex-end',
+      justifyContent:'space-between'
     },
     folderDiv:{
       display: "flex",
@@ -76,11 +78,10 @@ function Folder(props) {
       position: "relative",
       top : "-10px"
     },
+    //folder's Name Text Typhograph
     folderNameText:{
-      position: "absolute",
-      color: theme.palette.background.default,
-      marginLeft : "5px",
-      right : "70px"
+      position: "float",
+      color: theme.palette.text.primary,
     },
     arrowRight:{
       color : theme.palette.text.primary,

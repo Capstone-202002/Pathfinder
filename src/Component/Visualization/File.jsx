@@ -20,7 +20,7 @@ function File(props) {
     fileName:{
       width  : "150px",
       //color : theme.palette.text.primary
-      color : 'red'
+      color : ChangeFileNameColor()
     }
   }))
   const classes = useStyles();
@@ -46,5 +46,14 @@ export default File;
 function ChangeFileNameColor(){
   //ChangeFileName's Color by here
   const theme = useTheme();
-  return theme.palette.text.primary;
+  const hex = '#FF0000'
+  return hex;
+
+  //Level 1  #FF8D8D
+  //Level 2  #FFD175
+  //Level 3  #FFEF9F
+  //Level 4  #E0FFB8
+  //Level 5  #ACFFBA
+  //Level 6  #AEE1FF
+  //usage : color : '#FFFFFF' // color = '#FFFFFF'
 }
