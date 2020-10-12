@@ -25,7 +25,10 @@ function Folder(props) {
    //차지하는 용량 1퍼센트당 1픽셀
    //console.log('토탈: ', totalSize);
    //console.log('폴더: ', folderSize);
-   
+   if(totalSize === 0 ){
+     return folderMinHeight;
+   }
+
    var folderHeight = folderMinHeight + ((folderSize / totalSize) * 100);
     return folderHeight;
   }
