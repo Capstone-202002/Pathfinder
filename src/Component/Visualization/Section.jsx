@@ -6,7 +6,10 @@ import {makeStyles} from  '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   wrapper:{
     height : "100%",
-    width : "210px"
+    width : "230px",
+    paddingTop: '20px',
+    borderRight : '2px solid grey',
+    overflowY : 'auto'
   }
 
 }))
