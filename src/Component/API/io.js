@@ -44,8 +44,9 @@ export function changeFileName(dir, oldname, newname, callback) {
     })
 }
 
-
-// TEST
-
-// var a = getFileList("C:\\Users\\Jun\\Documents\\Heroes of the Storm")
-// console.log(a)
+export function changeFileDirectory(olddir, newdir, filename, callback) {
+    // 파일 경로를 바꿈.
+    fs.rename(path.join(olddir, filename), path.join(newdir, filename), (err) => {
+        callback(err)
+    })
+}
