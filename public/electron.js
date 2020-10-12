@@ -10,7 +10,6 @@ const { Hidden } = require('@material-ui/core')
 
 // db initialize
 var dbPath = path.join(app.getPath('userData'), 'data.db')
-console.log(app.getPath('userData'))
 
 var Datastore = require('nedb')
 var db = new Datastore({ filename: dbPath, autoload: true });
@@ -34,7 +33,8 @@ const createWindow = () => {
         titleBarStyle: 'hidden',
 
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            enableRemoteModule: true
         }
     });
     if (isDev) {
