@@ -22,14 +22,12 @@ const rightArrowVariants = {
 function Folder(props) {
 
   function setFolderHeight(totalSize, folderSize){
-    //Calculate folder's height
    //기본80
    //차지하는 용량 1퍼센트당 1픽셀
    //console.log('토탈: ', totalSize);
    //console.log('폴더: ', folderSize);
    
    var folderHeight = folderMinHeight + ((folderSize / totalSize) * 100);
-   console.log('결과: ', folderHeight);
     return folderHeight;
   }
 
