@@ -3,6 +3,9 @@ import Box from '@material-ui/core/Box';
 import {sizing} from '@material-ui/system';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import { CssBaseline, Paper } from "@material-ui/core";
+import LeftMenu from './LeftMenu';
+import TopMenu from './TopMenu';
+import SystemMessage from './SystemMessage';
 
 const useStyles = makeStyles((theme) => ({
     spacing : 10,
@@ -22,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     //except system message
     app:{
         display: 'flex',
-        height: "100%",
+        //height: "100%",
         width: '100%',
         height:'calc(100% - 20px)',
         color: theme.palette.background.default,
@@ -47,22 +50,26 @@ const useStyles = makeStyles((theme) => ({
     },
     //Top title Area
     title: {
+        display: 'flex',
+        flexDirection : 'row',
         height: 60,
         width : "100%",
         WebkitUserSelect : "none",
-        WebkitAppRegion : "drag"
+        //WebkitAppRegion : "drag",
+        //alignItems:'left'
     },
     //Main function area
     display: {
         display: 'flex',
         width : "100%",
         height : 'calc(100% - 60px)',
-        backgroundColor: theme.palette.background.paper
+        backgroundColor: theme.palette.background.paper,
     },
     //System Message area
     message:{
         width : "100%",
-        height : 20
+        height : 20,
+        overflow: 'hidden'
     },
     inner:{
         flexBasis: "auto",
@@ -85,13 +92,13 @@ export default function Mainframe(props){
                 {/* application space*/}
                 <div className={classes.menu}>
                     {/*App's Left Menu Section*/}
-
+                    <LeftMenu/>
                 </div>
                 <div className={classes.right}>
                     {/*App's Right Display Section*/}
                     <div className={classes.title}>
                         {/*title bar section*/}
-
+                        <TopMenu mainText={setMainTitleText()}/>
                     </div>
                     <div className={classes.display}>
                         {/*App's Main function display Section*/}
@@ -103,7 +110,15 @@ export default function Mainframe(props){
             </Paper>
             <div className={classes.message}>
                 {/*system message space*/}
+                <SystemMessage systemText={setSystemText()}/>
             </div>
         </Paper>
     );
+}
+
+function setMainTitleText(text){
+    return '디렉토리 뷰'
+}
+function setSystemText(text){
+    return '패스파인더가 디렉토리를 뒤적이고 있어요'
 }

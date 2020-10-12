@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {makeStyles} from  '@material-ui/core/styles';
-import { IconButton, Typography, Paper } from "@material-ui/core";
+import { IconButton, Typography, Paper , Button} from "@material-ui/core";
 import {FolderSharp, ArrowRight} from '@material-ui/icons';
 import {motion} from "framer-motion";
 const folderMinHeight = "80px";
@@ -67,17 +67,54 @@ const useStyles = makeStyles((theme) => ({
   arrowRight:{
     color : theme.palette.text.primary,
     fontSize: "40px"
+  },
+  APSImportBusDiv:{
+    width : '60px',
+    height : '60px',
+    position : 'absolute',
+    top : "30px",
+    right : '110px'
+  },
+  APSImportBusButton:{
+    width : '100%',
+    height : '100%',
+    backgroundColor : '#00680A',
+    borderRadius : '0'
+  },
+  APSExportBusDiv:{
+    width : '60px',
+    height : '60px',
+    position : 'absolute',
+    top : "30px",
+    left : '110px'
+  },
+  APSExportBusButton:{
+    width : '100%',
+    height : '100%',
+    backgroundColor : '#CB0C0C',
+    borderRadius : '0'
   }
 }))
 
 
 function Folder(props) {
   const [folderClicked, setFolderClicked] = useState(false);
+  const [APSClicked, setAPSFolderClicked] = useState(false);
   const isFolderClicked = (e) =>{
+    if(APSClicked){
+      return;
+    }
     if(folderClicked){
       setFolderClicked(false);
     }else{
     setFolderClicked(true);
+    }
+  }
+  const isAPSClicked = (e) =>{
+    if(APSClicked){
+      setAPSFolderClicked(false);
+    }else{
+      setAPSFolderClicked(true);
     }
   }
   const info = props.info;
@@ -108,6 +145,16 @@ function Folder(props) {
           </>
           }
           <Typography variant="body2" className={classes.folderNameText}>{info.name}</Typography>
+          <div className={classes.APSImportBusDiv}>
+            <Button className={classes.APSImportBusButton} onClick={() => {isAPSClicked()}}>
+              Import Bus
+            </Button>
+          </div>
+          <div className={classes.APSExportBusDiv}>
+            <Button className={classes.APSExportBusButton} onClick={() => {isAPSClicked()}}>
+              Export Bus
+            </Button>
+          </div>
         </motion.div>
         <div className={classes.rightArrowDiv}>
           {folderClicked
