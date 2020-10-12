@@ -6,12 +6,11 @@ import { getFileList } from "../API/io";
 const path = window.require('path')
 
 // 프로젝트 경로 하드코딩 되어있는거때문에 오류가 나니까 오류 안나게 바꿔드림.
-const { app } = window.require('electron').remote
 
 
-function Visualization() {
-  var defaultDir = app.getAppPath()            // 우선 하드코딩
-  var defaultDirInfo = getFileList(defaultDir);  // 이부분 받아오는걸로 변경예정
+
+function Visualization(props) {
+
 
   var displayStyle = {     // style이므로 정리 필요
     display: "flex",
@@ -19,7 +18,7 @@ function Visualization() {
 
   var title = "디렉토리 시각화";  // 이부분도 정리
 
-  const test = [defaultDirInfo];
+  const test = [props.defaultDirInfo];
   const [renderSection, setRenderSection] = useState(test);  // render 될 section들을 담는 state
   const [pathTracker, setPathTracker] = useState([]);
 
