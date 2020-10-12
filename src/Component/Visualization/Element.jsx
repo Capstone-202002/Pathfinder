@@ -5,7 +5,7 @@ import Folder from "./Folder";
 function Element(props) {
   // 기타 정보들이
   if (props.info.is_dir) {
-    return <Folder info={props.info} folderClicked={props.folderClicked}/>;
+    return <Folder totalSize={props.totalSize} info={props.info} folderClicked={props.folderClicked}/>;
   }
   return <File info={props.info} />;
 }

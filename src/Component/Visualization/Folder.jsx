@@ -3,7 +3,8 @@ import {makeStyles} from  '@material-ui/core/styles';
 import { IconButton, Typography, Paper , Button} from "@material-ui/core";
 import {FolderSharp, ArrowRight} from '@material-ui/icons';
 import {motion} from "framer-motion";
-const folderMinHeight = "80px";
+//const folderMinHeight = "80px";
+const folderMinHeight = 80;
 const folderMaxHeight = "180px";
 const rightArrowVariants = {
   initial:{
@@ -16,88 +17,101 @@ const rightArrowVariants = {
     }
   }
 }
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    display: "flex",
-    width:"210px",
-    //marginBottom : "10px",
-    paddingTop : "10px",
-    paddingBottom:"10px"
-  },
-  folderDiv:{
-    display: "flex",
-    flexDirection : "column",
-    position: "relative",
-    width : "170px",
-    minHeight : folderMinHeight,
-    maxHeight : folderMaxHeight,
-    alignItems: "center"
-  },
-  rightArrowDiv:{
-    display: "flex",
-    width : "40px",
-    alignItems : "center",
-    verticalAlign: "middle"
-  },
-  folderHeadDiv:{
-    position : "relative",
-    height: "30px",
-    width : "80px",
-    backgroundColor : "#DEF6FF",
-    borderRadius : "10px",
-    elevation : "0",
-    right : "15px"
-  },
-  folderBodyDiv:{
-    height : setFolderHeight(),
-    width : "110px",
-    backgroundColor : "#DEF6FF",
-    borderTopRightRadius : "10px",
-    borderBottomRightRadius : "10px",
-    borderBottomLeftRadius : '10px',
-    position: "relative",
-    top : "-10px"
-  },
-  folderNameText:{
-    position: "absolute",
-    color: theme.palette.background.default,
-    marginLeft : "5px",
-    right : "70px"
-  },
-  arrowRight:{
-    color : theme.palette.text.primary,
-    fontSize: "40px"
-  },
-  APSImportBusDiv:{
-    width : '60px',
-    height : '60px',
-    position : 'absolute',
-    top : "30px",
-    right : '110px'
-  },
-  APSImportBusButton:{
-    width : '100%',
-    height : '100%',
-    backgroundColor : '#00680A',
-    borderRadius : '0'
-  },
-  APSExportBusDiv:{
-    width : '60px',
-    height : '60px',
-    position : 'absolute',
-    top : "30px",
-    left : '110px'
-  },
-  APSExportBusButton:{
-    width : '100%',
-    height : '100%',
-    backgroundColor : '#CB0C0C',
-    borderRadius : '0'
-  }
-}))
 
 
 function Folder(props) {
+
+  function setFolderHeight(totalSize, folderSize){
+    //Calculate folder's height
+   //기본80
+   //차지하는 용량 1퍼센트당 1픽셀
+   //console.log('토탈: ', totalSize);
+   //console.log('폴더: ', folderSize);
+   
+   var folderHeight = folderMinHeight + ((folderSize / totalSize) * 100);
+   console.log('결과: ', folderHeight);
+    return folderHeight;
+  }
+
+  const useStyles = makeStyles((theme) => ({
+    wrapper: {
+      display: "flex",
+      width:"210px",
+      //marginBottom : "10px",
+      paddingTop : "10px",
+      paddingBottom:"10px"
+    },
+    folderDiv:{
+      display: "flex",
+      flexDirection : "column",
+      position: "relative",
+      width : "170px",
+      minHeight : folderMinHeight,
+      maxHeight : folderMaxHeight,
+      alignItems: "center"
+    },
+    rightArrowDiv:{
+      display: "flex",
+      width : "40px",
+      alignItems : "center",
+      verticalAlign: "middle"
+    },
+    folderHeadDiv:{
+      position : "relative",
+      height: "30px",
+      width : "80px",
+      backgroundColor : "#DEF6FF",
+      borderRadius : "10px",
+      elevation : "0",
+      right : "15px"
+    },
+    folderBodyDiv:{
+      height : setFolderHeight(props.totalSize, props.info.size),
+      width : "110px",
+      backgroundColor : "#DEF6FF",
+      borderTopRightRadius : "10px",
+      borderBottomRightRadius : "10px",
+      borderBottomLeftRadius : '10px',
+      position: "relative",
+      top : "-10px"
+    },
+    folderNameText:{
+      position: "absolute",
+      color: theme.palette.background.default,
+      marginLeft : "5px",
+      right : "70px"
+    },
+    arrowRight:{
+      color : theme.palette.text.primary,
+      fontSize: "40px"
+    },
+    APSImportBusDiv:{
+      width : '60px',
+      height : '60px',
+      position : 'absolute',
+      top : "30px",
+      right : '110px'
+    },
+    APSImportBusButton:{
+      width : '100%',
+      height : '100%',
+      backgroundColor : '#00680A',
+      borderRadius : '0'
+    },
+    APSExportBusDiv:{
+      width : '60px',
+      height : '60px',
+      position : 'absolute',
+      top : "30px",
+      left : '110px'
+    },
+    APSExportBusButton:{
+      width : '100%',
+      height : '100%',
+      backgroundColor : '#CB0C0C',
+      borderRadius : '0'
+    }
+  }))
   const [folderClicked, setFolderClicked] = useState(false);
   const [APSClicked, setAPSFolderClicked] = useState(false);
   const isFolderClicked = (e) =>{
@@ -172,7 +186,7 @@ function Folder(props) {
             animate = "initial"
             >
             
-          </motion.div>
+          </motion.div> 
           </>
           }
         </div>
@@ -184,7 +198,3 @@ function Folder(props) {
 export default Folder;
 
 
-function setFolderHeight(){
-  //Calculate folder's height
-  return folderMinHeight;
-}

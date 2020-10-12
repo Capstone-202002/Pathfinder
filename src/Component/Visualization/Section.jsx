@@ -15,10 +15,16 @@ function Section(props) {
   const classes = useStyles();
 
   var sectionInfo = props.sectionInfo;
-  
+
+  var total = 0;
+  // 임시로 폴더 총 용량 구하는 부분, 추후 백엔드에 포함 예정
+  for(var i=0; i < sectionInfo.length; i++){
+    total += sectionInfo[i].size;
+  }
+
   var section = sectionInfo.map((file, index) => (
     <div>
-      <Element info={file} name={file.name} isDir={file.is_dir} folderClicked={props.folderClicked} />
+      <Element info={file} totalSize={total} name={file.name} isDir={file.is_dir} folderClicked={props.folderClicked} />
     </div>
   ));
 
