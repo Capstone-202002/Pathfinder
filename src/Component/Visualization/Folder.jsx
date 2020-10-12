@@ -17,87 +17,6 @@ const rightArrowVariants = {
     }
   }
 }
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    display: "flex",
-    width:"210px",
-    //marginBottom : "10px",
-    paddingTop : "10px",
-    paddingBottom:"10px",
-    marginLeft : '10px'
-  },
-  folderDiv:{
-    display: "flex",
-    flexDirection : "column",
-    position: "relative",
-    width : "170px",
-    minHeight : folderMinHeight,
-    maxHeight : folderMaxHeight,
-    alignItems: "center"
-  },
-  rightArrowDiv:{
-    display: "flex",
-    width : "40px",
-    alignItems : "center",
-    verticalAlign: "middle"
-  },
-  folderHeadDiv:{
-    position : "relative",
-    height: "30px",
-    width : "80px",
-    backgroundColor : "#DEF6FF",
-    borderRadius : "10px",
-    elevation : "0",
-    right : "15px"
-  },
-  folderBodyDiv:{
-    height : setFolderHeight(),
-    width : "110px",
-    backgroundColor : "#DEF6FF",
-    borderTopRightRadius : "10px",
-    borderBottomRightRadius : "10px",
-    borderBottomLeftRadius : '10px',
-    position: "relative",
-    top : "-10px"
-  },
-  folderNameText:{
-    position: "absolute",
-    color: theme.palette.background.default,
-    marginLeft : "5px",
-    right : "70px"
-  },
-  arrowRight:{
-    color : theme.palette.text.primary,
-    fontSize: "40px"
-  },
-  APSImportBusDiv:{
-    width : '60px',
-    height : '60px',
-    position : 'absolute',
-    top : "30px",
-    right : '110px'
-  },
-  APSImportBusButton:{
-    width : '100%',
-    height : '100%',
-    backgroundColor : '#00680A',
-    borderRadius : '0'
-  },
-  APSExportBusDiv:{
-    width : '60px',
-    height : '60px',
-    position : 'absolute',
-    top : "30px",
-    left : '110px'
-  },
-  APSExportBusButton:{
-    width : '100%',
-    height : '100%',
-    backgroundColor : '#CB0C0C',
-    borderRadius : '0'
-  }
-}))
-
 
 function Folder(props) {
 
@@ -117,7 +36,8 @@ function Folder(props) {
       width:"210px",
       //marginBottom : "10px",
       paddingTop : "10px",
-      paddingBottom:"10px"
+      paddingBottom:"10px",
+      marginLeft : '5px'
     },
     folderDiv:{
       display: "flex",
