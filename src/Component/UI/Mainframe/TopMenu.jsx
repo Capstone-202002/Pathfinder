@@ -3,6 +3,7 @@ import {makeStyles, useTheme} from  '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper'
 import { IconButton, Tooltip, Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
+import {TitlebarMac} from 'electron-titlebar-react-component';
 //import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,12 +27,18 @@ const useStyles = makeStyles((theme) => ({
         alignItems : 'center',
         backgroundColor : theme.palette.background.default,
         borderRadius : '0',
+        flexDirection : 'vertical'
     },
     helpButton:{
         width : '40px',
         height : '40px',
-        marginLeft : '120px',
-        marginTop : '10px',
+        marginLeft : '30px',
+        //marginTop : '10px',
+    },
+    titleBar:{
+        position : 'absolute',
+        marginLeft : '100px',
+        marginBottom : '20px'
     }
 
 }));
@@ -47,6 +54,9 @@ export default function SystemMessage(props){
             </div>
             <div>
                 <Paper className={classes.rightFunctionArea}>
+                    <div className={classes.titleBar}>
+                        <TitlebarMac style={{background:'transparent'}}/>
+                    </div>
                     <Tooltip title = '도움말' arrow className={classes.helpButton}>
                         <IconButton aria-label="help" className={classes.helpButton}>
                             <HelpOutline/>

@@ -12,6 +12,7 @@
     "concurrently": "^5.3.0",
     "cross-env": "^7.0.2",
     "electron-is-dev": "^1.2.0",
+    "electron-titlebar-react-component": "^1.0.5",
     "eslint-plugin-react-hooks": "^4.1.2",
     "framer-motion": "^2.8.0",
     "immutability-helper": "^3.1.1",
