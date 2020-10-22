@@ -59,7 +59,12 @@ function Visualization(props) {
     <Section sectionInfo={renderInfo} folderClicked={folderClicked} />
   ));
 
-  var contents = (<div style={displayStyle}>{visualizationRenderer}</div>)
+  var contents = (
+              <div style={displayStyle}>
+              
+                {visualizationRenderer}
+              
+              </div>)
 
   return (
     <>
