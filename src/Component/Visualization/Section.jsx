@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     width : "230px",
     paddingTop: '20px',
     //borderRight : '2px solid grey',
-    overflowY : 'auto'
+    //overflowY : 'auto'
   }
 
 }))
@@ -27,17 +27,9 @@ function Section(props) {
   }
 
   var section = sectionInfo.map((file, index) => (
-    <div>
-      <Scrollbars 
-        style={{width: '100%', height: '100%'}}
-        autoHide
-        autoHideTimeout={1000}
-        autoHideDuration={200}
-        >
-        <h1>hELLO</h1>
-        <Element info={file} totalSize={total} name={file.name} isDir={file.is_dir} folderClicked={props.folderClicked} />
-      </Scrollbars>
-    </div>
+   <div>
+       <Element info={file} totalSize={total} name={file.name} isDir={file.is_dir} folderClicked={props.folderClicked} />
+   </div>
   ));
 
 
@@ -45,7 +37,14 @@ function Section(props) {
     <>
       {/*<div style={sectionStyle}>{section}</div>*/}
       <div className={classes.wrapper}>
-        {section}
+        <Scrollbars
+        style={{width: '100%', height: '100%'}}
+        autoHide
+        autoHideTimeout={1000}
+        autoHideDuration={200}
+        >
+          {section}
+        </Scrollbars>
       </div>
       <Divider variant="middle" orientation="vertical" flexItem/>
     </>
