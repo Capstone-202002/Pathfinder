@@ -4,11 +4,20 @@ import Paper from '@material-ui/core/Paper'
 import { IconButton, Tooltip, Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import {TitlebarMac} from 'electron-titlebar-react-component';
+import {motion} from 'framer-motion';
 //import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
     mainTextWrapper : {
+        display:'flex',
+        flexDirection:'column',
         width : '100%'
+    },
+    draggableRegion:{
+        width : 'calc(100%-200px)',
+        height : '20px',
+        WebkitAppRegion : "drag",
+        backgroundColor : "#212121"
     },
     mainText:{
         display: 'flex',
@@ -18,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor : theme.palette.background.default,
         borderRadius : '0',
         paddingLeft : '25px',
-        WebkitAppRegion : "drag"
+        //WebkitAppRegion : "drag"
     },
     rightFunctionArea:{
         display:'flex',
@@ -43,13 +52,22 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+//props에 디렉토리 경로를 넣어주세요 . 적용됩니다.
 export default function SystemMessage(props){
     const classes = useStyles();
     return (
         <>
             <div className={classes.mainTextWrapper}>
+                <div className={classes.draggableRegion}></div>
                 <Paper className={classes.mainText}>
+                    <motion.div
+                        whileHover = {{scale:1.1, originX:0}}
+                        whileTap = {{scale:0.9}}
+                        onClick = {setDirectory}
+                    >
                     <Typography>{props.mainText}</Typography>
+                    </motion.div>
+                    
                 </Paper>
             </div>
             <div>
@@ -66,4 +84,10 @@ export default function SystemMessage(props){
             </div>
         </>
     )
+}
+
+
+function setDirectory(){
+    //TODO
+    //상단 탑 부분에 제목을 클릭할 때 핸들링
 }

@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useTheme } from "react";
+import {makeStyles} from  '@material-ui/core/styles';
 import Base from "../Base/Base";
 import Mainframe from "../UI/Mainframe/Mainframe"
 import Section from "./Section";
 import { getFileList } from "../API/io";
 import SearchAndFilter from './SearchAndFilter';
 import Scrollbars from "react-custom-scrollbars";
+import { FormatColorTextSharp } from "@material-ui/icons";
+import clsx from 'clsx';
 const path = window.require('path')
 
 // 프로젝트 경로 하드코딩 되어있는거때문에 오류가 나니까 오류 안나게 바꿔드림.
@@ -13,15 +16,35 @@ const path = window.require('path')
 
 function Visualization(props) {
 
-
-  var displayStyle = {     // style이므로 정리 필요
-    display: "flex",
+  //const theme = useTheme();
+  const useStyles = makeStyles((theme) => ({
+    displayStyle:{
+      display: "flex",
+      height: "100%",
+      width:'100%',
+      overflowX: "auto",
+      flexWrap: 'nowrap',
+      flexDirection: 'row',
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginRight:'0px'
+    },
+    displayShiftStyle:{
+      display: "flex",
     height: "100%",
     width:'100%',
     overflowX: "auto",
     flexWrap: 'nowrap',
-    flexDirection: 'row'
-  };
+    flexDirection: 'row',
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginRight:'300px'
+    }
+  }));
 
   var title = "디렉토리 시각화";  // 이부분도 정리
 
@@ -99,10 +122,10 @@ function Visualization(props) {
                isSearching={isSearching}
                searchInfo={searchInfo} />
   ));
-
+  const classes = useStyles();
   var contents = (
             <>
-              <div style={displayStyle}>
+              <div className={clsx(classes.displayStyle,{[classes.displayShiftStyle]:isSearching,})}>
                 
                   {visualizationRenderer}
                          
