@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const recursive = require('./recursiveSearch')
+const { dialog } = require('electron')
 
 
 function getFileList(baseurl) {
@@ -64,13 +65,5 @@ function changeFileDirectory(olddir, newdir, filename, callback) {
 //     }
 // })
 
-changeFileDirectory("C:\\Users\\Jun\\Desktop\\Temp", "C:\\Users\\Jun\\Desktop\\Temp\\Release2", "SampleFolder", (err) => {
-    if (err) {
-        console.log(err)
-        console.log("파일 이름을 바꾸는 중 에러가 발생했습니다. io.js를 확인하세요.")
-    }
-    else {
-        console.log("성공")
-        console.log(err)
-    }
-})
+const selectedPaths = dialog.showOpenDialog();
+console.log(selectedPaths);

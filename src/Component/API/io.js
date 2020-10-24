@@ -1,6 +1,7 @@
 const fs = window.require('fs')
 const path = window.require('path')
 const recursive = require('./recursiveSearch')
+const { dialog } = window.require('electron').remote
 
 export function getFileList(baseurl) {
     var filelist = fs.readdirSync(baseurl)
@@ -49,4 +50,11 @@ export function changeFileDirectory(olddir, newdir, filename, callback) {
     fs.rename(path.join(olddir, filename), path.join(newdir, filename), (err) => {
         callback(err)
     })
+}
+
+export function openDirectorySelectDialog(callback) {
+    dialog.showOpenDialog({ title: '디렉토리 선택', properties: ['openDirectory'] })
+        .then(result => {
+            callback(result)
+        })
 }
