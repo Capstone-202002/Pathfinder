@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         paddingRight:'20px',
         paddingTop:'20px',
     },
-
+    
     horizonWrapper:{
         display:'flex',
         flexDirection:'row',
@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchDisplay(props) {
     const classes = useStyles();
+    const theme = useTheme();
     const [overByte, setOverByte] = useState(1);
     const handleOverChange = (event) =>{
         setOverByte(event.target.value);
@@ -87,10 +88,15 @@ export default function SearchDisplay(props) {
     }, [state, overByte, underByte])
 
 
+    const [nameChangeNumber, setNameChangeNumber] = React.useState(0);
+    const handleNameChangeNumberChange = (event) =>{
+        setNameChangeNumber(event.target.value);
+    }
+
     return(
         <>
             <Scrollbars>
-                <div className={classes.searchDisplayMainWrapper}>
+            <div className={classes.searchDisplayMainWrapper}>
                     <Typography>텍스트로 검색</Typography>
 
                     <Divider className={classes.topBottomMargins}></Divider>
@@ -177,6 +183,40 @@ export default function SearchDisplay(props) {
                             <MenuItem value={1e+12}> TB </MenuItem>
                         </Select>
                     </div>
+
+
+
+
+
+                    <Typography>선택된 파일 이름 일괄 변경</Typography>
+
+                    <Divider ></Divider>
+                    <Typography marginTop = '2px' variant='caption'>이름을 입력한 후, 접미 숫자의 자릿수를 설정해주세요. (ex. 파일이름, 3자리 {">"} 파일이름001.txt)</Typography>
+                    <div className={classes.horizonWrapper}>
+                        {/* 파일이름 변경 접두 텍스트 */}
+                        <CssTextField id="searchDisplayChangeNameTextField"
+                                label="파일 이름"
+                                defaultValue=""
+                                helperText=""                               
+                                className={classes.topBottomMargins}
+                                >
+                        </CssTextField>
+                        {/* ~접미 자릿수 셀렉터가 있음. 0,1,2,3,4 값으로 각각 단위를 나타냄 */}
+                        <Select
+                            value={nameChangeNumber}
+                            onChange={handleNameChangeNumberChange}
+                            id = 'searchDisplayNameChangeNumberSelect'
+                        >
+                            <MenuItem value={0}> 1자리 </MenuItem>
+                            <MenuItem value={1}> 2자리 </MenuItem>
+                            <MenuItem value={2}> 3자리 </MenuItem>
+                            <MenuItem value={3}> 4자리 </MenuItem>
+                            <MenuItem value={4}> 5자리 </MenuItem>
+                        </Select>
+                        <Button onClick={nameChangeButtonClicked}> 변경 </Button>
+                    </div>
+
+
                     <Button onClick={setAllElementToInitialState}>초기화</Button>
                 </div>
             </Scrollbars>
@@ -185,3 +225,6 @@ export default function SearchDisplay(props) {
     );
 }
 
+function nameChangeButtonClicked(){
+    //TODO
+}

@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
         //paddingLeft : '25px',
         //verticalAlign : 'center',
         textAlign : 'left',
-        backgroundColor  : 'red'
+        backgroundColor  : theme.palette.background.default
     },
     insideButton:{
         display  : 'flex',
@@ -56,13 +56,16 @@ const useStyles = makeStyles((theme) => ({
         alignItems : 'center',
         width : '100%',
         height : '100%',
+        radius : 0,
+        backgroundColor : theme.palette.background.default
     },
     buttonTextStyle:{
         position : 'absolute',
         x : '40px',
-        paddingLeft : '40px'
+        paddingLeft : '60px',
     },
     buttonClickCycleAnimation:{
+        marginLeft : '20px',
         position : 'relative',
         x : '20px'
     }
@@ -114,45 +117,53 @@ const menu = [0,1,2,3];
 
 function Item({ isSelected, onClick, menuItem}){
     const classes = useStyles();
+    const theme = useTheme();
     return (
         <>
             <li className={classes.menuButtons} onClick={onClick} >
                     <motion.div
+                        drag
                         className = {classes.insideButton}
                         whileHover={{scale:1.1}}
-                        whileTap={{scale:0.9}}
+                        whileTap={{scale:0.9, opacity:0.9}}
                     >
-                        {
-                        isSelected && (
-                            /*
-                            <motion.div
-                                className={classes.menuButtons}
-                                initial={false}
-                                animate={{backgroundColor:'#ffffff'}}
-                                transition={spring}
-                            >
+                        <Paper
+                            className={classes.insideButton}
+                        >
+                            {
+                            isSelected && (
+                                /*
+                                <motion.div
+                                    className={classes.menuButtons}
+                                    initial={false}
+                                    animate={{backgroundColor:'#ffffff'}}
+                                    transition={spring}
+                                >
 
-                            </motion.div>*/
-                            <motion.div
-                                className={classes.buttonClickCycleAnimation}
-                                style={{backgroundColor : '#ffffff', width : '20px', height : '20px'}}
-                                animate={{
-                                    scale: [1, 2, 2, 1, 1],
-                                    rotate: [0, 0, 270, 270, 0],
-                                    borderRadius: ["20%", "20%", "50%", "50%", "20%"]
-                                }}
-                                transition={{
-                                    duration: 2,
-                                    ease: "easeInOut",
-                                    times: [0, 0.2, 0.5, 0.8, 1],
-                                    repeatDelay: 1
-                                }}
-                            />
-                        )
-                        }
-                        <Typography className={classes.buttonTextStyle}>
-                            {menuItem}
-                        </Typography>
+                                </motion.div>*/
+                                <motion.div
+                                    
+                                    className={classes.buttonClickCycleAnimation}
+                                    style={{backgroundColor : '#ffffff', width : '20px', height : '20px'}}
+                                    animate={{
+                                        scale: [1, 2, 2, 1, 1],
+                                        rotate: [0, 0, 270, 270, 0],
+                                        borderRadius: ["20%", "20%", "50%", "50%", "20%"]
+                                    }}
+                                    transition={{
+                                        duration: 2,
+                                        ease: "easeInOut",
+                                        times: [0, 0.2, 0.5, 0.8, 1],
+                                        repeatDelay: 1
+                                    }}
+                                />
+                            )
+                            }
+                            
+                            <Typography color = {theme.palette.text.primary} className={classes.buttonTextStyle}>
+                                {menuItem}
+                            </Typography>
+                        </Paper>
                     </motion.div>
                 
 
