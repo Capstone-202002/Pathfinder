@@ -34,8 +34,13 @@ function File(props) {
     // console.log(fi, si);
     if (fi.size >= si.searchMinVol) {
       if (si.searchMaxVol == 0) {
-        sizeCompare = true;
-        console.log('asdfasjd;fljas;lkdj;asklf');
+        if (si.searchMinVol == 0) {
+          sizeCompare = false;
+        }
+        else {
+          sizeCompare = true;
+          console.log('asdfasjd;fljas;lkdj;asklf');
+        }
       }
       else if (fi.size <= si.searchMaxVol) {
         sizeCompare = true;
@@ -46,6 +51,9 @@ function File(props) {
     // console.log('sizeCompare: ', sizeCompare);
 
     if (nameResult === 'blank' && extResult === 'blank') {
+      if (sizeCompare == true) {
+        return true;
+      }
       return false;
     }
     if (nameResult === 'blank' || extResult === 'blank') {
