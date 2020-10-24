@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Base from "../Base/Base";
 import Mainframe from "../UI/Mainframe/Mainframe"
 import Section from "./Section";
-import { getFileList } from "../API/io";
+import { getFileList, openDirectorySelectDialog } from "../API/io";
 import SearchAndFilter from './SearchAndFilter';
 import Scrollbars from "react-custom-scrollbars";
 const path = window.require('path')
@@ -85,12 +85,26 @@ function Visualization(props) {
     setIsSearching(isSearching);
   }
 
-
   useEffect(()=> {  // 검색부분 변화있으면 실행됨
     //console.log(searchInfo);
     //console.log('검색바 오픈: ', isSearching);
-    console.log(searchInfo);
+    //console.log(searchInfo);
   }, [searchInfo, isSearching])
+
+  function setDefaultDir(e) {
+    e.preventDefault();
+    openDirectorySelectDialog( (result) => {
+      if (!result.canceled){
+          let newDirInfo = getFileList(result.filePaths[0]);
+          setRenderSection([newDirInfo]);
+          setPathTracker([]);
+      }
+  })
+    
+  //   const test = [props.defaultDirInfo];
+  // const [renderSection, setRenderSection] = useState(test);  // render 될 section들을 담는 state
+  // const [pathTracker, setPathTracker] = useState([]);
+  }
 
   var visualizationRenderer = renderSection.map((renderInfo, index) => (
       <Section sectionInfo={renderInfo} 
@@ -103,7 +117,7 @@ function Visualization(props) {
   var contents = (
             <>
               <div style={displayStyle}>
-                
+                <button onClick={setDefaultDir}>asdfasdf</button>
                   {visualizationRenderer}
                          
               </div>

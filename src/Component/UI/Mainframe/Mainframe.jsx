@@ -100,14 +100,12 @@ export default function Mainframe(props){
                     {/*App's Right Display Section*/}
                     <div className={classes.title}>
                         {/*title bar section*/}
-                        <TopMenu mainText={setMainTitleText()}/>
+                        <TopMenu mainText={setMainTitleText()} onTitleClicked={props.onTitleClicked}/>
                     </div>
                     
                     <div className={classes.display}>
                         {/*App's Main function display Section*/}
-                        
                         {props.contents}
-                        
                     </div>
 
 
