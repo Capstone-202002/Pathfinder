@@ -7,7 +7,7 @@ import {motion} from "framer-motion";
 
 function File(props) {
   function searchName(fi, si) {
-    if (fi.name.indexOf(si.searchName) !== -1) {
+    if (fi.name.toLowerCase().indexOf(si.searchName.toLowerCase()) !== -1) {
       if (si.searchName === '') {
         return 'blank';
       }
@@ -19,7 +19,7 @@ function File(props) {
     if (si.searchExt === '') {
       return 'blank';
     }
-    if (fi.extension.replace(".", "") === si.searchExt) {
+    if (fi.extension.replace(".", "").toLowerCase() === si.searchExt.toLowerCase()) {
       //console.log(fi.extension, si.searchExt);
       //console.log("확장자 비교 true!");
       return true;

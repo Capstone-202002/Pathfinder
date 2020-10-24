@@ -140,7 +140,7 @@ function Visualization(props) {
   var contents = (
             <>
               <div className={clsx(classes.displayStyle,{[classes.displayShiftStyle]:isSearching,})}>
-              <button onClick={setDefaultDir}>asdfasdf</button>
+              <button onClick={setDefaultDir}>setDir</button>
                   {visualizationRenderer}
                          
               </div>
