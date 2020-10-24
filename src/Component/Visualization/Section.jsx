@@ -3,14 +3,21 @@ import Element from "./Element";
 import {makeStyles} from  '@material-ui/core/styles';
 import {Scrollbars} from 'react-custom-scrollbars';
 import Divider from '@material-ui/core/Divider';
+import {motion} from 'framer-motion';
 
 const useStyles = makeStyles((theme) => ({
-  wrapper:{
+  sectionWrapper:{
     height : "100%",
-    width : "230px",
-    paddingTop: '20px',
+    width : "240px",
+    //paddingTop: '10px',
+    float : 'left',
+    //paddingLeft: '10px',
     //borderRight : '2px solid grey',
-    //overflowY : 'auto'
+    overflow : 'hidden',
+    flexShrink:'0',
+  },
+  divider:{
+    margin:'0'
   }
 
 }))
@@ -28,7 +35,7 @@ function Section(props) {
 
   var section = sectionInfo.map((file, index) => (
    <div>
-       <Element info={file} totalSize={total} name={file.name} isDir={file.is_dir} folderClicked={props.folderClicked} />
+       <Element info={file} totalSize={total} name={file.name} isDir={file.is_dir} folderClicked={props.folderClicked} key={index}/>
    </div>
   ));
 
@@ -36,17 +43,27 @@ function Section(props) {
   return (
     <>
       {/*<div style={sectionStyle}>{section}</div>*/}
-      <div className={classes.wrapper}>
+      <motion.div className={classes.sectionWrapper}
+        initial={{x:-250, opacity:0}}
+        animate={{x:0, opacity:1}}
+        transition={{delay:0.2, duration : 0.5}}
+      >
         <Scrollbars
-        style={{width: '100%', height: '100%'}}
+        style={{height: '100%'}}
         autoHide
         autoHideTimeout={1000}
         autoHideDuration={200}
+        renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}
+        renderView={props => (
+          <div {...props} style={{ ...props.style, overflowX: 'hidden' }} />
+      )}
         >
+          
           {section}
         </Scrollbars>
-      </div>
-      <Divider variant="middle" orientation="vertical" flexItem/>
+
+      </motion.div>
+      <Divider className={classes.divider} variant="middle" orientation="vertical" flexItem/>
     </>
   );
 }

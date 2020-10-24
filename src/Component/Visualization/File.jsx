@@ -66,7 +66,7 @@ function File(props) {
     <>
       {/*<div style={divStyle}>이름: {name}, 파일임</div>*/}
       <motion.div className={classes.fileDiv}
-        whileHover = {{scale : 1.2}}
+        whileHover = {{scale : 1.2, originX:0}}
       >
         <InsertDriveFileSharp className={classes.fileIcon}/>
         <Typography className={classes.fileName}>{info.name}</Typography>

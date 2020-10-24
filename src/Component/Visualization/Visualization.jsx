@@ -3,6 +3,8 @@ import Base from "../Base/Base";
 import Mainframe from "../UI/Mainframe/Mainframe"
 import Section from "./Section";
 import { getFileList } from "../API/io";
+import SearchAndFilter from './SearchAndFilter';
+import Scrollbars from "react-custom-scrollbars";
 const path = window.require('path')
 
 // 프로젝트 경로 하드코딩 되어있는거때문에 오류가 나니까 오류 안나게 바꿔드림.
@@ -14,6 +16,11 @@ function Visualization(props) {
 
   var displayStyle = {     // style이므로 정리 필요
     display: "flex",
+    height: "100%",
+    width:'100%',
+    overflowX: "auto",
+    flexWrap: 'nowrap',
+    flexDirection: 'row'
   };
 
   var title = "디렉토리 시각화";  // 이부분도 정리
@@ -56,15 +63,19 @@ function Visualization(props) {
 
 
   var visualizationRenderer = renderSection.map((renderInfo, index) => (
-    <Section sectionInfo={renderInfo} folderClicked={folderClicked} />
+      <Section sectionInfo={renderInfo} folderClicked={folderClicked} key={index}/>
   ));
 
   var contents = (
+            <>
               <div style={displayStyle}>
-              
-                {visualizationRenderer}
-              
-              </div>)
+                
+                  {visualizationRenderer}
+                         
+              </div>
+              <SearchAndFilter/>
+            </>
+              )
 
   return (
     <>

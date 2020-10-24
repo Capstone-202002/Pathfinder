@@ -38,9 +38,10 @@ function Folder(props) {
       display: "flex",
       width:"210px",
       //marginBottom : "10px",
-      paddingTop : "10px",
+      //paddingTop : "10px",
       paddingBottom:"10px",
-      marginLeft : '5px',
+      marginTop:"20px",
+      marginLeft : '15px',
       webkitJustifyContent : 'flex-end',
       justifyContent:'space-between'
     },
@@ -142,7 +143,7 @@ function Folder(props) {
       {/*<div style={divStyle}>이름: {name}, 폴더임</div>*/}
       <div className={classes.wrapper}>
         <motion.div className={classes.folderDiv}
-          whileHover={{ scale : 1.2,
+          whileHover={{ scale : 1.2, originX:0
           }}
           onClick={() => { props.folderClicked(info); isFolderClicked() }}
         >

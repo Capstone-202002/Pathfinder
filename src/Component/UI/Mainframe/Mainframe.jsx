@@ -6,6 +6,7 @@ import { CssBaseline, Paper } from "@material-ui/core";
 import LeftMenu from './LeftMenu';
 import TopMenu from './TopMenu';
 import SystemMessage from './SystemMessage';
+import { Scrollbars } from 'react-custom-scrollbars'
 
 const useStyles = makeStyles((theme) => ({
     spacing : 10,
@@ -64,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
         width : "100%",
         height : 'calc(100% - 60px)',
         backgroundColor: theme.palette.background.paper,
+        overflow:'auto'
     },
     //System Message area
     message:{
@@ -100,9 +102,12 @@ export default function Mainframe(props){
                         {/*title bar section*/}
                         <TopMenu mainText={setMainTitleText()}/>
                     </div>
+                    
                     <div className={classes.display}>
                         {/*App's Main function display Section*/}
+                        
                         {props.contents}
+                        
                     </div>
 
 

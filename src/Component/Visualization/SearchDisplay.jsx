@@ -1,0 +1,146 @@
+import React, { useState, useEffect } from "react";
+import {makeStyles, useTheme, withStyles} from  '@material-ui/core/styles';
+import { Divider, TextField, Typography} from "@material-ui/core";
+import Select from '@material-ui/core/Select';
+import Scrollbars from "react-custom-scrollbars";
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+const CssTextField = withStyles({
+    root:{
+        '& label.Mui-focused': {
+            color: '#ffffff',
+          },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: '#ffffff',
+          },
+          '& .MuiOutlinedInput-root': {
+            '&.Mui-focused fieldset': {
+              borderColor: '#ffffff',
+            },
+          },
+        },
+          
+})(TextField);
+const useStyles = makeStyles((theme) => ({
+    searchDisplayMainWrapper:{
+        display:'flex',
+        flexDirection:'column',
+        paddingLeft:'20px',
+        paddingRight:'20px',
+        paddingTop:'20px',
+    },
+    
+    horizonWrapper:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'center',
+        alignItems : 'center',
+        marginBottom: theme.spacing(2),
+    },
+
+    topBottomMargins:{
+        marginBottom : theme.spacing(2)
+    }
+
+}));
+
+export default function SearchDisplay(props) {
+    const classes = useStyles();
+    const [overByte, setOverByte] = React.useState(2);
+    const handleOverChange = (event) =>{
+        setOverByte(event.target.value);
+    }
+    const [underByte, setUnderByte] = React.useState(2);
+    const handleUnderChange = (event) =>{
+        setUnderByte(event.target.value);
+    }
+    return(
+        <>
+            <Scrollbars>
+                <div className={classes.searchDisplayMainWrapper}>
+                    <Typography>텍스트로 검색</Typography>
+
+                    <Divider className={classes.topBottomMargins}></Divider>
+                    {/* 파일이름 검색 텍스트 필드가 존재하는 곳. 내부값은 id로 검색하는 게 빠름 */}
+                    <CssTextField id="searchDisplayNameTextField"
+                            label="이름"
+                            defaultValue=""
+                            helperText="파일이름으로 검색할 수 있어요"
+                            variant="outlined"
+                            
+                            className={classes.topBottomMargins}
+                            >
+                    </CssTextField>
+                    {/* 파일 확장자 검색 텍스트 필드가 존재하는 곳. 내부값은 id로 검색하는 게 빠름 */}
+                    <CssTextField id="searchDisplayTypeTextField"
+                            label="확장자"
+                            defaultValue=""
+                            helperText="확장자명으로 검색할 수 있어요"
+                            variant="outlined"
+                            
+                            className={classes.topBottomMargins}
+                            >
+                    </CssTextField>
+                    <Typography>용량으로 검색</Typography>
+
+                    <Divider className={classes.topBottomMargins}></Divider>
+
+                    
+                    <div className={classes.horizonWrapper}>
+                         {/* ~바이트 '이상' 을 감지하는 텍스트 필드가 존재하는 곳. 내부값은 id로 검색하는 게 빠름 */}
+                        <CssTextField id="searchDisplayOverByteTextField"
+                                label="이상"
+                                defaultValue="0"
+                                helperText=""                               
+                                className={classes.topBottomMargins}
+                                >
+                        </CssTextField>
+                        {/* ~바이트 '이상' 을 감지하는 셀렉터가 있음. 0,1,2,3,4 값으로 각각 단위를 나타냄 */}
+                        <Select
+                            value={overByte}
+                            onChange={handleOverChange}
+                            id = 'searchDisplayOverByteSelect'
+                        >
+                            <MenuItem value={0}> BYTE </MenuItem>
+                            <MenuItem value={1}> KB </MenuItem>
+                            <MenuItem value={2}> MB </MenuItem>
+                            <MenuItem value={3}> GB </MenuItem>
+                            <MenuItem value={4}> TB </MenuItem>
+                        </Select>
+                    </div>
+                    <div className={classes.horizonWrapper}>
+                        {/* ~바이트 '이하' 를 감지하는 텍스트 필드가 존재하는 곳. 내부값은 id로 검색하는 게 빠름 */}
+                        <CssTextField id="searchDisplayUnderByteTextField"
+                                label="이하"
+                                defaultValue="0"
+                                helperText=""                               
+                                className={classes.topBottomMargins}
+                                >
+                        </CssTextField>
+                        {/* ~바이트 '이하' 를 감지하는 셀렉터가 있음. 0,1,2,3,4 값으로 각각 단위를 나타냄 */}
+                        <Select
+                            value={underByte}
+                            onChange={handleUnderChange}
+                            id = 'searchDisplayUnderByteSelect'
+                        >
+                            <MenuItem value={0}> BYTE </MenuItem>
+                            <MenuItem value={1}> KB </MenuItem>
+                            <MenuItem value={2}> MB </MenuItem>
+                            <MenuItem value={3}> GB </MenuItem>
+                            <MenuItem value={4}> TB </MenuItem>
+                        </Select>
+                    </div>
+                    <Button onClick={setAllElementToInitialState}>초기화</Button>
+                </div>
+            </Scrollbars>
+        </>
+
+    );
+}
+
+function setAllElementToInitialState(){
+    document.getElementById('searchDisplayNameTextField').setValue('');
+    document.getElementById('searchDisplayTypeTextField').setValue('');
+    document.getElementById('searchDisplayOverByteTextField').setValue(0);
+    document.getElementById('searchDisplayUnderByteTextField').setValue(0);
+}
