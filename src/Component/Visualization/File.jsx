@@ -30,42 +30,45 @@ function File(props) {
   function searchResult(fi, si) { // searchInfo: si, fileInfo: fi
     const nameResult = searchName(fi, si);
     const extResult = searchExt(fi, si);
-    let sizeCompare = false;
-    // console.log(fi, si);
-    if (fi.size >= si.searchMinVol) {
-      if (si.searchMaxVol == 0) {
-        if (si.searchMinVol == 0) {
-          sizeCompare = false;
-        }
-        else {
-          sizeCompare = true;
-          console.log('asdfasjd;fljas;lkdj;asklf');
-        }
-      }
-      else if (fi.size <= si.searchMaxVol) {
-        sizeCompare = true;
-      }
+    
+    const sizeBothZero = (si.searchMinVol == 0) && (si.searchMaxVol == 0);
+    const maxVolZero = ((si.searchMaxVol == 0));
+    let sizeResult = false;
+    let sizeCompareResult1 = (fi.size >= si.searchMinVol) && (si.searchMaxVol == 0);
+    let sizeCompareResult2 = (fi.size >= si.searchMinVol) && (fi.size <= si.searchMaxVol);
+    console.log(sizeCompareResult2);
+    if (sizeBothZero) {
+      sizeResult = true;
     }
-    // console.log('비교하는거: ', fi.size >= si.searchMinVol);
-    // console.log('비교하는거2: ', si.searchMaxVol == 0);
-    // console.log('sizeCompare: ', sizeCompare);
+    else if (sizeCompareResult1) {
+      sizeResult = true;
+    }
+    else if (sizeCompareResult2) {
+      sizeResult = true;
+    }
+    console.log(sizeResult);
 
     if (nameResult === 'blank' && extResult === 'blank') {
-      if (sizeCompare == true) {
+      if (sizeBothZero) {
+        return false;
+      }
+      else if (sizeResult) {
         return true;
       }
-      return false;
+      else {
+        return false;
+      }
     }
     if (nameResult === 'blank' || extResult === 'blank') {
       if (nameResult === 'blank') {
-        return extResult && sizeCompare;
+        return extResult && sizeResult ;
       }
       else {
-        return nameResult && sizeCompare;
+        return nameResult && sizeResult;
       }
     }
     else {
-      return nameResult && extResult && sizeCompare;
+      return nameResult && extResult && sizeResult;
     }
   }
 
@@ -141,7 +144,7 @@ function File(props) {
         whileHover = {{scale : 1.2, originX:0}}
       >
         <InsertDriveFileSharp className={classes.fileIcon}/>
-        <Typography className={classes.fileName}>{info.name}</Typography>
+  <Typography className={classes.fileName}>{info.name}({info.size})</Typography>
       </motion.div>
     </>
   );
