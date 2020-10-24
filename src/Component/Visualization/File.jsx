@@ -6,9 +6,73 @@ import {motion} from "framer-motion";
 
 
 function File(props) {
+  function searchName(fi, si) {
+    if (fi.name.indexOf(si.searchName) !== -1) {
+      if (si.searchName === '') {
+        return 'blank';
+      }
+      return true;
+    }
+    return false;
+  }
+  function searchExt(fi, si) {
+    if (si.searchExt === '') {
+      return 'blank';
+    }
+    if (fi.extension.replace(".", "") === si.searchExt) {
+      //console.log(fi.extension, si.searchExt);
+      //console.log("확장자 비교 true!");
+      return true;
+    }
+    return false;
+  }
   
-  function ChangeFileNameColor(size){
-    console.log(size);
+  function searchResult(fi, si) { // searchInfo: si, fileInfo: fi
+    const nameResult = searchName(fi, si);
+    const extResult = searchExt(fi, si);
+    let sizeCompare = false;
+    // console.log(fi, si);
+    if (fi.size >= si.searchMinVol) {
+      if (si.searchMaxVol == 0) {
+        sizeCompare = true;
+        console.log('asdfasjd;fljas;lkdj;asklf');
+      }
+      else if (fi.size <= si.searchMaxVol) {
+        sizeCompare = true;
+      }
+    }
+    // console.log('비교하는거: ', fi.size >= si.searchMinVol);
+    // console.log('비교하는거2: ', si.searchMaxVol == 0);
+    // console.log('sizeCompare: ', sizeCompare);
+
+    if (nameResult === 'blank' && extResult === 'blank') {
+      return false;
+    }
+    if (nameResult === 'blank' || extResult === 'blank') {
+      if (nameResult === 'blank') {
+        return extResult && sizeCompare;
+      }
+      else {
+        return nameResult && sizeCompare;
+      }
+    }
+    else {
+      return nameResult && extResult && sizeCompare;
+    }
+  }
+
+  function ChangeFileNameColor(fi, si){
+    const size = fi.size;
+    //console.log('파일인포: ', fi);
+    if (props.isSearching === true) {
+      //console.log(searchResult(fi, si));
+      if (searchResult(fi, si)) {
+        return '#F6FD25'
+      }
+      return '#545454';
+    }
+    //if (searchResult())
+
     if (size < 104857600) {
       return '#AEE1FF';
     }
@@ -55,7 +119,7 @@ function File(props) {
     fileName:{
       width  : "150px",
       //color : theme.palette.text.primary
-      color : ChangeFileNameColor(props.info.size)
+      color : ChangeFileNameColor(props.info, props.searchInfo)
     }
   }))
   const classes = useStyles();

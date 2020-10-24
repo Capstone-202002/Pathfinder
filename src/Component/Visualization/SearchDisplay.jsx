@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         paddingRight:'20px',
         paddingTop:'20px',
     },
-    
+
     horizonWrapper:{
         display:'flex',
         flexDirection:'row',
@@ -46,14 +46,47 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchDisplay(props) {
     const classes = useStyles();
-    const [overByte, setOverByte] = React.useState(2);
+    const [overByte, setOverByte] = useState(1);
     const handleOverChange = (event) =>{
         setOverByte(event.target.value);
     }
-    const [underByte, setUnderByte] = React.useState(2);
+    const [underByte, setUnderByte] = useState(1);
     const handleUnderChange = (event) =>{
         setUnderByte(event.target.value);
     }
+    // const [searchName, setSearchName] = useState('');
+    // const [searchExt, setSearchExt] = useState('');
+    // const [searchMinVol, setSearchMinVol] = useState(0);
+    // const [searchMaxVol, setSearchMaxVol] = useState(0);
+    const [state, setState] = React.useState({
+        searchName: '',
+        searchExt: '',
+        searchMinVol: 0,
+        searchMaxVol: 0
+    });
+
+    function setAllElementToInitialState() {
+        setState({
+            ...state,
+            searchName: '',
+            searchExt: '',
+            searchMinVol: 0,
+            searchMaxVol: 0,
+        });
+    }
+
+    function handleInputChange(e) {
+        const value = e.target.value;
+        setState({
+            ...state,
+            [e.target.name]: value
+        });
+    }
+    useEffect(() => {
+        props.searchChanger(state, overByte, underByte);
+    }, [state, overByte, underByte])
+
+
     return(
         <>
             <Scrollbars>
@@ -64,9 +97,13 @@ export default function SearchDisplay(props) {
                     {/* 파일이름 검색 텍스트 필드가 존재하는 곳. 내부값은 id로 검색하는 게 빠름 */}
                     <CssTextField id="searchDisplayNameTextField"
                             label="이름"
-                            defaultValue=""
+                            //defaultValue=""
                             helperText="파일이름으로 검색할 수 있어요"
                             variant="outlined"
+                            
+                            value={state.searchName}
+                            name='searchName'
+                            onChange={handleInputChange}
                             
                             className={classes.topBottomMargins}
                             >
@@ -78,6 +115,10 @@ export default function SearchDisplay(props) {
                             helperText="확장자명으로 검색할 수 있어요"
                             variant="outlined"
                             
+                            value={state.searchExt}
+                            name='searchExt'
+                            onChange={handleInputChange}
+
                             className={classes.topBottomMargins}
                             >
                     </CssTextField>
@@ -91,7 +132,10 @@ export default function SearchDisplay(props) {
                         <CssTextField id="searchDisplayOverByteTextField"
                                 label="이상"
                                 defaultValue="0"
-                                helperText=""                               
+                                helperText=""
+                                value={state.searchMinVol}
+                                name='searchMinVol'
+                                onChange={handleInputChange}                               
                                 className={classes.topBottomMargins}
                                 >
                         </CssTextField>
@@ -101,11 +145,11 @@ export default function SearchDisplay(props) {
                             onChange={handleOverChange}
                             id = 'searchDisplayOverByteSelect'
                         >
-                            <MenuItem value={0}> BYTE </MenuItem>
-                            <MenuItem value={1}> KB </MenuItem>
-                            <MenuItem value={2}> MB </MenuItem>
-                            <MenuItem value={3}> GB </MenuItem>
-                            <MenuItem value={4}> TB </MenuItem>
+                            <MenuItem value={1}> BYTE </MenuItem>
+                            <MenuItem value={1000}> KB </MenuItem>
+                            <MenuItem value={1e+6}> MB </MenuItem>
+                            <MenuItem value={1e+9}> GB </MenuItem>
+                            <MenuItem value={1e+12}> TB </MenuItem>
                         </Select>
                     </div>
                     <div className={classes.horizonWrapper}>
@@ -113,7 +157,10 @@ export default function SearchDisplay(props) {
                         <CssTextField id="searchDisplayUnderByteTextField"
                                 label="이하"
                                 defaultValue="0"
-                                helperText=""                               
+                                helperText=""
+                                value={state.searchMaxVol}
+                                name='searchMaxVol'
+                                onChange={handleInputChange}                                
                                 className={classes.topBottomMargins}
                                 >
                         </CssTextField>
@@ -123,11 +170,11 @@ export default function SearchDisplay(props) {
                             onChange={handleUnderChange}
                             id = 'searchDisplayUnderByteSelect'
                         >
-                            <MenuItem value={0}> BYTE </MenuItem>
-                            <MenuItem value={1}> KB </MenuItem>
-                            <MenuItem value={2}> MB </MenuItem>
-                            <MenuItem value={3}> GB </MenuItem>
-                            <MenuItem value={4}> TB </MenuItem>
+                            <MenuItem value={1}> BYTE </MenuItem>
+                            <MenuItem value={1000}> KB </MenuItem>
+                            <MenuItem value={1e+6}> MB </MenuItem>
+                            <MenuItem value={1e+9}> GB </MenuItem>
+                            <MenuItem value={1e+12}> TB </MenuItem>
                         </Select>
                     </div>
                     <Button onClick={setAllElementToInitialState}>초기화</Button>
@@ -138,9 +185,3 @@ export default function SearchDisplay(props) {
     );
 }
 
-function setAllElementToInitialState(){
-    document.getElementById('searchDisplayNameTextField').setValue('');
-    document.getElementById('searchDisplayTypeTextField').setValue('');
-    document.getElementById('searchDisplayOverByteTextField').setValue(0);
-    document.getElementById('searchDisplayUnderByteTextField').setValue(0);
-}

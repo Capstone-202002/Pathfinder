@@ -35,7 +35,11 @@ function Section(props) {
 
   var section = sectionInfo.map((file, index) => (
    <div>
-       <Element info={file} totalSize={total} name={file.name} isDir={file.is_dir} folderClicked={props.folderClicked} key={index}/>
+       <Element info={file} totalSize={total} name={file.name} isDir={file.is_dir} 
+                folderClicked={props.folderClicked} key={index}
+                isSearching={props.isSearching}
+                searchInfo={props.searchInfo}
+                />
    </div>
   ));
 

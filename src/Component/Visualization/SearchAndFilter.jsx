@@ -59,6 +59,9 @@ export default function SearchAndFilter(props){
     const handleDrawerClose = () => {
         setOpen(false);
     }
+    useEffect(()=>{
+        props.isSearchingChanger(open);
+    })
     const handleDrawerByOneButton = () => {
         if(open){
             handleDrawerClose();
@@ -96,7 +99,7 @@ export default function SearchAndFilter(props){
                 
             </motion.div>
             <Drawer variant='persistent' anchor='right' open={open} classes={{paper: classes.snfDrawer}}>
-                    <SearchDisplay/>
+                    <SearchDisplay searchChanger={props.searchChanger}/>
             </Drawer>
         </>
         );

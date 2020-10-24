@@ -32,7 +32,7 @@ function Visualization(props) {
   function pathChecker(currentPath) {
     for (var idx = 0; idx < pathTracker.length; idx++) {
       if (currentPath === pathTracker[idx]) {
-        console.log(idx);
+        //console.log(idx);
         return idx;
       }
     }
@@ -41,7 +41,7 @@ function Visualization(props) {
 
   function folderClicked(info) {  // 폴더요소 클릭시의 처리
 
-    //console.log(pathTracker);
+    //console.log('패스트래커: ', pathTracker);
     //console.log(renderSection);
     //console.log(info);
     var newpathTracker = pathTracker;
@@ -57,13 +57,47 @@ function Visualization(props) {
     var newInfo = [getFileList(info.absPath)];
     setRenderSection(newRenderSection.concat(newInfo));
 
-    console.log(pathTracker);
-    console.log(renderSection);
+    //console.log(pathTracker);
+    //console.log(renderSection);
+  }
+
+  // 검색 & 필터 정보 받아오는 부분
+  const [searchInfo, setSearchInfo] = useState({
+    searchName: '',
+    searchExt: '',
+    searchMinVol: 0,
+    searchMaxVol: 0,
+});
+  function searchChanger(info, ob, ub) { //info: searchDisplay의 state정보가 담겨있음
+    setSearchInfo({
+      ...searchInfo,
+      searchName: info.searchName,
+      searchExt: info.searchExt,
+      searchMinVol: info.searchMinVol * ob,
+      searchMaxVol: info.searchMaxVol * ub
+    })
+    //setSearchInfo(info);
+  }
+  
+  // 검색 & 필터 바 오픈 여부 받아오는 부분
+  const [isSearching, setIsSearching] = useState(false);
+  function isSearchingChanger(isSearching) {
+    setIsSearching(isSearching);
   }
 
 
+  useEffect(()=> {  // 검색부분 변화있으면 실행됨
+    //console.log(searchInfo);
+    //console.log('검색바 오픈: ', isSearching);
+    console.log(searchInfo);
+  }, [searchInfo, isSearching])
+
   var visualizationRenderer = renderSection.map((renderInfo, index) => (
-      <Section sectionInfo={renderInfo} folderClicked={folderClicked} key={index}/>
+      <Section sectionInfo={renderInfo} 
+               folderClicked={folderClicked} 
+               key={index} 
+               isSearching={isSearching}
+               searchInfo={searchInfo} />
   ));
 
   var contents = (
@@ -73,7 +107,7 @@ function Visualization(props) {
                   {visualizationRenderer}
                          
               </div>
-              <SearchAndFilter/>
+              <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger}/>
             </>
               )
 
