@@ -7,19 +7,6 @@ const path = require('path')
 const isDev = require('electron-is-dev')
 const { Hidden } = require('@material-ui/core')
 
-
-// db initialize
-var dbPath = path.join(app.getPath('userData'), 'data.db')
-
-var Datastore = require('nedb')
-var db = new Datastore({ filename: dbPath, autoload: true });
-
-// DB 테스트
-db.insert({ name: 'test' }, (err, newrec) => {
-    console.log(err)
-    console.log(newrec)
-})
-
 let mainWindow
 
 const createWindow = () => {

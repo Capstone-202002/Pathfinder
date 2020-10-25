@@ -1,7 +1,15 @@
 const fs = window.require('fs')
 const path = window.require('path')
 function getFileDataofDirectory(baseurl) {
-    var filelist = fs.readdirSync(baseurl)
+    try {
+        var filelist = fs.readdirSync(baseurl)
+    } catch (err) {
+        return {
+            totalSize: 0,
+            totalFileNum: 0
+        }
+    }
+
     var totalSize = 0
     var totalFileNum = 0
     filelist.forEach(element => {
