@@ -63,7 +63,7 @@ export default function SystemMessage(props){
                     <motion.div
                         whileHover = {{scale:1.1, originX:0}}
                         whileTap = {{scale:0.9}}
-                        onClick = {setDirectory}
+                        onClick = {props.onTitleClicked}
                     >
                     <Typography>{props.mainText}</Typography>
                     </motion.div>
@@ -84,10 +84,4 @@ export default function SystemMessage(props){
             </div>
         </>
     )
-}
-
-
-function setDirectory(){
-    //TODO
-    //상단 탑 부분에 제목을 클릭할 때 핸들링
 }

@@ -46,11 +46,21 @@ function Visualization(props) {
     }
   }));
 
-  var title = "디렉토리 시각화";  // 이부분도 정리
-
-  const test = [props.defaultDirInfo];
-  const [renderSection, setRenderSection] = useState(test);  // render 될 section들을 담는 state
+  const [dirName, setDirName] = useState('클릭하여 탐색할 디렉토리를 지정하세요.');
+  const [renderSection, setRenderSection] = useState([]);  // render 될 section들을 담는 state
   const [pathTracker, setPathTracker] = useState([]);
+
+  function setDefaultDir(e) { // 디렉토리를 지정하는 함수, title 지정까지 같이함
+    e.preventDefault();
+      openDirectorySelectDialog( (result) => {
+        if (!result.canceled){
+          setDirName(result.filePaths[0]);
+          let newDirInfo = getFileList(result.filePaths[0]);
+          setRenderSection([newDirInfo]);
+          setPathTracker([]);
+        }
+    })
+  }
 
   function pathChecker(currentPath) {
     for (var idx = 0; idx < pathTracker.length; idx++) {
@@ -114,35 +124,21 @@ function Visualization(props) {
     //console.log(searchInfo);
   }, [searchInfo, isSearching])
 
-  function setDefaultDir(e) {
-    e.preventDefault();
-    openDirectorySelectDialog( (result) => {
-      if (!result.canceled){
-          let newDirInfo = getFileList(result.filePaths[0]);
-          setRenderSection([newDirInfo]);
-          setPathTracker([]);
-      }
-  })
-    
-  //   const test = [props.defaultDirInfo];
-  // const [renderSection, setRenderSection] = useState(test);  // render 될 section들을 담는 state
-  // const [pathTracker, setPathTracker] = useState([]);
-  }
+  
 
   var visualizationRenderer = renderSection.map((renderInfo, index) => (
-      <Section sectionInfo={renderInfo} 
-               folderClicked={folderClicked} 
-               key={index} 
-               isSearching={isSearching}
-               searchInfo={searchInfo} />
+    <Section sectionInfo={renderInfo} 
+              folderClicked={folderClicked} 
+              key={index} 
+              isSearching={isSearching}
+              searchInfo={searchInfo} />
   ));
+  
   const classes = useStyles();
   var contents = (
             <>
               <div className={clsx(classes.displayStyle,{[classes.displayShiftStyle]:isSearching,})}>
-              <button onClick={setDefaultDir}>setDir</button>
                   {visualizationRenderer}
-                         
               </div>
               <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger}/>
             </>
@@ -150,7 +146,7 @@ function Visualization(props) {
 
   return (
     <>
-      <Mainframe contents={contents} title={title}></Mainframe>
+      <Mainframe contents={contents} titleName={dirName} onTitleClicked={setDefaultDir}></Mainframe>
     </>
   );
 }

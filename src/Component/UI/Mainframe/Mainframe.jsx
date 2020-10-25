@@ -100,7 +100,7 @@ export default function Mainframe(props){
                     {/*App's Right Display Section*/}
                     <div className={classes.title}>
                         {/*title bar section*/}
-                        <TopMenu mainText={setMainTitleText()} onTitleClicked={props.onTitleClicked}/>
+                        <TopMenu mainText={props.titleName} onTitleClicked={props.onTitleClicked}/>
                     </div>
                     
                     <div className={classes.display}>
@@ -119,9 +119,6 @@ export default function Mainframe(props){
     );
 }
 
-function setMainTitleText(text){
-    return '디렉토리 뷰'
-}
 function setSystemText(text){
     return '패스파인더가 디렉토리를 뒤적이고 있어요'
 }

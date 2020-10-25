@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Visualization from "./Component/Visualization/Visualization";
-import { getFileList } from "./Component/API/io";
 const { app } = window.require('electron').remote
 const path = window.require('path')
 // function 컴포넌트에서 state, effect 를 사용하기 위해 Hook을 사용합니다
@@ -8,10 +7,6 @@ function HookTest() {
   // 새로운 state 변수 선언, count
   // uststate(state의 초깃값), [해당 state, 변수 갱신 함수] 반환
   const [count, setCount] = useState(0);
-  var defaultDir = path.join(app.getAppPath(), 'src');            // 우선 하드코딩
-  
-  var defaultDirInfo = getFileList(defaultDir);  // 이부분 받아오는걸로 변경예정
-
   // componentDidMount, componentDidUpdate와 같은 방식으로 작동
   useEffect(() => {
     //브라우저 API를 이용하여 문서 타이틀을 업데이트
@@ -22,7 +17,7 @@ function HookTest() {
   
   return (
     <>
-      <Visualization defaultDirInfo={defaultDirInfo}/>
+      <Visualization/>
     </>
   );
 }
