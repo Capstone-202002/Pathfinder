@@ -20,8 +20,6 @@ function File(props) {
       return 'blank';
     }
     if (fi.extension.replace(".", "").toLowerCase() === si.searchExt.toLowerCase()) {
-      //console.log(fi.extension, si.searchExt);
-      //console.log("확장자 비교 true!");
       return true;
     }
     return false;
@@ -32,11 +30,9 @@ function File(props) {
     const extResult = searchExt(fi, si);
     
     const sizeBothZero = (si.searchMinVol == 0) && (si.searchMaxVol == 0);
-    const maxVolZero = ((si.searchMaxVol == 0));
     let sizeResult = false;
     let sizeCompareResult1 = (fi.size >= si.searchMinVol) && (si.searchMaxVol == 0);
     let sizeCompareResult2 = (fi.size >= si.searchMinVol) && (fi.size <= si.searchMaxVol);
-    console.log(sizeCompareResult2);
     if (sizeBothZero) {
       sizeResult = true;
     }
@@ -46,7 +42,6 @@ function File(props) {
     else if (sizeCompareResult2) {
       sizeResult = true;
     }
-    console.log(sizeResult);
 
     if (nameResult === 'blank' && extResult === 'blank') {
       if (sizeBothZero) {
