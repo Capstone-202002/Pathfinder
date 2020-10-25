@@ -3,6 +3,8 @@ import {makeStyles, useTheme} from  '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper'
 import Typography from "@material-ui/core/Typography";
 import Explore from "@material-ui/icons/Explore"
+import {motion} from 'framer-motion';
+import { Loop } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
     systemTextWrapper:{
         width : '100%',
@@ -30,9 +32,21 @@ export default function SystemMessage(props){
         <>
             <div>
                 <Paper className={classes.systemTextWrapper}>
-                    <div className={classes.exploreIconWrapper}>
+                    <motion.div className={classes.exploreIconWrapper}
+                        animate={{
+                            rotate : [90,270,180,90,180,90]
+                        }}
+                        transition={{
+                            loop:Infinity,
+                            type:'spring',
+                            stiffness:100,
+                            //mass:10,
+                            repeatDelay:0.5
+                        }}
+
+                    >
                         <Explore fontSize='small'/>
-                    </div>
+                    </motion.div>
                     <Typography className={classes.systemText} fontSize = 'small'>
                         {props.systemText}
                     </Typography>

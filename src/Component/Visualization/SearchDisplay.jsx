@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {makeStyles, useTheme, withStyles} from  '@material-ui/core/styles';
-import { Divider, TextField, Typography} from "@material-ui/core";
+import { Divider, TextField, Tooltip, Typography} from "@material-ui/core";
 import Select from '@material-ui/core/Select';
 import Scrollbars from "react-custom-scrollbars";
 import MenuItem from '@material-ui/core/MenuItem';
@@ -187,11 +187,11 @@ export default function SearchDisplay(props) {
 
 
 
-
-                    <Typography>선택된 파일 이름 일괄 변경</Typography>
-
+                    <Tooltip TransitionComponent={'Zoom'} title='이름을 입력한 후, 접미 숫자의 자릿수를 설정해주세요. (ex. 파일이름, 3자리 > 파일이름001.txt)'>
+                        <Typography>선택된 파일 이름 일괄 변경</Typography>
+                    </Tooltip>
                     <Divider ></Divider>
-                    <Typography marginTop = '2px' variant='caption'>이름을 입력한 후, 접미 숫자의 자릿수를 설정해주세요. (ex. 파일이름, 3자리 {">"} 파일이름001.txt)</Typography>
+                    
                     <div className={classes.horizonWrapper}>
                         {/* 파일이름 변경 접두 텍스트 */}
                         <CssTextField id="searchDisplayChangeNameTextField"

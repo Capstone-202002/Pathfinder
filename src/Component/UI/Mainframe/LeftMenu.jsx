@@ -7,6 +7,9 @@ import { Typography,AccordionDetails, AccordionSummary } from "@material-ui/core
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InsertEmoticon  from "@material-ui/icons/InsertEmoticon";
 import { AnimateSharedLayout, motion } from "framer-motion";
+import pathfinderIcon from '../Asset/img/pathfinder_icon.svg';
+
+
 
 const menuTexts = ['디렉토리 뷰', '다운로드 어시스트', '자동 폴더 정리', '설정']
 const useStyles = makeStyles((theme) => ({
@@ -75,13 +78,20 @@ export default function LeftMenu(props){
     const classes = useStyles();
     const theme = useTheme();
     const [selected, setSelected] = useState(null);
-
+    const rotateNumber = 0;
     return(
         <>
             <div>
                 <Paper className={classes.iconSection}>
-                    <InsertEmoticon fontSize='large' color="#fff"/>
-                    <Typography size='40px' color={theme.palette.text.primary}>PATHFINDER</Typography>
+                    <motion.div style={{marginBottom : '20px'}}
+                        whileHover={{
+                            rotate:180
+                        }}
+                        transition={{type:'spring', stiffness:300}}                      
+                    >
+                        <img src={pathfinderIcon} alt='Logo'/>
+                    </motion.div>
+                    <Typography variant='h5' color={theme.palette.text.primary}>PATHFINDER</Typography>
                 </Paper>
             </div>
             <div className={classes.virtualDirectorySection}>
@@ -122,7 +132,7 @@ function Item({ isSelected, onClick, menuItem}){
         <>
             <li className={classes.menuButtons} onClick={onClick} >
                     <motion.div
-                        drag
+                        
                         className = {classes.insideButton}
                         whileHover={{scale:1.1}}
                         whileTap={{scale:0.9, opacity:0.9}}

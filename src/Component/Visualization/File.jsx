@@ -3,8 +3,11 @@ import {makeStyles, useTheme} from  '@material-ui/core/styles';
 import { InsertDriveFileSharp } from "@material-ui/icons";
 import { Typography } from "@material-ui/core";
 import {motion} from "framer-motion";
-
-
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import ImageIcon from '@material-ui/icons/Image';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
+import MovieIcon from '@material-ui/icons/Movie';
+import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 function File(props) {
   function searchName(fi, si) {
     if (fi.name.toLowerCase().indexOf(si.searchName.toLowerCase()) !== -1) {
@@ -110,6 +113,31 @@ function File(props) {
     //Level 6  #AEE1FF    2147483648    
     //usage : color : '#FFFFFF' // color = '#FFFFFF'
   }
+  const documents=['.ppt','.pptx','.doc','.docx','.xls','.pdf','.ai','.psd','.hwp','.txt']
+  const images = ['.bmp','.gif','png','.jpg','.jpeg','.raw','.webp','.ico','.pcx','.swf']
+  const musics = ['.wav','.wma','.mp3']
+  const videos = ['.mkv','.webm','.mp4','.flv','.mov','.avi']
+  const zips = ['.zip','.alz','.egg','.rar','.arj','.lzh']
+
+  function setIcon(){
+    if(documents.includes(info.extension)){
+      return <AssignmentIcon className={classes.fileIcon}/>;
+    }
+    if(images.includes(info.extension)){
+      return <ImageIcon className={classes.fileIcon}/>;
+      }
+    if(musics.includes(info.extension)){
+      return <MusicNoteIcon className={classes.fileIcon}/>;
+    }
+    if(videos.includes(info.extension)){
+      return <MovieIcon className={classes.fileIcon}/>;
+    }
+    if(zips.includes(info.extension)){
+      return <WorkOutlineIcon className={classes.fileIcon}/>;
+    }
+    return <InsertDriveFileSharp className={classes.fileIcon}/>;
+    
+  }
 
   const useStyles = makeStyles((theme) => ({
     fileDiv:{
@@ -125,20 +153,22 @@ function File(props) {
     fileName:{
       width  : "150px",
       //color : theme.palette.text.primary
-      color : ChangeFileNameColor(props.info, props.searchInfo)
+      color : ChangeFileNameColor(props.info, props.searchInfo),
+      overflow : 'hidden'
     }
   }))
   const classes = useStyles();
   const info = props.info;
   // 기타 정보들이
-
+  console.log(info);
   return (
     <>
       {/*<div style={divStyle}>이름: {name}, 파일임</div>*/}
       <motion.div className={classes.fileDiv}
         whileHover = {{scale : 1.2, originX:0}}
       >
-        <InsertDriveFileSharp className={classes.fileIcon}/>
+        
+        {setIcon()}
   <Typography className={classes.fileName}>{info.name}({info.size})</Typography>
       </motion.div>
     </>

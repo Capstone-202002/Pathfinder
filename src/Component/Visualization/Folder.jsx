@@ -101,8 +101,13 @@ function Folder(props) {
     APSImportBusButton: {
       width: '100%',
       height: '100%',
-      backgroundColor: '#00680A',
-      borderRadius: '0'
+      backgroundColor: 'transparent',
+      borderRadius: '10',
+      textColor : theme.palette.text.primary,
+      color : theme.palette.text.primary,
+      cursor: 'pointer',
+      border : '1px dotted white',
+      outline:'0'
     },
     APSExportBusDiv: {
       width: '60px',
@@ -114,8 +119,13 @@ function Folder(props) {
     APSExportBusButton: {
       width: '100%',
       height: '100%',
-      backgroundColor: '#CB0C0C',
-      borderRadius: '0'
+      backgroundColor: 'transparent',
+      borderRadius: '10',
+      textColor : theme.palette.text.primary,
+      color : theme.palette.text.primary,
+      cursor: 'pointer',
+      border : '1px dotted white',
+      outline:'0'
     }
   }))
   const [folderClicked, setFolderClicked] = useState(false);
@@ -167,14 +177,20 @@ function Folder(props) {
           }
           <Typography variant="body2" className={classes.folderNameText}>{info.name}</Typography>
           <div className={classes.APSImportBusDiv}>
-            <Button className={classes.APSImportBusButton} onClick={() => { isAPSClicked() }}>
+            <motion.button className={classes.APSImportBusButton} onClick={() => { isAPSClicked() }}
+              initial={{opacity:0}}
+              whileHover={{opacity : 1}}
+            >
               Import Bus
-            </Button>
+            </motion.button>
           </div>
           <div className={classes.APSExportBusDiv}>
-            <Button className={classes.APSExportBusButton} onClick={() => { isAPSClicked() }}>
+            <motion.button className={classes.APSExportBusButton} onClick={() => { isAPSClicked() }}
+              initial={{opacity:0}}
+              whileHover={{opacity : 1}}
+            >
               Export Bus
-            </Button>
+            </motion.button>
           </div>
         </motion.div>
         <div className={classes.rightArrowDiv}>
