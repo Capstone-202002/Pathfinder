@@ -138,6 +138,7 @@ function Visualization(props) {
 
   //왼쪽 메뉴로부터 값 읽어오기
   //TODO
+  //menu State : Mainframe으로부터 동기화하여 아래 setContents()를 바뀔때마다 콘텐츠 변경
   //UI 개발을 위해 메뉴값을 1로 고정해둠 나중에 바꿀것
   const [menu, setMenu] = useState(1);
   const test = 1
@@ -147,7 +148,7 @@ function Visualization(props) {
 }
   const classes = useStyles();
 
-
+  //State를 이용하여 메인프레임에 콘텐츠 전송
   function setContents(){
     console.log(menu);
     if(menu === 0){
@@ -195,7 +196,7 @@ function Visualization(props) {
   return (
     <>
                                                                                             {/*메뉴 번호 받는 함수 일시적으로 Disable*/}
-      <Mainframe contents={<><DownloadPopup/></>} titleName={dirName} onTitleClicked={setDefaultDir} /*menu={getMenu}*/></Mainframe>
+      <Mainframe contents={setContents()} titleName={dirName} onTitleClicked={setDefaultDir} /*menu={getMenu}*/></Mainframe>
     </>
   );
 }
