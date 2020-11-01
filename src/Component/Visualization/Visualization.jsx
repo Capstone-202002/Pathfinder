@@ -9,6 +9,7 @@ import Scrollbars from "react-custom-scrollbars";
 import { FormatColorTextSharp } from "@material-ui/icons";
 import clsx from 'clsx';
 import DownloadAssistMain from "./Functionframe/02_DownloadAssist/DownloadAssistMain";
+import DownloadPopup from "./Popup/DownloadPopup";
 const path = window.require('path')
 
 // 프로젝트 경로 하드코딩 되어있는거때문에 오류가 나니까 오류 안나게 바꿔드림.
@@ -194,7 +195,7 @@ function Visualization(props) {
   return (
     <>
                                                                                             {/*메뉴 번호 받는 함수 일시적으로 Disable*/}
-      <Mainframe contents={setContents()} titleName={dirName} onTitleClicked={setDefaultDir} /*menu={getMenu}*/></Mainframe>
+      <Mainframe contents={<><DownloadPopup/></>} titleName={dirName} onTitleClicked={setDefaultDir} /*menu={getMenu}*/></Mainframe>
     </>
   );
 }

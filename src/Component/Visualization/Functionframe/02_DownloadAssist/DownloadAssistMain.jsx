@@ -72,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DownloadAssistMain(props){
     const classes = useStyles();
+    //assist : 디렉토리 자동 추천 기능 사용여부
     const [state, setState] = React.useState({
         assist: true,
     });
@@ -85,6 +86,10 @@ export default function DownloadAssistMain(props){
         {field:'time', headerName:'다운로드 일시', width : 170},
         {field:'dir', headerName:'저장위치', width : 450},
     ]
+
+    //다운로드 히스토리를 DB에 저장해야함
+    //다운로드 히스토리를 DB로부터 불러와서 아래와 같은 형태로 내보내야함
+    //ID값은 row고유값을 가짐
     const rows = [
         {id:1,name:'testData', type:'.jpg', size:'20mb',time:'2020.03.24. 22:00', dir:'D:/helpme/'}
     ]
@@ -97,6 +102,8 @@ export default function DownloadAssistMain(props){
                         {/*기본 다운로드 디렉토리 섹션*/}
                         <Typography variant='subtitle2' className={classes.baseDownloadDirectoryText} align='left'> 기본 다운로드 디렉토리 </Typography>
                         <Divider marginBottom="10px"></Divider>
+                        {/*TODO*/}
+                        {/*버튼 온클릭 구현 : 누르면 기본 다운로드 경로를 변경함*/}
                         <Button className={classes.baseDownloadDirectorySet}>
                             <FolderIcon></FolderIcon>
                             <Typography variant='subtitle2' align='left'>
