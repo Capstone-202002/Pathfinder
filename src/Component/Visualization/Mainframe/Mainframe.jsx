@@ -7,6 +7,7 @@ import LeftMenu from './LeftMenu';
 import TopMenu from './TopMenu';
 import SystemMessage from './SystemMessage';
 import { Scrollbars } from 'react-custom-scrollbars'
+import { SettingsPowerSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
     spacing : 10,
@@ -81,9 +82,20 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Mainframe(props){
+    
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [menu, setMenu] = React.useState('');
+    //왼쪽 메뉴로부터 값 읽어오기
+    function getMenu(data){
+        setMenu(data);
+        console.log(menu)
+        setProp()
+    }
+    function setProp(){
+        props.menu(menu);
+    }
     document.body.style.backgroundColor = "transparent";
     document.body.style.color = "transparent";
     return(
@@ -94,7 +106,7 @@ export default function Mainframe(props){
                 {/* application space*/}
                 <div className={classes.menu}>
                     {/*App's Left Menu Section*/}
-                    <LeftMenu/>
+                    <LeftMenu menu={getMenu}/>
                 </div>
                 <div className={classes.right}>
                     {/*App's Right Display Section*/}

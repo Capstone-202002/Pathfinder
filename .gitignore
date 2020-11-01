@@ -24,3 +24,4 @@ yarn-error.log*
 
 # build destination
 /dist
+/pathfinder.exe - 바로 가기.lnk

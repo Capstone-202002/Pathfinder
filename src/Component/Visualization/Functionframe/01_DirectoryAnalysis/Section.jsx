@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Element from "./Element";
+import Element from "../../Element";
 import {makeStyles} from  '@material-ui/core/styles';
 import {Scrollbars} from 'react-custom-scrollbars';
 import Divider from '@material-ui/core/Divider';

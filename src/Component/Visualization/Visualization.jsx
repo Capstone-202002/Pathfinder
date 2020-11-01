@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useTheme } from "react";
 import {makeStyles} from  '@material-ui/core/styles';
 import Base from "../Base/Base";
-import Mainframe from "../UI/Mainframe/Mainframe"
-import Section from "./Section";
+import Mainframe from "./Mainframe/Mainframe"
+import Section from "./Functionframe/01_DirectoryAnalysis/Section";
 import { getFileList, openDirectorySelectDialog } from "../API/io";
-import SearchAndFilter from './SearchAndFilter';
+import SearchAndFilter from './Functionframe/01_DirectoryAnalysis/SearchAndFilter';
 import Scrollbars from "react-custom-scrollbars";
 import { FormatColorTextSharp } from "@material-ui/icons";
 import clsx from 'clsx';
+import DownloadAssistMain from "./Functionframe/02_DownloadAssist/DownloadAssistMain";
 const path = window.require('path')
 
 // 프로젝트 경로 하드코딩 되어있는거때문에 오류가 나니까 오류 안나게 바꿔드림.
@@ -133,8 +134,54 @@ function Visualization(props) {
               isSearching={isSearching}
               searchInfo={searchInfo} />
   ));
-  
+
+  //왼쪽 메뉴로부터 값 읽어오기
+  //TODO
+  //UI 개발을 위해 메뉴값을 1로 고정해둠 나중에 바꿀것
+  const [menu, setMenu] = useState(1);
+  const test = 1
+  function getMenu(data){
+    setMenu(data);
+    console.log(test)
+}
   const classes = useStyles();
+
+
+  function setContents(){
+    console.log(menu);
+    if(menu === 0){
+      return (<>
+      {/*Directory Analysis*/}
+          <div className={clsx(classes.displayStyle,{[classes.displayShiftStyle]:isSearching,})}>
+            {visualizationRenderer}
+          </div>
+          <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger}/>
+      </>
+      );
+    }
+    else if(test  === 1){
+      return(<>
+      {/*DownloadAssist*/}
+      <DownloadAssistMain/>
+      </>);
+    }
+    else if(menu === 2){
+      return(<>
+      
+        {/*Applied Sortistics*/}
+        
+        </>);
+    }
+    else if(menu === 3){
+      return(<>
+      
+        {/*Settings*/}
+        
+        </>);
+    }
+  }
+
+
   var contents = (
             <>
               <div className={clsx(classes.displayStyle,{[classes.displayShiftStyle]:isSearching,})}>
@@ -146,7 +193,8 @@ function Visualization(props) {
 
   return (
     <>
-      <Mainframe contents={contents} titleName={dirName} onTitleClicked={setDefaultDir}></Mainframe>
+                                                                                            {/*메뉴 번호 받는 함수 일시적으로 Disable*/}
+      <Mainframe contents={setContents()} titleName={dirName} onTitleClicked={setDefaultDir} /*menu={getMenu}*/></Mainframe>
     </>
   );
 }

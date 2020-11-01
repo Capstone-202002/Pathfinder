@@ -78,6 +78,11 @@ export default function LeftMenu(props){
     const classes = useStyles();
     const theme = useTheme();
     const [selected, setSelected] = useState(null);
+    function menuSetting(item){
+        setSelected(item);
+        props.menu(item);
+    }
+
     const rotateNumber = 0;
     return(
         <>
@@ -109,7 +114,9 @@ export default function LeftMenu(props){
                             <Item
                                 key={item}
                                 isSelected={selected === item}
-                                onClick={() => setSelected(item)}
+                                //메뉴 아이템 클릭 메소드
+                                //TODO
+                                onClick={menuSetting.bind(this,item)}
                                 menuItem = {menuTexts[item]}
                             />
                         ))}
