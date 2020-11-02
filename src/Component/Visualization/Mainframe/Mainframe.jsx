@@ -92,9 +92,10 @@ export default function Mainframe(props){
     //왼쪽 메뉴로부터 값 읽어오기
     function getMenu(data){
         setMenu(data);
-        console.log(menu)
+        //console.log(menu)
         setProp()
     }
+    console.log(menu)
     function setProp(){
         props.menu(menu);
     }
