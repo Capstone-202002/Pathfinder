@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Box from '@material-ui/core/Box';
 import {sizing} from '@material-ui/system';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
@@ -91,14 +91,16 @@ export default function Mainframe(props){
     const [menu, setMenu] = React.useState('');
     //왼쪽 메뉴로부터 값 읽어오기
     function getMenu(data){
-        setMenu(data);
+        
         //console.log(menu)
-        setProp()
+        setMenu(data);
+        props.menu(data);
     }
-    console.log(menu)
-    function setProp(){
-        props.menu(menu);
-    }
+    
+    useEffect(()=>{
+        console.log('useEffect');
+        console.log(menu);
+      });
     document.body.style.backgroundColor = "transparent";
     document.body.style.color = "transparent";
     return(

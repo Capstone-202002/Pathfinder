@@ -148,7 +148,7 @@ function Visualization(props) {
   const test = 1
   function getMenu(data){
     setMenu(data);
-    
+    //props.menu(data);
     //console.log(test)
 }
   useEffect(()=>{
@@ -194,17 +194,6 @@ function Visualization(props) {
         </>);
     }
   }
-
-
-  var contents = (
-            <>
-              <div className={clsx(classes.displayStyle,{[classes.displayShiftStyle]:isSearching,})}>
-                  {visualizationRenderer}
-              </div>
-              <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger}/>
-            </>
-              )
-
   return (
     <>
                                                                                             {/*메뉴 번호 받는 함수 일시적으로 Disable*/}

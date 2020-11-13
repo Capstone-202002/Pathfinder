@@ -8,13 +8,18 @@ const useStyles = makeStyles((theme) => ({
     popupRoot:{
         height :'480px',
         width : '400px',
+        backgroundColor:'#0090FF'
     },
     popupRootPaper:{
         height:'100%',
         width:'100%',
         display:'flex',
         flexDirection :'column',
-        padding:'20px'
+        padding:'20px',
+        borderTopRightRadius:'80px',
+        borderTopLeftRadius:'0px',
+        borderBottomRightRadius:'0px',
+        borderBottomLeftRadius:'0px',
     },
     initText:{
         height : '20px',

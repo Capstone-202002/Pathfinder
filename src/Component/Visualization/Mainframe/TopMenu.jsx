@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //props에 디렉토리 경로를 넣어주세요 . 적용됩니다.
-export default function SystemMessage(props){
+export default function TopMenu(props){
     const classes = useStyles();
     return (
         <>
