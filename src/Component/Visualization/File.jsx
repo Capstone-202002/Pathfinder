@@ -29,6 +29,9 @@ function File(props) {
   }
   
   function searchResult(fi, si) { // searchInfo: si, fileInfo: fi
+    if (si === {}) {
+      return false;
+    }
     const nameResult = searchName(fi, si);
     const extResult = searchExt(fi, si);
     
@@ -73,10 +76,12 @@ function File(props) {
   function ChangeFileNameColor(fi, si){
     const size = fi.size;
     //console.log('파일인포: ', fi);
-    if (props.isSearching === true) {
+    if (props.isSearching) {
       //console.log(searchResult(fi, si));
-      if (searchResult(fi, si)) {
-        return '#F6FD25'
+      if (props.doubleClicked) {
+        if (searchResult(fi, si)) {
+          return '#F6FD25'
+        }
       }
       return '#545454';
     }
@@ -160,7 +165,7 @@ function File(props) {
   const classes = useStyles();
   const info = props.info;
   // 기타 정보들이
-  console.log(info);
+  //console.log(info);
   return (
     <>
       {/*<div style={divStyle}>이름: {name}, 파일임</div>*/}
@@ -169,7 +174,7 @@ function File(props) {
       >
         
         {setIcon()}
-  <Typography className={classes.fileName}>{info.name}({info.size})</Typography>
+  <Typography className={classes.fileName}>{info.name}</Typography>
       </motion.div>
     </>
   );

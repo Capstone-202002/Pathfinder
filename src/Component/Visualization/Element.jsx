@@ -10,7 +10,8 @@ function Element(props) {
   }
   return <File info={props.info} 
                isSearching={props.isSearching}
-               searchInfo={props.searchInfo}/>;
+               searchInfo={props.searchInfo}
+               doubleClicked={props.doubleClicked}/>;
 }
 
 export default Element;
