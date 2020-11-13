@@ -103,6 +103,14 @@ export default function Mainframe(props){
       });
     document.body.style.backgroundColor = "transparent";
     document.body.style.color = "transparent";
+    function setTitleButtonDisable(){
+        if(menu!==0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     return(
         <Paper className={classes.root} color="#0090FF" style={{borderBottomLeftRadius : '160px'}}>
             <CssBaseline />
@@ -117,7 +125,7 @@ export default function Mainframe(props){
                     {/*App's Right Display Section*/}
                     <div className={classes.title}>
                         {/*title bar section*/}
-                        <TopMenu mainText={props.titleName} onTitleClicked={props.onTitleClicked}/>
+                        <TopMenu mainText={props.titleName} onTitleClicked={props.onTitleClicked} disable={setTitleButtonDisable()}/>
                     </div>
                     
                     <div className={classes.display}>

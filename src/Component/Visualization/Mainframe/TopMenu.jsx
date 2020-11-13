@@ -55,6 +55,21 @@ const useStyles = makeStyles((theme) => ({
 //props에 디렉토리 경로를 넣어주세요 . 적용됩니다.
 export default function TopMenu(props){
     const classes = useStyles();
+    function setOnClick(){
+        if(props.disable){
+            return;
+        }
+        else{
+            return props.onTitleClicked
+        }
+    }
+    function setTitleText(){
+        if(props.disable){
+            return;
+        }else{
+            return props.mainText;
+        }
+    }
     return (
         <>
             <div className={classes.mainTextWrapper}>
@@ -63,9 +78,10 @@ export default function TopMenu(props){
                     <motion.div
                         whileHover = {{scale:1.1, originX:0}}
                         whileTap = {{scale:0.9}}
-                        onClick = {props.onTitleClicked}
+                        onClick = {setOnClick()}
+                        
                     >
-                    <Typography>{props.mainText}</Typography>
+                    <Typography>{setTitleText()}</Typography>
                     </motion.div>
                     
                 </Paper>
