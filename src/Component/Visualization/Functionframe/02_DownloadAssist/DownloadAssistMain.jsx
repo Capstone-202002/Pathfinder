@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import {makeStyles, useTheme} from '@material-ui/core/styles';
-import {Paper, Typography, Button, Divider, Switch} from '@material-ui/core';
+import {makeStyles, useTheme, withStyles} from '@material-ui/core/styles';
+import {Paper, Typography, Button, Divider, Switch, Slider} from '@material-ui/core';
 import {DataGrid} from '@material-ui/data-grid';
 import {Scrollbars} from 'react-custom-scrollbars';
 import FolderIcon from '@material-ui/icons/Folder';
-
+import {motion} from 'framer-motion';
 const useStyles = makeStyles((theme) => ({
     downloadAssistWrapper:{
         width:'100%',
@@ -67,10 +67,43 @@ const useStyles = makeStyles((theme) => ({
         marginTop:'5px',
         width : '100%',
         marginBottom:'30px'
+    },
+    downloadedFileAutoDeleteSlider:{
+        width:'100%',
+        marginTop:'50px',
     }
 }));
 
 export default function DownloadAssistMain(props){
+    const PrettoSlider = withStyles({
+        root: {
+          color: '#52af77',
+          height: 8,
+        },
+        thumb: {
+          height: 24,
+          width: 24,
+          backgroundColor: '#fff',
+          border: '2px solid currentColor',
+          marginTop: -8,
+          marginLeft: -12,
+          '&:focus, &:hover, &$active': {
+            boxShadow: 'inherit',
+          },
+        },
+        active: {},
+        valueLabel: {
+          left: 'calc(-50% + 4px)',
+        },
+        track: {
+          height: 8,
+          borderRadius: 4,
+        },
+        rail: {
+          height: 8,
+          borderRadius: 4,
+        },
+      })(Slider);
     const classes = useStyles();
     //assist : 디렉토리 자동 추천 기능 사용여부
     const [state, setState] = React.useState({
@@ -79,14 +112,22 @@ export default function DownloadAssistMain(props){
     const handleChange = (event) =>{
         setState({...state, [event.target.name]: event.target.checked});
     };
+    //State: autoDelete : 기본 다운로드 디렉토리에서 해당 기간동안 삭제되지 않는 놈은 자동으로 삭제됨
+    //TODO : 해당 일수를 받아서 실제 백그라운드에서 이용할것
+    const [autoDelete, setAutoDelete] = useState(30);
+    const handleAutoDeleteChange = (event, value) =>{
+        setAutoDelete(value);
+        console.log(value);
+    };
+
     const columns = [
         {field:'name', headerName:'이름', width : 130},
         {field:'type', headerName:'확장자',width:110},
         {field:'size', headerName:'크기', width : 110},
         {field:'time', headerName:'다운로드 일시', width : 170},
         {field:'dir', headerName:'저장위치', width : 450},
-    ]
-
+    ];
+    
     //다운로드 히스토리를 DB에 저장해야함
     //다운로드 히스토리를 DB로부터 불러와서 아래와 같은 형태로 내보내야함
     //ID값은 row고유값을 가짐
@@ -95,8 +136,13 @@ export default function DownloadAssistMain(props){
     ]
     return (
         <>
-            <Scrollbars>
-            <div className={classes.downloadAssistWrapper}>
+            
+            <motion.div className={classes.downloadAssistWrapper}
+                initial={{x:-250, opacity:0}}
+                animate={{x:0, opacity:1}}
+                transition={{delay:0.2, duration : 0.5}}
+            >
+                <Scrollbars>
                 <Paper className={classes.mainPaper} elevation={0}>
                     <div className={classes.baseDownloadDirectoryWrapper}>
                         {/*기본 다운로드 디렉토리 섹션*/}
@@ -123,6 +169,14 @@ export default function DownloadAssistMain(props){
                             {/*Applied Sortistics 관련 기능 집어넣기*/}
                         </div>
                     </div>
+                    <div className={classes.baseDownloadDirectoryOutputBusControlWrapper}>
+                        {/*다운로드폴더 자동 삭제 주기 슬라이더*/}
+                        <Typography variant='subtitle2' className={classes.baseDownloadDirectoryText} align='left'> 다운로드 된 파일 중 자동으로 정리되지 않은 파일은 며칠 뒤에 삭제할까요? (0으로 설정할 경우 삭제하지 않습니다.)</Typography>
+                        <Divider marginBottom="10px"></Divider>
+                        <div className = {classes.downloadedFileAutoDeleteSlider}>
+                            <PrettoSlider valueLabelDisplay='on' defaultValue={30} max={365} onChangeCommitted={handleAutoDeleteChange}/>
+                        </div>
+                    </div>
                     <div className={classes.willDownloadDirectoryRecommendationWrapper}>
                         <Typography style={{marginRight:'30px'}}variant='subtitle1' align='left'>
                                 PathFinder의 스마트한 다운로드 경로 추천을 받으실래요?
@@ -147,8 +201,9 @@ export default function DownloadAssistMain(props){
                         <DataGrid className={classes.downloadHistoryDataGrid} rows={rows} columns={columns} checkboxSelection ></DataGrid>
                     </div>
                 </Paper>
-            </div>
-            </Scrollbars>
+                </Scrollbars>
+            </motion.div>
+            
         </>
     );
 }

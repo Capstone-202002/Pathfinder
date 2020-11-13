@@ -10,6 +10,8 @@ import { FormatColorTextSharp } from "@material-ui/icons";
 import clsx from 'clsx';
 import DownloadAssistMain from "./Functionframe/02_DownloadAssist/DownloadAssistMain";
 import DownloadPopup from "./Popup/DownloadPopup";
+import SettingsMain from "./Functionframe/04_Settings/SettingsMain";
+import { Typography } from "@material-ui/core";
 const path = window.require('path')
 
 // 프로젝트 경로 하드코딩 되어있는거때문에 오류가 나니까 오류 안나게 바꿔드림.
@@ -154,7 +156,7 @@ function Visualization(props) {
 
   //State를 이용하여 메인프레임에 콘텐츠 전송
   function setContents(){
-    console.log(menu);
+    //console.log(menu);
     if(menu === 0){
       return (<>
       {/*Directory Analysis*/}
@@ -165,7 +167,7 @@ function Visualization(props) {
       </>
       );
     }
-    else if(test  === 1){
+    else if(menu  === 1){
       return(<>
       {/*DownloadAssist*/}
       <DownloadAssistMain/>
@@ -175,14 +177,14 @@ function Visualization(props) {
       return(<>
       
         {/*Applied Sortistics*/}
-        
+        <Typography>Menu3</Typography>
         </>);
     }
     else if(menu === 3){
       return(<>
       
         {/*Settings*/}
-        
+        <SettingsMain/>
         </>);
     }
   }
