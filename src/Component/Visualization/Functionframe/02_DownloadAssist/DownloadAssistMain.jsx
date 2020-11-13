@@ -66,12 +66,21 @@ const useStyles = makeStyles((theme) => ({
     downloadHistoryDataGrid:{
         marginTop:'5px',
         width : '100%',
-        marginBottom:'30px'
+        marginBottom:'30px',
+        '& .MuiDataGrid-columnsContainer':{
+            backgroundColor:theme.palette.background.default
+        }
     },
     downloadedFileAutoDeleteSlider:{
         width:'100%',
         marginTop:'50px',
-    }
+    },
+    dataGridHeader:{
+        backgroundColor:theme.palette.background.default
+    },
+    dataGridCell:{
+        backgroundColor:theme.palette.background.paper
+    },
 }));
 
 export default function DownloadAssistMain(props){
@@ -112,6 +121,8 @@ export default function DownloadAssistMain(props){
     const handleChange = (event) =>{
         setState({...state, [event.target.name]: event.target.checked});
     };
+
+
     //State: autoDelete : 기본 다운로드 디렉토리에서 해당 기간동안 삭제되지 않는 놈은 자동으로 삭제됨
     //TODO : 해당 일수를 받아서 실제 백그라운드에서 이용할것
     const [autoDelete, setAutoDelete] = useState(30);
@@ -121,16 +132,19 @@ export default function DownloadAssistMain(props){
     };
 
     const columns = [
-        {field:'name', headerName:'이름', width : 130},
-        {field:'type', headerName:'확장자',width:110},
-        {field:'size', headerName:'크기', width : 110},
-        {field:'time', headerName:'다운로드 일시', width : 170},
-        {field:'dir', headerName:'저장위치', width : 450},
+        {field:'name', headerClassName:classes.dataGridHeader, headerName:'이름', width : 130},
+        {field:'type', headerClassName:classes.dataGridHeader,headerName:'확장자',width:110},
+        {field:'size', headerClassName:classes.dataGridHeader,headerName:'크기', width : 110},
+        {field:'time', headerClassName:classes.dataGridHeader,headerName:'다운로드 일시', width : 170},
+        {field:'dir', headerClassName:classes.dataGridHeader,headerName:'저장위치', width : 450},
     ];
     
     //다운로드 히스토리를 DB에 저장해야함
     //다운로드 히스토리를 DB로부터 불러와서 아래와 같은 형태로 내보내야함
     //ID값은 row고유값을 가짐
+    function createData(id, name, type, size, time, dir){
+        return {id, name, type, size, time, dir}
+    }
     const rows = [
         {id:1,name:'testData', type:'.jpg', size:'20mb',time:'2020.03.24. 22:00', dir:'D:/helpme/'}
     ]
@@ -198,7 +212,7 @@ export default function DownloadAssistMain(props){
                         {/* 다운로드 히스토리 섹션 */}
                         <Typography variant='subtitle2' className={classes.baseDownloadDirectoryText} align='left'> 다운로드 히스토리 </Typography>
                         <Divider marginBottom="10px"></Divider>
-                        <DataGrid className={classes.downloadHistoryDataGrid} rows={rows} columns={columns} checkboxSelection ></DataGrid>
+                        <DataGrid className={classes.downloadHistoryDataGrid} rows={rows} columns={columns} checkboxSelection></DataGrid>
                     </div>
                 </Paper>
                 </Scrollbars>

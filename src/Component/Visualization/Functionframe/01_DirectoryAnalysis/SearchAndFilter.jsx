@@ -85,6 +85,7 @@ export default function SearchAndFilter(props){
             <motion.div
                 className={classes.snfDiv}
                 animate={buttonMovementControl}
+                
                 whileHover={{
                     //boxShadow:'0px, 0px, 8px, rgb(255,255,255)',
                 }}>
