@@ -212,7 +212,7 @@ export default function DownloadAssistMain(props){
                         {/* 다운로드 히스토리 섹션 */}
                         <Typography variant='subtitle2' className={classes.baseDownloadDirectoryText} align='left'> 다운로드 히스토리 </Typography>
                         <Divider marginBottom="10px"></Divider>
-                        <DataGrid className={classes.downloadHistoryDataGrid} rows={rows} columns={columns} checkboxSelection></DataGrid>
+                        <DataGrid className={classes.downloadHistoryDataGrid} rows={rows} columns={columns} checkboxSelection disableSelectionOnClick></DataGrid>
                     </div>
                 </Paper>
                 </Scrollbars>

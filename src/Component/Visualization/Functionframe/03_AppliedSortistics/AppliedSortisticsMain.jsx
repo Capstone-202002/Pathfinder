@@ -93,6 +93,26 @@ export default function AppliedSortisticsMain(props){
         createImportRowsData(1,'dev.testData',new Date(2020,11,14),'D:/heplmee','dev.filter')
     ];
 
+    const historyColumns =[
+        {field : 'name', headerName:'이름', width : 150},
+        {field : 'date', headerName:'이동 날짜', width:200},
+        {field : 'originDir', headerName:'기존 디렉토리', width : 250},
+        {field : 'targetDir', headerName:'이동한 디렉토리', width : 250},
+    ];
+    function createHistoryRowsData(historyId, historyName,historyDate,historyOriginDir,historyTargetDir){
+        return {id:historyId, name:historyName, date:historyDate,originDir:historyOriginDir, targetDir:historyTargetDir}
+    }
+    const historyRows =[
+        createHistoryRowsData(1,'dev.testData',new Date(2020,11,14),'D:/heplmee','dev.filter')
+    ];
+
+    function addExportBus(){
+        //TODO : 흡입기 추가 기능 구현
+    }
+    function addImportBus(){
+        //TODO : 배출기 추가 기능 구현
+    }
+
     return (
         <>
             <motion.div className={classes.APSWrapper}
@@ -105,21 +125,31 @@ export default function AppliedSortisticsMain(props){
                         <div className={classes.APSDataGridWrapper}>
                             <div className={classes.horizonDiv}>
                                 <Typography variant='h6' className={classes.TextMarginRight}> 흡입기 </Typography>
-                                <Button> 버튼을 눌러 추가 </Button>
+                                <Button onClick={addExportBus}> 버튼을 눌러 추가 </Button>
                             </div>
                             <Divider/>
                             <Typography variant='caption' className={classes.TextBlankBottom}> 흡입기는 폴더를 지정하여 흡입기가 부착된 폴더 안에 든 파일들을 빼올 수 있습니다. 흡입기에 필터를 지정하면, 더 체계적인 관리를 할 수 있어요</Typography> 
-                            <DataGrid className={classes.APSDataGrid} rows={exportRows} columns={exportColumns} checkboxSelection></DataGrid>
+                            <DataGrid className={classes.APSDataGrid} rows={exportRows} columns={exportColumns} checkboxSelection disableSelectionOnClick></DataGrid>
                         </div>
                         <div className={classes.GridBlank}></div>
                         <div className={classes.APSDataGridWrapper}>
                             <div className={classes.horizonDiv}>
                                 <Typography variant='h6' className={classes.TextMarginRight}> 배출기 </Typography>
-                                <Button> 버튼을 눌러 추가 </Button>
+                                <Button onClick={addImportBus}> 버튼을 눌러 추가 </Button>
                             </div>
                             <Divider/>
                             <Typography variant='caption' className={classes.TextBlankBottom}> 배출기는 폴더를 지정하여 흡입기로부터 가져온 파일들을 배출기가 부착된 폴더에 넣을 수 있습니다. 배출기에 필터를 지정하면, 더 체계적인 관리를 할 수 있어요</Typography> 
-                            <DataGrid className={classes.APSDataGrid} rows={importRows} columns={importColumns} checkboxSelection></DataGrid>
+                            <DataGrid className={classes.APSDataGrid} rows={importRows} columns={importColumns} checkboxSelection disableSelectionOnClick></DataGrid>
+                        </div>
+                        <div className={classes.GridBlank}></div>
+                        <div className={classes.APSDataGridWrapper}>
+                            <div className={classes.horizonDiv}>
+                                <Typography variant='h6' className={classes.TextMarginRight}> 파일 자동 정리 내역 </Typography>
+                                
+                            </div>
+                            <Divider/>
+                            <Typography variant='caption' className={classes.TextBlankBottom}> 파일이 어디갔는지 모르겠다면 내역을 확인하세요. 항목을 누르면 메뉴가 뜬답니다.</Typography> 
+                            <DataGrid className={classes.APSDataGrid} rows={historyRows} columns={historyColumns} checkboxSelection disableSelectionOnClick></DataGrid>
                         </div>
                     </Paper>
                 </Scrollbars>

@@ -148,9 +148,7 @@ function Visualization(props) {
   const test = 1
   function getMenu(data){
     setMenu(data);
-    //props.menu(data);
-    //console.log(test)
-}
+  }
   useEffect(()=>{
     console.log(menu)
   });
