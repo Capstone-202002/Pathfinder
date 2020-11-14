@@ -1,13 +1,15 @@
 const {
     app,
     BrowserWindow,
-    ipcMain
+    Tray,
+    Menu
 } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
 const { Hidden } = require('@material-ui/core')
 
 let mainWindow
+let tray
 
 const createWindow = () => {
     mainWindow = new BrowserWindow({
@@ -39,24 +41,45 @@ const createWindow = () => {
         // BrowserWindow.addDevToolsExtension('<location to your react chrome extension>')
         // mainWindow.webContents.openDevTools()
     }
-    mainWindow.on('closed', () => {
-        mainWindow = null
+
+    // System Tray에 아이콘 생성
+    tray = new Tray(path.join(__dirname, '../src/Component/UI/Asset/img/pathfinder_icon.ico'))
+    const contextMenu = Menu.buildFromTemplate([
+        {
+            label: '열기', click: () => {
+                mainWindow.show()
+            }
+        },
+        {
+            label: '종료', click: () => {
+                app.quit()
+            }
+        },
+    ])
+    tray.setToolTip('Pathfinder')
+    tray.setContextMenu(contextMenu)
+
+
+    mainWindow.on('closed', (event) => {
+        event.preventDefault()
+        mainWindow.hide()
     })
+
+    mainWindow.on('minimize', (event) => {
+        event.preventDefault();
+        mainWindow.hide();
+    });
 }
 
 app.on('ready', createWindow)
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
-})
+
+// app.on('window-all-closed', () => {
+//     if (process.platform !== 'darwin') {
+//         app.quit()
+//     }
+// })
 app.on('activate', () => {
     if (mainWindow === null) {
         createWindow()
     }
-})
-
-ipcMain.on('test', (event, arg) => {
-    console.log("전송이 되었음!")
-    console.log(arg)
 })

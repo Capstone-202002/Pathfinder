@@ -1,3 +1,4 @@
+const chokidar = require('chokidar');
 const fs = require('fs')
 const os = require('os')
 const path = require('path')
@@ -8,15 +9,20 @@ DL_URL = "C:\\" + path.join("Users", username, "Downloads")
 
 console.log("다운로드와쳐 실행됨!")
 
-fs.watch(DL_URL, (eventType, filename) => {
-    console.log(eventType)
-    console.log(filename)
-    if (eventType == "change") {
-        fs.stat(path.join(DL_URL, filename), (err, stat) => {
-            console.log(Date.now())
-            console.log(stat.mtimeMs)
-        })
-    }
+const dlwatcher = chokidar.watch(DL_URL, {
+    ignoreInitial: true,
+    ignored: '*.tmp',
+    awaitWriteFinish: true
+})
 
-    // ipcMain 같은걸로 여기서 렌더러로 감지된 거 보내면 됨!
+dlwatcher.on("all", (event, path) => {
+    console.log(event)
+    console.log(path)
+
+    // fs.stat(path, (err, stat) => {
+    //     // console.log(Date.now())
+    //     console.log(err)
+    //     console.dir(stat)
+    // })
+
 })
