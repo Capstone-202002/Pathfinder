@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useTheme } from "react";
-import {makeStyles} from  '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Base from "../Base/Base";
 import Mainframe from "./Mainframe/Mainframe"
 import Section from "./Functionframe/01_DirectoryAnalysis/Section";
@@ -13,10 +13,8 @@ import DownloadPopup from "./Popup/DownloadPopup";
 import SettingsMain from "./Functionframe/04_Settings/SettingsMain";
 import { Typography } from "@material-ui/core";
 import AppliedSortisticsMain from "./Functionframe/03_AppliedSortistics/AppliedSortisticsMain";
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 const path = window.require('path')
-
-// 프로젝트 경로 하드코딩 되어있는거때문에 오류가 나니까 오류 안나게 바꿔드림.
 
 
 
@@ -24,10 +22,10 @@ function Visualization(props) {
 
   //const theme = useTheme();
   const useStyles = makeStyles((theme) => ({
-    displayStyle:{
+    displayStyle: {
       display: "flex",
       height: "100%",
-      width:'100%',
+      width: '100%',
       overflowX: "auto",
       flexWrap: 'nowrap',
       flexDirection: 'row',
@@ -35,20 +33,20 @@ function Visualization(props) {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      marginRight:'0px'
+      marginRight: '0px'
     },
-    displayShiftStyle:{
+    displayShiftStyle: {
       display: "flex",
-    height: "100%",
-    width:'100%',
-    overflowX: "auto",
-    flexWrap: 'nowrap',
-    flexDirection: 'row',
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginRight:'300px'
+      height: "100%",
+      width: '100%',
+      overflowX: "auto",
+      flexWrap: 'nowrap',
+      flexDirection: 'row',
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginRight: '300px'
     }
   }));
 
@@ -58,13 +56,13 @@ function Visualization(props) {
 
   function setDefaultDir(e) { // 디렉토리를 지정하는 함수, title 지정까지 같이함
     e.preventDefault();
-      openDirectorySelectDialog( (result) => {
-        if (!result.canceled){
-          setDirName(result.filePaths[0]);
-          let newDirInfo = getFileList(result.filePaths[0]);
-          setRenderSection([newDirInfo]);
-          setPathTracker([]);
-        }
+    openDirectorySelectDialog((result) => {
+      if (!result.canceled) {
+        setDirName(result.filePaths[0]);
+        let newDirInfo = getFileList(result.filePaths[0]);
+        setRenderSection([newDirInfo]);
+        setPathTracker([]);
+      }
     })
   }
 
@@ -77,6 +75,8 @@ function Visualization(props) {
     }
     return 'null';
   }
+
+  // db 코드 테스트
 
   function folderClicked(info) {  // 폴더요소 클릭시의 처리
 
@@ -106,7 +106,7 @@ function Visualization(props) {
     searchExt: '',
     searchMinVol: 0,
     searchMaxVol: 0,
-});
+  });
   function searchChanger(info, ob, ub) { //info: searchDisplay의 state정보가 담겨있음
     setSearchInfo({
       ...searchInfo,
@@ -117,27 +117,27 @@ function Visualization(props) {
     })
     //setSearchInfo(info);
   }
-  
+
   // 검색 & 필터 바 오픈 여부 받아오는 부분
   const [isSearching, setIsSearching] = useState(false);
   function isSearchingChanger(isSearching) {
     setIsSearching(isSearching);
   }
 
-  useEffect(()=> {  // 검색부분 변화있으면 실행됨
+  useEffect(() => {  // 검색부분 변화있으면 실행됨
     //console.log(searchInfo);
     //console.log('검색바 오픈: ', isSearching);
     //console.log(searchInfo);
   }, [searchInfo, isSearching])
 
-  
+
 
   var visualizationRenderer = renderSection.map((renderInfo, index) => (
-    <Section sectionInfo={renderInfo} 
-              folderClicked={folderClicked} 
-              key={index} 
-              isSearching={isSearching}
-              searchInfo={searchInfo} />
+    <Section sectionInfo={renderInfo}
+      folderClicked={folderClicked}
+      key={index}
+      isSearching={isSearching}
+      searchInfo={searchInfo} />
   ));
 
   //왼쪽 메뉴로부터 값 읽어오기
@@ -146,55 +146,55 @@ function Visualization(props) {
   //UI 개발을 위해 메뉴값을 1로 고정해둠 나중에 바꿀것
   const [menu, setMenu] = useState('');
   const test = 1
-  function getMenu(data){
+  function getMenu(data) {
     setMenu(data);
   }
-  useEffect(()=>{
+  useEffect(() => {
     console.log(menu)
   });
   const classes = useStyles();
 
   //State를 이용하여 메인프레임에 콘텐츠 전송
-  function setContents(){
+  function setContents() {
     //console.log(menu);
-    if(menu === 0){
+    if (menu === 0) {
       return (<>
-      {/*Directory Analysis*/}
-          <motion.div className={clsx(classes.displayStyle,{[classes.displayShiftStyle]:isSearching,})}
-            initial={{x:-250, opacity:0}}
-            animate={{x:0, opacity:1}}
-            transition={{delay:0.2, duration : 0.5}}
-          >
-            {visualizationRenderer}
-          </motion.div>
-          <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger}/>
+        {/*Directory Analysis*/}
+        <motion.div className={clsx(classes.displayStyle, { [classes.displayShiftStyle]: isSearching, })}
+          initial={{ x: -250, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          {visualizationRenderer}
+        </motion.div>
+        <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger} />
       </>
       );
     }
-    else if(menu  === 1){
-      return(<>
-      {/*DownloadAssist*/}
-      <DownloadAssistMain/>
+    else if (menu === 1) {
+      return (<>
+        {/*DownloadAssist*/}
+        <DownloadAssistMain />
       </>);
     }
-    else if(menu === 2){
-      return(<>
-      
+    else if (menu === 2) {
+      return (<>
+
         {/*Applied Sortistics*/}
-        <AppliedSortisticsMain/>
-        </>);
+        <AppliedSortisticsMain />
+      </>);
     }
-    else if(menu === 3){
-      return(<>
-      
+    else if (menu === 3) {
+      return (<>
+
         {/*Settings*/}
-        <SettingsMain/>
-        </>);
+        <SettingsMain />
+      </>);
     }
   }
   return (
     <>
-                                                                                            {/*메뉴 번호 받는 함수 일시적으로 Disable*/}
+      {/*메뉴 번호 받는 함수 일시적으로 Disable*/}
       <Mainframe contents={setContents()} titleName={dirName} onTitleClicked={setDefaultDir} menu={getMenu}></Mainframe>
     </>
   );
