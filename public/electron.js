@@ -43,7 +43,7 @@ const createWindow = () => {
     }
 
     // System Tray에 아이콘 생성
-    tray = new Tray(path.join(__dirname, '../src/Component/UI/Asset/img/pathfinder_icon.ico'))
+    tray = new Tray(path.join(__dirname, '../src/Component/Visualization/Asset/img/pathfinder_icon.ico'))
     const contextMenu = Menu.buildFromTemplate([
         {
             label: '열기', click: () => {
