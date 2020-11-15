@@ -11,7 +11,7 @@ import pathfinderIcon from '../Asset/img/pathfinder_icon.svg';
 
 
 
-const menuTexts = ['디렉토리 뷰', '다운로드 어시스트', '자동 폴더 정리', '설정']
+const menuTexts = ['디렉토리 뷰', '다운로드 어시스트', '자동 폴더 정리', '설정','가상 디렉토리']
 const useStyles = makeStyles((theme) => ({
     iconSection:{
         display: "flex",
@@ -79,7 +79,7 @@ export default function LeftMenu(props){
     const theme = useTheme();
     //TODO
     //Selected : 상수형 state : Mainframe으로 넘겨줘야함
-    const [selected, setSelected] = useState(null);
+    const [selected, setSelected] = useState(4);
     function menuSetting(item){
         setSelected(item);
         props.menu(item);
@@ -102,14 +102,6 @@ export default function LeftMenu(props){
                 </Paper>
             </div>
             <div className={classes.virtualDirectorySection}>
-                <Accordion>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography> 가상 디렉토리 </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-
-                    </AccordionDetails>
-                </Accordion>
                 <AnimateSharedLayout>
                     <ul className={classes.menuButtonsSection}>
                         {menu.map(item => (
@@ -132,7 +124,7 @@ export default function LeftMenu(props){
     );
 }
 
-const menu = [0,1,2,3];
+const menu = [4,0,1,2,3];
 
 function Item({ isSelected, onClick, menuItem}){
     const classes = useStyles();

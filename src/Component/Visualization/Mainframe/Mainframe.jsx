@@ -88,7 +88,7 @@ export default function Mainframe(props){
     const [open, setOpen] = React.useState(false);
 
     //menu State: LeftMenu.jsx 로부터 동기화 하여 visualization.jsx 로 넘겨줘야 함
-    const [menu, setMenu] = React.useState('');
+    const [menu, setMenu] = React.useState(4);
     //왼쪽 메뉴로부터 값 읽어오기
     function getMenu(data){
         

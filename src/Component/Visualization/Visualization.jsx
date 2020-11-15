@@ -14,6 +14,8 @@ import SettingsMain from "./Functionframe/04_Settings/SettingsMain";
 import { Typography } from "@material-ui/core";
 import AppliedSortisticsMain from "./Functionframe/03_AppliedSortistics/AppliedSortisticsMain";
 import { motion } from 'framer-motion';
+import VirtualDirectoryMain from "./Functionframe/00_VirtualDirectory/VirtualDirectoryMain";
+import RightClickSnackbar from "./Popup/RightClickSnackbar";
 const path = window.require('path')
 
 
@@ -144,7 +146,7 @@ function Visualization(props) {
   //TODO
   //menu State : Mainframe으로부터 동기화하여 아래 setContents()를 바뀔때마다 콘텐츠 변경
   //UI 개발을 위해 메뉴값을 1로 고정해둠 나중에 바꿀것
-  const [menu, setMenu] = useState('');
+  const [menu, setMenu] = useState(4);
   const test = 1
   function getMenu(data) {
     setMenu(data);
@@ -191,10 +193,15 @@ function Visualization(props) {
         <SettingsMain />
       </>);
     }
+    else if (menu === 4) {
+      return (<>
+        {/*Virtual Directory*/}
+        <VirtualDirectoryMain/>
+      </>)
+    }
   }
   return (
     <>
-      {/*메뉴 번호 받는 함수 일시적으로 Disable*/}
       <Mainframe contents={setContents()} titleName={dirName} onTitleClicked={setDefaultDir} menu={getMenu}></Mainframe>
     </>
   );
