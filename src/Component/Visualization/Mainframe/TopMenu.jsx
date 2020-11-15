@@ -3,7 +3,7 @@ import {makeStyles, useTheme} from  '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper'
 import { IconButton, Tooltip, Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import {TitlebarMac} from 'electron-titlebar-react-component';
+import TitlebarMac from '../TitlebarMac/TitlebarMac';
 import {motion} from 'framer-motion';
 //import Tooltip from "@material-ui/core/Tooltip";
 
