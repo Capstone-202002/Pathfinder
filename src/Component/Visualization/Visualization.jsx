@@ -16,7 +16,11 @@ import AppliedSortisticsMain from "./Functionframe/03_AppliedSortistics/AppliedS
 import { motion } from 'framer-motion';
 import VirtualDirectoryMain from "./Functionframe/00_VirtualDirectory/VirtualDirectoryMain";
 import RightClickSnackbar from "./Popup/RightClickSnackbar";
+
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
 const path = window.require('path')
+
 
 
 
@@ -55,7 +59,7 @@ function Visualization(props) {
   //const [dirName, setDirName] = useState('클릭하여 탐색할 디렉토리를 지정하세요.');
   const [renderSection, setRenderSection] = useState(props.defaultRenderSection);  // render 될 section들을 담는 state
   const [pathTracker, setPathTracker] = useState(props.defaultPathTracker);
-  
+
   useEffect(() => {  // 검색부분 변화있으면 실행됨
     // setRenderSection(props.defaultRenderSection);
     // setPathTracker(props.defaultPathTracker);
@@ -83,7 +87,6 @@ function Visualization(props) {
     return 'null';
   }
 
-  // db 코드 테스트
 
   function folderClicked(info) {  // 폴더요소 클릭시의 처리
 
@@ -135,6 +138,7 @@ function Visualization(props) {
     //console.log(searchInfo);
     //console.log('검색바 오픈: ', isSearching);
     //console.log(searchInfo);
+
   }, [searchInfo, isSearching])
 
 
@@ -144,27 +148,36 @@ function Visualization(props) {
       folderClicked={folderClicked}
       key={index}
       isSearching={isSearching}
-      searchInfo={searchInfo} 
-      />
+      searchInfo={searchInfo}
+    />
   ));
 
   //왼쪽 메뉴로부터 값 읽어오기
   //TODO
   //menu State : Mainframe으로부터 동기화하여 아래 setContents()를 바뀔때마다 콘텐츠 변경
   //UI 개발을 위해 메뉴값을 1로 고정해둠 나중에 바꿀것
+  useEffect(() => {
+    // db 코드 테스트
+
+    ipcRenderer.on('download-request', (event, payload) => {
+      console.log("다운로드 요청 ipc로 받기")
+      console.log(event)
+      console.log(payload)
+    })
+  });
   const classes = useStyles();
-  
+
   return (
-  <>
-        {/*Directory Analysis*/}
-        <motion.div className={clsx(classes.displayStyle, { [classes.displayShiftStyle]: isSearching, })}
-          initial={{ x: -250, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-        >
-          {visualizationRenderer}
-        </motion.div>
-        <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger}/>
+    <>
+      {/*Directory Analysis*/}
+      <motion.div className={clsx(classes.displayStyle, { [classes.displayShiftStyle]: isSearching, })}
+        initial={{ x: -250, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+      >
+        {visualizationRenderer}
+      </motion.div>
+      <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger} />
     </>
   );
 }

@@ -2,27 +2,54 @@ const chokidar = require('chokidar');
 const fs = require('fs')
 const os = require('os')
 const path = require('path')
+const { app, ipcMain } = require('electron')
+const { db } = require('./DB')
+
 
 // 다운로드 폴더를 우선 상수로 고정
 var username = os.userInfo().username
 DL_URL = "C:\\" + path.join("Users", username, "Downloads")
+const ads_suffix = "Zone.Identifier"
 
-console.log("다운로드와쳐 실행됨!")
+function trimURLData(rawdata) {
 
-const dlwatcher = chokidar.watch(DL_URL, {
-    ignoreInitial: true,
-    ignored: '*.tmp',
-    awaitWriteFinish: true
-})
+    var re = /(ReferrerUrl=).*/
+    var arr = re.exec(rawdata)
 
-dlwatcher.on("all", (event, path) => {
-    console.log(event)
-    console.log(path)
+    return arr[0].substring(12)
+}
 
-    // fs.stat(path, (err, stat) => {
-    //     // console.log(Date.now())
-    //     console.log(err)
-    //     console.dir(stat)
-    // })
 
-})
+const initDlWatcher = function (mainWindow) {
+    const dlwatcher = chokidar.watch(DL_URL, {
+        ignoreInitial: true,
+        ignored: '**/*.tmp',
+        awaitWriteFinish: true
+    })
+
+    console.log("다운로드와쳐 실행됨!")
+
+    dlwatcher.on("add", (filepath, stats) => {
+        var result = fs.readFileSync(`${filepath}:${ads_suffix}`, { encoding: 'utf-8' })
+        // URL 정리
+
+        var url = trimURLData(result)
+        var extenstion = path.extname(filepath)
+
+        let insert_history = db.prepare(`INSERT INTO dl_history (Filename, URL, Extension, Place) 
+        VALUES ('${filepath}', '${url}', '${extenstion}', '어딘가')`)
+        insert_history.run()
+
+        // 데이터 전송
+        let payload = {
+            path: filepath,
+            URL: url,
+            extension: extenstion,
+            place: '어딘가'
+        }
+        mainWindow.webContents.send('download-request', payload)
+    })
+}
+
+
+exports.dlwatcher = initDlWatcher
