@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useForceUpdate} from "react";
 import Box from '@material-ui/core/Box';
 import {sizing} from '@material-ui/system';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
@@ -8,6 +8,15 @@ import TopMenu from './TopMenu';
 import SystemMessage from './SystemMessage';
 import { Scrollbars } from 'react-custom-scrollbars'
 import { SettingsPowerSharp } from "@material-ui/icons";
+
+//임시용
+import Visualization from '../Visualization';
+import DownloadAssistMain from '../Functionframe/02_DownloadAssist/DownloadAssistMain';
+import AppliedSortisticsMain from '../Functionframe/03_AppliedSortistics/AppliedSortisticsMain';
+import SettingsMain from '../Functionframe/04_Settings/SettingsMain';
+import VirtualDirectoryMain from '../Functionframe/00_VirtualDirectory/VirtualDirectoryMain';
+import { getFileList, openDirectorySelectDialog } from "../../API/io";
+//임시용
 
 const useStyles = makeStyles((theme) => ({
     spacing : 10,
@@ -94,7 +103,7 @@ export default function Mainframe(props){
         
         //console.log(menu)
         setMenu(data);
-        props.menu(data);
+        //props.menu(data);
     }
     function getSystemText(data){
         setSystemState(data);
@@ -119,10 +128,64 @@ export default function Mainframe(props){
                 return '패스파인더가 디렉토리를 뒤적이고 있어요'
         }
     }
-    useEffect(()=>{
-        console.log('useEffect');
-        console.log(menu);
-      });
+
+    const [titleText, setTitleText] = React.useState("클릭하여 탐색할 디렉토리를 설정하세요");
+    const [defaultRenderSection, setDefaultRenderSection] = React.useState([]);
+    const [defaultPathTracker, setDefaultPathTracker] = React.useState([]);
+    function titleHandler() {
+        openDirectorySelectDialog((result) => {
+            if (!result.canceled) {
+                setTitleText(result.filePaths[0])
+                //setDirName(result.filePaths[0]);
+                let newDirInfo = getFileList(result.filePaths[0]);
+                setDefaultRenderSection([newDirInfo]);
+                setDefaultPathTracker([]);
+                setMenu(1); // forceUpdate를 위한 state 변환... 다른 방법 찾으면 수정 예정
+                setMenu(0);
+            }
+        })
+    }
+
+    function setContents() {
+        //console.log(menu);
+        if (menu === 0) {
+          //setSystemState('VisualizationReady');
+          return (<>
+            {/*Directory Analysis*/}
+            <Visualization defaultRenderSection={defaultRenderSection} defaultPathTracker={defaultPathTracker}/>
+          </>
+          );
+        }
+        else if (menu === 1) {
+          return (<>
+            {/*DownloadAssist*/}
+            <DownloadAssistMain systemText={getSystemText}/>
+          </>);
+        }
+        else if (menu === 2) {
+          return (<>
+    
+            {/*Applied Sortistics*/}
+            <AppliedSortisticsMain systemText={getSystemText}/>
+          </>);
+        }
+        else if (menu === 3) {
+          return (<>
+    
+            {/*Settings*/}
+            <SettingsMain systemText={getSystemText}/>
+          </>);
+        }
+        else if (menu === 4) {
+          return (<>
+            {/*Virtual Directory*/}
+            <VirtualDirectoryMain systemText={getSystemText}/>
+          </>)
+        }
+    }
+
+    
+
     document.body.style.backgroundColor = "transparent";
     document.body.style.color = "transparent";
     function setTitleButtonDisable(){
@@ -147,12 +210,12 @@ export default function Mainframe(props){
                     {/*App's Right Display Section*/}
                     <div className={classes.title}>
                         {/*title bar section*/}
-                        <TopMenu mainText={props.titleName} onTitleClicked={props.onTitleClicked} disable={setTitleButtonDisable()}/>
+                        <TopMenu mainText={titleText} onTitleClicked={titleHandler} disable={setTitleButtonDisable()}/>
                     </div>
                     
                     <div className={classes.display}>
                         {/*App's Main function display Section*/}
-                        {props.contents}
+                        {setContents()}
                     </div>
 
 

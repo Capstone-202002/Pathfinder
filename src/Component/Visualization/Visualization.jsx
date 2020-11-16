@@ -52,21 +52,26 @@ function Visualization(props) {
     }
   }));
 
-  const [dirName, setDirName] = useState('클릭하여 탐색할 디렉토리를 지정하세요.');
-  const [renderSection, setRenderSection] = useState([]);  // render 될 section들을 담는 state
-  const [pathTracker, setPathTracker] = useState([]);
+  //const [dirName, setDirName] = useState('클릭하여 탐색할 디렉토리를 지정하세요.');
+  const [renderSection, setRenderSection] = useState(props.defaultRenderSection);  // render 될 section들을 담는 state
+  const [pathTracker, setPathTracker] = useState(props.defaultPathTracker);
+  
+  useEffect(() => {  // 검색부분 변화있으면 실행됨
+    // setRenderSection(props.defaultRenderSection);
+    // setPathTracker(props.defaultPathTracker);
+  }, [renderSection, pathTracker])
 
-  function setDefaultDir(e) { // 디렉토리를 지정하는 함수, title 지정까지 같이함
-    e.preventDefault();
-    openDirectorySelectDialog((result) => {
-      if (!result.canceled) {
-        setDirName(result.filePaths[0]);
-        let newDirInfo = getFileList(result.filePaths[0]);
-        setRenderSection([newDirInfo]);
-        setPathTracker([]);
-      }
-    })
-  }
+  // function setDefaultDir(e) { // 디렉토리를 지정하는 함수, title 지정까지 같이함
+  //   e.preventDefault();
+  //   openDirectorySelectDialog((result) => {
+  //     if (!result.canceled) {
+  //       setDirName(result.filePaths[0]);
+  //       let newDirInfo = getFileList(result.filePaths[0]);
+  //       setRenderSection([newDirInfo]);
+  //       setPathTracker([]);
+  //     }
+  //   })
+  // }
 
   function pathChecker(currentPath) {
     for (var idx = 0; idx < pathTracker.length; idx++) {
@@ -140,7 +145,6 @@ function Visualization(props) {
       key={index}
       isSearching={isSearching}
       searchInfo={searchInfo} 
-      systemText={getSystemText}
       />
   ));
 
@@ -148,26 +152,10 @@ function Visualization(props) {
   //TODO
   //menu State : Mainframe으로부터 동기화하여 아래 setContents()를 바뀔때마다 콘텐츠 변경
   //UI 개발을 위해 메뉴값을 1로 고정해둠 나중에 바꿀것
-  const [menu, setMenu] = useState(4);
-  const test = 1
-  function getMenu(data) {
-    setMenu(data);
-  }
-  useEffect(() => {
-    console.log(menu)
-  });
   const classes = useStyles();
-  const [systemState, setSystemState] = useState('Online');
-  function getSystemText(data){
-    setSystemState(data);
-  }
-
-  //State를 이용하여 메인프레임에 콘텐츠 전송
-  function setContents() {
-    //console.log(menu);
-    if (menu === 0) {
-      //setSystemState('VisualizationReady');
-      return (<>
+  
+  return (
+  <>
         {/*Directory Analysis*/}
         <motion.div className={clsx(classes.displayStyle, { [classes.displayShiftStyle]: isSearching, })}
           initial={{ x: -250, opacity: 0 }}
@@ -176,40 +164,7 @@ function Visualization(props) {
         >
           {visualizationRenderer}
         </motion.div>
-        <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger} systemText={getSystemText} />
-      </>
-      );
-    }
-    else if (menu === 1) {
-      return (<>
-        {/*DownloadAssist*/}
-        <DownloadAssistMain systemText={getSystemText}/>
-      </>);
-    }
-    else if (menu === 2) {
-      return (<>
-
-        {/*Applied Sortistics*/}
-        <AppliedSortisticsMain systemText={getSystemText}/>
-      </>);
-    }
-    else if (menu === 3) {
-      return (<>
-
-        {/*Settings*/}
-        <SettingsMain systemText={getSystemText}/>
-      </>);
-    }
-    else if (menu === 4) {
-      return (<>
-        {/*Virtual Directory*/}
-        <VirtualDirectoryMain systemText={getSystemText}/>
-      </>)
-    }
-  }
-  return (
-    <>
-      <Mainframe contents={setContents()} titleName={dirName} onTitleClicked={setDefaultDir} menu={getMenu} systemState={systemState}></Mainframe>
+        <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger}/>
     </>
   );
 }

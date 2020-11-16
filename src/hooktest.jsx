@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Visualization from "./Component/Visualization/Visualization";
+import Mainframe from "./Component/Visualization/Mainframe/Mainframe";
 const { app } = window.require('electron').remote
 const path = window.require('path')
 // function 컴포넌트에서 state, effect 를 사용하기 위해 Hook을 사용합니다
@@ -17,7 +18,7 @@ function HookTest() {
   
   return (
     <>
-      <Visualization/>
+      <Mainframe />
     </>
   );
 }
