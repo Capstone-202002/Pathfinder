@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {makeStyles, useTheme, withStyles} from '@material-ui/core/styles';
 import {Paper, Typography, Button, Divider, Switch, Slider} from '@material-ui/core';
 import {DataGrid} from '@material-ui/data-grid';
@@ -148,6 +148,9 @@ export default function DownloadAssistMain(props){
     const rows = [
         {id:1,name:'testData', type:'.jpg', size:'20mb',time:'2020.03.24. 22:00', dir:'D:/helpme/'}
     ]
+    useEffect(()=>{
+        props.systemText('DownloadAssistReady');
+    })
     return (
         <>
             

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {motion} from 'framer-motion';
 import Scrollbars from 'react-custom-scrollbars';
@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AppliedSortisticsMain(props){
     const classes = useStyles();
+    useEffect(()=>{
+        props.systemText('AppliedSortisticsReady');
+    })
     function showFilterInfo(filterInfo){
         //TODO
     }

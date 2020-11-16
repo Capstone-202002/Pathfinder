@@ -139,7 +139,9 @@ function Visualization(props) {
       folderClicked={folderClicked}
       key={index}
       isSearching={isSearching}
-      searchInfo={searchInfo} />
+      searchInfo={searchInfo} 
+      systemText={getSystemText}
+      />
   ));
 
   //왼쪽 메뉴로부터 값 읽어오기
@@ -155,11 +157,16 @@ function Visualization(props) {
     console.log(menu)
   });
   const classes = useStyles();
+  const [systemState, setSystemState] = useState('Online');
+  function getSystemText(data){
+    setSystemState(data);
+  }
 
   //State를 이용하여 메인프레임에 콘텐츠 전송
   function setContents() {
     //console.log(menu);
     if (menu === 0) {
+      //setSystemState('VisualizationReady');
       return (<>
         {/*Directory Analysis*/}
         <motion.div className={clsx(classes.displayStyle, { [classes.displayShiftStyle]: isSearching, })}
@@ -169,40 +176,40 @@ function Visualization(props) {
         >
           {visualizationRenderer}
         </motion.div>
-        <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger} />
+        <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger} systemText={getSystemText} />
       </>
       );
     }
     else if (menu === 1) {
       return (<>
         {/*DownloadAssist*/}
-        <DownloadAssistMain />
+        <DownloadAssistMain systemText={getSystemText}/>
       </>);
     }
     else if (menu === 2) {
       return (<>
 
         {/*Applied Sortistics*/}
-        <AppliedSortisticsMain />
+        <AppliedSortisticsMain systemText={getSystemText}/>
       </>);
     }
     else if (menu === 3) {
       return (<>
 
         {/*Settings*/}
-        <SettingsMain />
+        <SettingsMain systemText={getSystemText}/>
       </>);
     }
     else if (menu === 4) {
       return (<>
         {/*Virtual Directory*/}
-        <VirtualDirectoryMain/>
+        <VirtualDirectoryMain systemText={getSystemText}/>
       </>)
     }
   }
   return (
     <>
-      <Mainframe contents={setContents()} titleName={dirName} onTitleClicked={setDefaultDir} menu={getMenu}></Mainframe>
+      <Mainframe contents={setContents()} titleName={dirName} onTitleClicked={setDefaultDir} menu={getMenu} systemState={systemState}></Mainframe>
     </>
   );
 }

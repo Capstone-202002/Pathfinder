@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {Paper, Typography} from '@material-ui/core';
 import Scrollbars from 'react-custom-scrollbars';
@@ -63,6 +63,9 @@ export default function SettingsMain(props){
     const [buttonBg2,setButtonBg2] = useState(unClicked);
     const [buttonBg3,setButtonBg3] = useState(unClicked);
     const [buttonBg4,setButtonBg4] = useState(unClicked);
+    useEffect(()=>{
+        props.systemText('SettingReady');
+    })
     function buttonClick1(){
         setButtonBg1(clicked);
         setButtonBg2(unClicked);

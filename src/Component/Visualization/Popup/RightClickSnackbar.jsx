@@ -5,6 +5,7 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import {IconButton} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import Paper from '@material-ui/core/Paper';
+import Snackbar from '@material-ui/core/Snackbar';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +58,11 @@ export default function RightClickSnackbar(props) {
                 </>);
         }
     }
+    function handleOpen(){
+        if(props.isFolderClicked){
+            setOpen(true)
+        }
+    }   
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
         return;
@@ -68,7 +74,7 @@ export default function RightClickSnackbar(props) {
   return (
     <div className={classes.root}>
 
-      <SnackbarContent message="패스파인더가 어떤 동작을 할까요?" open={open} onClose={handleClose} action={returnAction()} anchorOrigin={{vertical:'bottom', horizontal:'center'}}/>
+      <Snackbar message="패스파인더가 어떤 동작을 할까요?" open={props.folderOpen} onClose={handleClose} action={returnAction()} anchorOrigin={{vertical:'bottom', horizontal:'center'}}/>
     </div>
   );
 }

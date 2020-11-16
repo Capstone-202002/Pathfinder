@@ -86,7 +86,7 @@ export default function Mainframe(props){
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-
+    const [systemState, setSystemState]= React.useState('Online');
     //menu State: LeftMenu.jsx 로부터 동기화 하여 visualization.jsx 로 넘겨줘야 함
     const [menu, setMenu] = React.useState(4);
     //왼쪽 메뉴로부터 값 읽어오기
@@ -96,7 +96,29 @@ export default function Mainframe(props){
         setMenu(data);
         props.menu(data);
     }
-    
+    function getSystemText(data){
+        setSystemState(data);
+    }
+    function setSystemText(){
+        switch(props.systemState){
+            case 'Online':
+                return '패스파인더가 준비되었습니다.'
+            case 'VirtualDirectoryReady':
+                return '패스파인더가 가상 디렉토리를 준비했어요.'
+            case 'VisualizationReady':
+                return '패스파인더가 디렉토리를 뒤적이고 있어요.'
+            case 'DownloadAssistReady':
+                return '패스파인더가 다운로드 패킷을 확인하고 있어요.'
+            case 'AppliedSortisticsReady':
+                return '패스파인더가 필터를 준비했습니다.'
+            case 'SettingReady':
+                return '패스파인더가 사용자의 설정을 받아적을 준비를 했어요.'
+            case 'SearchAndFilter':
+                return '패스파인더가 폴더와 파일을 분류하고 있어요.'
+            default:
+                return '패스파인더가 디렉토리를 뒤적이고 있어요'
+        }
+    }
     useEffect(()=>{
         console.log('useEffect');
         console.log(menu);
@@ -144,6 +166,3 @@ export default function Mainframe(props){
     );
 }
 
-function setSystemText(text){
-    return '패스파인더가 디렉토리를 뒤적이고 있어요'
-}

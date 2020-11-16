@@ -60,7 +60,6 @@ function Section(props) {
     // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
     console.log(doubleClicked);
   });
-
   var section = sectionInfo.map((file, index) => (
     <div>
         <Element info={file} totalSize={total} name={file.name} isDir={file.is_dir} 

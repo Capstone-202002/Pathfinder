@@ -55,9 +55,11 @@ export default function SearchAndFilter(props){
     const buttonMovementControl = useAnimation();
     const handleDrawerOpen = () => {
         setOpen(true);
+        props.systemText('SearchAndFilter');
     }
     const handleDrawerClose = () => {
         setOpen(false);
+        props.systemText('VisualizationReady');
     }
     useEffect(()=>{
         props.isSearchingChanger(open);

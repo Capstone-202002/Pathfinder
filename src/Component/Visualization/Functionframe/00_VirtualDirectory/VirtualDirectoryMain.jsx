@@ -1,10 +1,11 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {motion} from 'framer-motion';
 import Scrollbars from 'react-custom-scrollbars';
 import {Paper, Typography, Button, Divider } from  '@material-ui/core';
 import Folder from './Folder';
-import RightClickSnackbar from '../../Popup/RightClickSnackbar';
+import RightClickSnackbar from "../../Popup/RightClickSnackbar";
+
 const useStyles = makeStyles((theme) => ({
     VirtualDirectoryWrapper:{
         width:'100%',
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         height : '100%',
         padding : '30px',
         display:'grid',
-        gridTemplateColumns:'repeat(auto-fill,auto-fill)',
+        gridTemplateColumns:'repeat(auto-fill,minmax(210px, auto))',
         gap:'10px',
 
     },
@@ -31,12 +32,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function VirtualDirectoryMain(props){
     const classes = useStyles();
-    const constraintsRef = useRef(null)
-    function VirtualDirectoryFolderClickedHandler(){
-        return(
-        <RightClickSnackbar SnackbarType={'VirtualDirectory'}/>
-        );
+    const constraintsRef = React.createRef();
+    const [folderOpen, setFolderOpen] = useState(false);
+    function getFolderOpen(data){
+        setFolderOpen(data);
     }
+    useEffect(() => {
+        props.systemText('VirtualDirectoryReady');
+        console.log(folderOpen);
+      });
     return (
         <>
             <motion.div className={classes.VirtualDirectoryWrapper}
@@ -46,9 +50,15 @@ export default function VirtualDirectoryMain(props){
             >
                 <Scrollbars>
                     <Paper className={classes.VirtualDirectoryWrapperPaper} elevation={0} ref={constraintsRef}>
-                        <Folder constraintsRef={constraintsRef} folderClicked={VirtualDirectoryFolderClickedHandler()}/>
+                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
+                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
+                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
+                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
+                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
+                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
                     </Paper>
                 </Scrollbars>
+                <RightClickSnackbar SnackbarType={'VirtualDirectory'} folderOpen={folderOpen}/>
             </motion.div>
         </>
     );

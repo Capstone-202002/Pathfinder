@@ -129,14 +129,14 @@ function Folder(props) {
     }
   }))
   const [folderClicked, setFolderClicked] = useState(false);
-  const isFolderClicked = (e) => {
-    if (folderClicked) {
+  function isFolderClicked(){
+    if (folderClicked===true) {
       setFolderClicked(false);
-      //props.folderOpen(false);
-    } else {
+    } else if(folderClicked===false){
       setFolderClicked(true);
-      //props.folderOpen(true);
     }
+    props.folderOpen(folderClicked);
+    console.log(folderClicked);
   }
   const info = props.info;
   const classes = useStyles();
@@ -151,7 +151,7 @@ function Folder(props) {
           whileHover={{
             scale: 1.2, originX: 0
           }}
-          onClick={()=>isFolderClicked()}
+          onClick={isFolderClicked}
         >
           {folderClicked
             ? <>
