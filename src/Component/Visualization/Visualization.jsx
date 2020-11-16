@@ -15,6 +15,9 @@ import { Typography } from "@material-ui/core";
 import AppliedSortisticsMain from "./Functionframe/03_AppliedSortistics/AppliedSortisticsMain";
 import { motion } from 'framer-motion';
 import { Selectquery } from '../API/db';
+
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
 const path = window.require('path')
 
 
@@ -152,8 +155,18 @@ function Visualization(props) {
   function getMenu(data) {
     setMenu(data);
   }
+
+
   useEffect(() => {
     // db 코드 테스트
+
+    ipcRenderer.on('download-request', (event, payload) => {
+      console.log("다운로드 요청 ipc로 받기")
+      console.log(event)
+      console.log(payload)
+    })
+
+
     console.log(menu)
   });
   const classes = useStyles();

@@ -53,7 +53,7 @@ const createWindow = () => {
     tray.setToolTip('Pathfinder')
     tray.setContextMenu(contextMenu)
 
-    dlwatcher()
+    dlwatcher(mainWindow)
 
 
     mainWindow.on('closed', (event) => {

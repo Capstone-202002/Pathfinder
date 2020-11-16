@@ -1,11 +1,12 @@
-const path = require('path')
-const { app } = require('electron')
-const storage = require('electron-json-storage')
+const fs = require('fs')
 
-// db initialize
-// var dbPath = path.join(app.getPath('userData'), 'data.db')
+var path = 'C:\\Users\\Jun\\Downloads\\다운로드 (4).jpg'
 
-const dataPath = storage.getDataPath();
-console.log(dataPath);
+const ads_suffix = "Zone.Identifier"
 
+var result = fs.readFileSync(`${path}:${ads_suffix}`, { encoding: 'utf-8' })
 
+var re = /(ReferrerUrl=).*/
+var arr = re.exec(result)
+
+console.log(arr[0].substring(12))
