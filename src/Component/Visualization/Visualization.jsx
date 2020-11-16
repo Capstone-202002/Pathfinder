@@ -1,3 +1,4 @@
+  
 import React, { useState, useEffect, useTheme } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Base from "../Base/Base";
@@ -127,7 +128,7 @@ function Visualization(props) {
     })
     //setSearchInfo(info);
   }
-
+  const [systemState, setSystemState] = useState('VisualizationReady');
   // 검색 & 필터 바 오픈 여부 받아오는 부분
   const [isSearching, setIsSearching] = useState(false);
   function isSearchingChanger(isSearching) {
@@ -138,7 +139,7 @@ function Visualization(props) {
     //console.log(searchInfo);
     //console.log('검색바 오픈: ', isSearching);
     //console.log(searchInfo);
-
+    props.systemText(systemState);
   }, [searchInfo, isSearching])
 
 
@@ -166,7 +167,10 @@ function Visualization(props) {
     })
   });
   const classes = useStyles();
-
+  function getSystemText(data){
+    setSystemState(data);
+    props.systemText(systemState);
+}
   return (
     <>
       {/*Directory Analysis*/}
@@ -177,9 +181,8 @@ function Visualization(props) {
       >
         {visualizationRenderer}
       </motion.div>
-      <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger} />
+      <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger} systemText = {getSystemText} />
     </>
   );
 }
-
 export default Visualization;

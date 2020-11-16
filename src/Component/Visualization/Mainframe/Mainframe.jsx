@@ -109,7 +109,7 @@ export default function Mainframe(props){
         setSystemState(data);
     }
     function setSystemText(){
-        switch(props.systemState){
+        switch(systemState){
             case 'Online':
                 return '패스파인더가 준비되었습니다.'
             case 'VirtualDirectoryReady':
@@ -152,7 +152,7 @@ export default function Mainframe(props){
           //setSystemState('VisualizationReady');
           return (<>
             {/*Directory Analysis*/}
-            <Visualization defaultRenderSection={defaultRenderSection} defaultPathTracker={defaultPathTracker}/>
+            <Visualization defaultRenderSection={defaultRenderSection} defaultPathTracker={defaultPathTracker} systemText={getSystemText}/>
           </>
           );
         }
