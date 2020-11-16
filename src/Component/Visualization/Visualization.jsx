@@ -14,7 +14,9 @@ import SettingsMain from "./Functionframe/04_Settings/SettingsMain";
 import { Typography } from "@material-ui/core";
 import AppliedSortisticsMain from "./Functionframe/03_AppliedSortistics/AppliedSortisticsMain";
 import { motion } from 'framer-motion';
+import { Selectquery } from '../API/db';
 const path = window.require('path')
+
 
 
 
@@ -56,6 +58,7 @@ function Visualization(props) {
 
   function setDefaultDir(e) { // 디렉토리를 지정하는 함수, title 지정까지 같이함
     e.preventDefault();
+
     openDirectorySelectDialog((result) => {
       if (!result.canceled) {
         setDirName(result.filePaths[0]);
@@ -76,7 +79,6 @@ function Visualization(props) {
     return 'null';
   }
 
-  // db 코드 테스트
 
   function folderClicked(info) {  // 폴더요소 클릭시의 처리
 
@@ -128,6 +130,7 @@ function Visualization(props) {
     //console.log(searchInfo);
     //console.log('검색바 오픈: ', isSearching);
     //console.log(searchInfo);
+
   }, [searchInfo, isSearching])
 
 
@@ -150,6 +153,7 @@ function Visualization(props) {
     setMenu(data);
   }
   useEffect(() => {
+    // db 코드 테스트
     console.log(menu)
   });
   const classes = useStyles();

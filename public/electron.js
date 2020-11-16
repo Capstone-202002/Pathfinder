@@ -7,6 +7,7 @@ const {
 const path = require('path')
 const isDev = require('electron-is-dev')
 const { Hidden } = require('@material-ui/core')
+const { dlwatcher } = require('./DownloadWatcher')
 
 let mainWindow
 let tray
@@ -35,13 +36,6 @@ const createWindow = () => {
         mainWindow.loadFile(path.join(__dirname, '../build/index.html'));
     }
 
-
-    if (isDev) {
-        // Open the DevTools.
-        // BrowserWindow.addDevToolsExtension('<location to your react chrome extension>')
-        // mainWindow.webContents.openDevTools()
-    }
-
     // System Tray에 아이콘 생성
     tray = new Tray(path.join(__dirname, '../src/Component/Visualization/Asset/img/pathfinder_icon.ico'))
     const contextMenu = Menu.buildFromTemplate([
@@ -58,6 +52,8 @@ const createWindow = () => {
     ])
     tray.setToolTip('Pathfinder')
     tray.setContextMenu(contextMenu)
+
+    dlwatcher()
 
 
     mainWindow.on('closed', (event) => {
