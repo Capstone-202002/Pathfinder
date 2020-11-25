@@ -77,7 +77,6 @@ const useStyles = makeStyles((theme) => ({
 export default function LeftMenu(props){
     const classes = useStyles();
     const theme = useTheme();
-    //TODO
     //Selected : 상수형 state : Mainframe으로 넘겨줘야함
     const [selected, setSelected] = useState(4);
     function menuSetting(item){

@@ -129,15 +129,47 @@ function Folder(props) {
     }
   }))
   const [folderClicked, setFolderClicked] = useState(false);
+  const [leftClicked, setLeftClicked] = useState(false);
   function isFolderClicked(){
     if (folderClicked===true) {
       setFolderClicked(false);
+      props.folderOpen(folderClicked);
     } else if(folderClicked===false){
       setFolderClicked(true);
+      props.folderOpen(folderClicked);
     }
-    props.folderOpen(folderClicked);
+    
     console.log(folderClicked);
   }
+  function setIsFolderClickedToFalse(){
+    setFolderClicked(false);
+    props.folderOpen(folderClicked);
+  }
+  function isFolderLeftClicked(){
+    if(leftClicked){
+      setLeftClicked(false);
+      setIsFolderClickedToFalse();
+      return;
+    }
+    else{
+      setLeftClicked(true);
+      setIsFolderClickedToFalse();
+      return;
+    }
+  }
+  function componentDidMount(){
+    document.addEventListener('click', handleClickOutside, true);
+  }
+  function componentWillUnmount(){
+    document.addEventListener('click', handleClickOutside,true);
+    }
+  const handleClickOutside = event =>{
+    const domNode = React.findDOMNode(this);
+    if(!domNode || !domNode.contains(event.target)){
+      setFolderClicked(false);
+    }
+  }
+  
   const info = props.info;
   const classes = useStyles();
   // 기타 정보들이
@@ -151,22 +183,13 @@ function Folder(props) {
           whileHover={{
             scale: 1.2, originX: 0
           }}
-          onClick={isFolderClicked}
-        >
-          {folderClicked
-            ? <>
-              <Paper className={classes.folderHeadDiv} elevation={0}>
-              </Paper>
-              <Paper className={classes.folderBodyDiv} elevation={12}>
-              </Paper>
-            </>
-            : <>
-              <Paper className={classes.folderHeadDiv} elevation={0}>
+          onContextMenu={isFolderClicked}
+          onClick={isFolderLeftClicked}
+          onFocusOut={setIsFolderClickedToFalse}
+        >     <Paper className={classes.folderHeadDiv} elevation={0}>
               </Paper>
               <Paper className={classes.folderBodyDiv} elevation={0}>
               </Paper>
-            </>
-          }
           <Typography variant="body2" className={classes.folderNameText}>{''/*info.name*/}</Typography>
         </motion.div>
       </div>

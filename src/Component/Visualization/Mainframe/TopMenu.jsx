@@ -5,6 +5,9 @@ import { IconButton, Tooltip, Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import TitlebarMac from '../TitlebarMac/TitlebarMac';
 import {motion} from 'framer-motion';
+import DialogContent from '@material-ui/core/DialogContent';
+import Dialog from '@material-ui/core/Dialog';
+import HelpMain from "../Popup/HelpMain";
 //import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +51,15 @@ const useStyles = makeStyles((theme) => ({
         position : 'absolute',
         marginLeft : '100px',
         marginBottom : '20px'
+    },
+    helpMain:{
+        width:'940px',
+        height:'600px',
+    },
+    helpMainRoot:{
+        '& .MuiDialogContent-root':{
+            padding:'0'
+        }
     }
 
 }));
@@ -69,6 +81,13 @@ export default function TopMenu(props){
         }else{
             return props.mainText;
         }
+    }
+    const [open, setOpen] = React.useState(false);
+    const handleHelpOpen = () => {
+        setOpen(true);
+    };
+    const handleHelpClose = () => {
+        setOpen(false);
     }
     return (
         <>
@@ -92,10 +111,16 @@ export default function TopMenu(props){
                         <TitlebarMac style={{background:'transparent'}}/>
                     </div>
                     <Tooltip title = '도움말' arrow className={classes.helpButton}>
-                        <IconButton aria-label="help" className={classes.helpButton}>
+                        <IconButton aria-label="help" className={classes.helpButton} onClick={handleHelpOpen}>
                             <HelpOutline/>
                         </IconButton>
+                        
                     </Tooltip>
+                    <Dialog open={open} onClose={handleHelpClose} maxWidth={false} PaperProps={classes.helpMain} className={classes.helpMainRoot}>
+                            <DialogContent>
+                                <HelpMain menu={0} closeOnClick={handleHelpClose}/>
+                            </DialogContent>
+                        </Dialog>
                 </Paper>
             </div>
         </>

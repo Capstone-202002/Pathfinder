@@ -12,7 +12,7 @@ function HookTest() {
   useEffect(() => {
     //브라우저 API를 이용하여 문서 타이틀을 업데이트
     //근데 electron은 nodejs 상에서 돌리기 때문에 안되는듯
-    document.title = "You clicked ${count} times";
+    document.title = "Pathfinder에 어서오세요";
     
   }, [count]); // count state가 바뀔때만 useEffect 실행한다는 뜻, 과도하게 실행되어 발생하는 overhead 방지
   
