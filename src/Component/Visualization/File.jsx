@@ -125,6 +125,8 @@ function File(props) {
   const zips = ['.zip','.alz','.egg','.rar','.arj','.lzh']
 
   function setIcon(){
+    
+    
     if(documents.includes(info.extension)){
       return <AssignmentIcon className={classes.fileIcon}/>;
     }
@@ -143,7 +145,7 @@ function File(props) {
     return <InsertDriveFileSharp className={classes.fileIcon}/>;
     
   }
-
+  const info = props.info;
   const useStyles = makeStyles((theme) => ({
     fileDiv:{
       display: 'flex',
@@ -159,11 +161,22 @@ function File(props) {
       width  : "150px",
       //color : theme.palette.text.primary
       color : ChangeFileNameColor(props.info, props.searchInfo),
-      overflow : 'hidden'
+      overflow : 'hidden',
+      '&:hover':{
+        transition: 'text-indent 3s linear',
+        textIndent: returnIndentNumber()
+      }
     }
   }))
+  function returnIndentNumber(){
+    if(info.name.length>14){
+      return -(info.name.length);
+    }
+    else{
+      return 0;
+    }
+  }
   const classes = useStyles();
-  const info = props.info;
   // 기타 정보들이
   //console.log(info);
   return (
@@ -174,7 +187,7 @@ function File(props) {
       >
         
         {setIcon()}
-  <Typography className={classes.fileName}>{info.name}</Typography>
+          <Typography noWrap className={classes.fileName}>{info.name}</Typography>
       </motion.div>
     </>
   );
