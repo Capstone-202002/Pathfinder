@@ -60,7 +60,10 @@ const useStyles = makeStyles((theme) => ({
         width : '100%',
         height : '100%',
         radius : 0,
-        backgroundColor : theme.palette.background.default
+        backgroundColor : theme.palette.background.default,
+        '& .MuiPaper-elevation12':{
+            boxShadow:'inset 0px 7px 8px -4px rgba(0,0,0,0.2), inset 0px 12px 17px 2px rgba(0,0,0,0.14), inset 0px 5px 22px 4px rgba(0,0,0,0.12)'
+        }
     },
     buttonTextStyle:{
         position : 'absolute',
@@ -128,6 +131,14 @@ const menu = [4,0,1,2,3];
 function Item({ isSelected, onClick, menuItem}){
     const classes = useStyles();
     const theme = useTheme();
+    function elevationSet(){
+        if(isSelected){
+            return 12;
+        }
+        else{
+            return 0;
+        }
+    }
     return (
         <>
             <li className={classes.menuButtons} onClick={onClick} >
@@ -139,6 +150,7 @@ function Item({ isSelected, onClick, menuItem}){
                     >
                         <Paper
                             className={classes.insideButton}
+                            elevation={elevationSet()}
                         >
                             {
                             isSelected && (
