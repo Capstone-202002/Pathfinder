@@ -39,11 +39,11 @@ const useStyles = makeStyles((theme) => ({
     },
     helpMainContentSection:{
         width:'100%',
-        height:'calc(100%-50px)',
+        height:'400px',
     },
     helpMainSubtitleSection:{
         width:'100%',
-        height:'50px',
+        height:'100px',
     },
     helpMainStepperSection:{
         width:'100%',
@@ -83,10 +83,12 @@ export default function HelpMain(props){
                     </div>
                     <div className={classes.helpMainMiddleSection}>
                             <div className={classes.helpMainContentSection}>
+                                <Paper className={classes.helpMainContentSection} elevation={0}>
                                 {/*도움말 메인 콘텐츠 섹션*/}
                                 <Typography>
                                     helper
                                 </Typography>
+                                </Paper>
                             </div>
                             <div className={classes.helpMainSubtitleSection}>
                                 <Typography>
@@ -102,7 +104,7 @@ export default function HelpMain(props){
                         activeStep={activeStep}
                         className={classes.root}
                         nextButton={
-                            <Button size="small" onClick={handleNext} disabled={activeStep === menuSubtitles[mainContents].length}>
+                            <Button size="small" onClick={handleNext} disabled={activeStep === menuSubtitles[mainContents].length-1}>
                             Next
                             {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                             </Button>
