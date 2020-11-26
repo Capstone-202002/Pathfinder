@@ -47,6 +47,7 @@ const initDlWatcher = function (mainWindow) {
             extension: extenstion,
             place: '어딘가'
         }
+
         mainWindow.webContents.send('download-request', payload)
     })
 }
