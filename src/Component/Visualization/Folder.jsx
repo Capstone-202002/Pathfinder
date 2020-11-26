@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { IconButton, Typography, Paper, Button } from "@material-ui/core";
 import { FolderSharp, ArrowRight } from '@material-ui/icons';
 import { motion } from "framer-motion";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Draggable from 'react-draggable';
 
 import { openDirectorySelectDialog } from '../API/io'
+
 
 //const folderMinHeight = "80px";
 const folderMinHeight = 80;
@@ -22,7 +29,7 @@ const rightArrowVariants = {
 }
 
 function Folder(props) {
-
+  const theme = useTheme();
   function setFolderHeight(totalSize, folderSize) {
     //기본80
     //차지하는 용량 1퍼센트당 1픽셀
@@ -151,6 +158,23 @@ function Folder(props) {
   const classes = useStyles();
   // 기타 정보들이
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  function PaperComponent(props) {
+    return (
+      <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+        <Paper {...props} />
+      </Draggable>
+    );
+  }
+
   return (
     <>
       {/*<div style={divStyle}>이름: {name}, 폴더임</div>*/}
@@ -160,6 +184,7 @@ function Folder(props) {
             scale: 1.2, originX: 0
           }}
           onClick={() => { props.folderClicked(info); isFolderClicked() }}
+          onContextMenu = {handleClickOpen}
         >
           {folderClicked
             ? <>
@@ -214,6 +239,32 @@ function Folder(props) {
           }
         </div>
       </div>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperComponent={PaperComponent}
+        aria-labelledby="draggable-dialog-title"
+      >
+        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          {info.name} 폴더에 대해 어떤 작업을 실행할까요?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            아래 행동 중에 하나를 골라주세요
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+        <Button color="secondary" variant="outlined" size="small" onClick={handleClose}>
+                        폴더 탐색
+        </Button>
+        <Button color="primary" variant="outlined" size="small" onClick={handleClose}>
+                        탐색기에서 열기
+        </Button>
+        <Button color="secondary" variant="outlined" size="small" onClick={handleClose}>
+                        가상 디렉토리에 추가
+        </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

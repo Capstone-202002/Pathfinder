@@ -4,7 +4,12 @@ import { IconButton, Typography, Paper, Button } from "@material-ui/core";
 import { FolderSharp, ArrowRight } from '@material-ui/icons';
 import { motion } from "framer-motion";
 import RightClickSnackbar from '../../Popup/RightClickSnackbar';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Draggable from 'react-draggable';
 
 //const folderMinHeight = "80px";
 const folderMinHeight = 80;
@@ -169,7 +174,22 @@ function Folder(props) {
       setFolderClicked(false);
     }
   }
-  
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  function PaperComponent(props) {
+    return (
+      <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+        <Paper {...props} />
+      </Draggable>
+    );
+  }
   const info = props.info;
   const classes = useStyles();
   // 기타 정보들이
@@ -183,9 +203,7 @@ function Folder(props) {
           whileHover={{
             scale: 1.2, originX: 0
           }}
-          onContextMenu={isFolderClicked}
-          onClick={isFolderLeftClicked}
-          onFocusOut={setIsFolderClickedToFalse}
+          onContextMenu={handleClickOpen}
         >     <Paper className={classes.folderHeadDiv} elevation={0}>
               </Paper>
               <Paper className={classes.folderBodyDiv} elevation={0}>
@@ -193,6 +211,29 @@ function Folder(props) {
           <Typography variant="body2" className={classes.folderNameText}>{''/*info.name*/}</Typography>
         </motion.div>
       </div>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperComponent={PaperComponent}
+        aria-labelledby="draggable-dialog-title"
+      >
+        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          'DevTitle' 폴더에 대해 어떤 작업을 실행할까요?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            아래 행동 중에 하나를 골라주세요
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+        <Button color="primary" size="small" onClick={handleClose}>
+                        탐색기에서 열기
+        </Button>
+        <Button color="secondary" size="small" onClick={handleClose}>
+                        가상 디렉토리에서 삭제
+        </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
