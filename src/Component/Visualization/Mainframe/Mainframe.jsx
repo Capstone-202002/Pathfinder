@@ -198,7 +198,6 @@ export default function Mainframe(props){
     }
     return(
         <Paper className={classes.root} color="#0090FF" style={{borderBottomLeftRadius : '160px'}}>
-            <CssBaseline />
             
             <Paper className={classes.app} style={{borderBottomLeftRadius : '140px'}}>
                 {/* application space*/}

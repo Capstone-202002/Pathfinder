@@ -50,12 +50,12 @@ export default function VirtualDirectoryMain(props){
             >
                 <Scrollbars>
                     <Paper className={classes.VirtualDirectoryWrapperPaper} elevation={0} ref={constraintsRef}>
-                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
-                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
-                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
-                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
-                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
-                        <Folder constraintsRef={constraintsRef} folderOpen={getFolderOpen} />
+                        <Folder constraintsRef={constraintsRef} />
+                        <Folder constraintsRef={constraintsRef} />
+                        <Folder constraintsRef={constraintsRef} />
+                        <Folder constraintsRef={constraintsRef} />
+                        <Folder constraintsRef={constraintsRef} />
+                        <Folder constraintsRef={constraintsRef} />
                     </Paper>
                 </Scrollbars>
                 <RightClickSnackbar SnackbarType={'VirtualDirectory'} folderOpen={folderOpen}/>
