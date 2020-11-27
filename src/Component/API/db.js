@@ -33,10 +33,10 @@ create_history_tables.run()
 create_vdirectory_tables.run()
 console.log("DB 테이블 작성 및 인스턴스 작동")
 
-export function SelectDlHistoryAll() {
+export function SelectDlHistoryAll(callback) {
     let select_all = db.prepare(`SELECT * FROM dl_history`)
     var result = select_all.all()
-    return result
+    callback(result)
 }
 
 export function addVDirectory(kwargs) {
@@ -53,9 +53,9 @@ export function addVDirectory(kwargs) {
     console.log(result)
 }
 
-export function selectVdir() {
+export function selectVdir(callback) {
     let select_all = db.prepare(`SELECT * FROM vdirectory`)
     var result = select_all.all()
-    return result
+    callback(result)
 }
 

@@ -32,10 +32,10 @@ create_history_tables.run()
 create_vdirectory_tables.run()
 
 
-function SelectDlHistoryAll() {
+function SelectDlHistoryAll(callback) {
     let select_all = db.prepare(`SELECT * FROM dl_history`)
     var result = select_all.all()
-    return result
+    callback(result)
 }
 
 function addVDirectory(kwargs) {
@@ -52,21 +52,23 @@ function addVDirectory(kwargs) {
     console.log(result)
 }
 
-function selectVdir() {
+function selectVdir(callback) {
     let select_all = db.prepare(`SELECT * FROM vdirectory`)
     var result = select_all.all()
-    return result
+    callback(result)
 }
 
-// TEST_DATA = {
-//     VDir: '가상 디렉토리',
-//     FileName: '파일 이름',
-//     RealPath: '실제 저장경로',
-//     Extension: '확장자',
-//     Size: '크기'
-// }
+TEST_DATA = {
+    VDir: '가상 디렉토리',
+    FileName: '파일 이름',
+    RealPath: '실제 저장경로',
+    Extension: '확장자',
+    Size: '크기'
+}
 
 
-// addVDirectory(TEST_DATA)
+addVDirectory(TEST_DATA)
 
-console.log(selectVdir())
+selectVdir((result) => {
+    console.log(result)
+})
