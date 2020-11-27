@@ -9,7 +9,29 @@ const Database = window.require('better-sqlite3')
 const dbPath = app.getPath('userData')
 
 // DB 인스턴스 시작
-export const db = new Database(path.join(dbPath, 'data.db'), { verbose: console.log })
+export const db = new Database(path.join(dbPath, 'data'), { verbose: console.log })
+
+
+const create_history_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "dl_history" (
+	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"FIlename"	TEXT,
+	"URL"	TEXT,
+	"Extension"	TEXT,
+	"Place"	TEXT
+);`)
+
+const create_vdirectory_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "vdirectory" (
+	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"VDir"	TEXT,
+	"FileName"	TEXT,
+	"RealPath"	TEXT,
+	"Extension"	TEXT,
+	"Size" TEXT
+);`)
+
+create_history_tables.run()
+create_vdirectory_tables.run()
+console.log("DB 테이블 작성 및 인스턴스 작동")
 
 export function SelectDlHistoryAll() {
     let select_all = db.prepare(`SELECT * FROM dl_history`)
@@ -17,4 +39,23 @@ export function SelectDlHistoryAll() {
     return result
 }
 
+export function addVDirectory(kwargs) {
+    // kwargs는 vDir, FileName, RealPath, Extension, Size를 갖고 있어야 함.
+    let vDir = kwargs['VDir']
+    let FileName = kwargs['FileName']
+    let RealPath = kwargs['RealPath']
+    let Extension = kwargs['Extension']
+    let Size = kwargs['Size']
+
+    let query = db.prepare(`INSERT INTO vdirectory (VDir, FileName, RealPath, Extension, Size) 
+                            VALUES('${vDir}', '${FileName}', '${RealPath}', '${Extension}', '${Size}')`)
+    let result = query.run()
+    console.log(result)
+}
+
+export function selectVdir() {
+    let select_all = db.prepare(`SELECT * FROM vdirectory`)
+    var result = select_all.all()
+    return result
+}
 
