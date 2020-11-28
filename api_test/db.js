@@ -58,17 +58,22 @@ function selectVdir(callback) {
     callback(result)
 }
 
-TEST_DATA = {
-    VDir: '가상 디렉토리',
-    FileName: '파일 이름',
-    RealPath: '실제 저장경로',
-    Extension: '확장자',
-    Size: '크기'
-}
+// TEST_DATA = {
+//     VDir: '가상 디렉토리',
+//     FileName: '파일 이름',
+//     RealPath: '실제 저장경로',
+//     Extension: '확장자',
+//     Size: '크기'
+// }
 
 
-addVDirectory(TEST_DATA)
+// addVDirectory(TEST_DATA)
 
-selectVdir((result) => {
-    console.log(result)
-})
+// selectVdir((result) => {
+//     console.log(result)
+// })
+
+// 로컬 테스트용
+
+exports.SelectDlHistoryAll = SelectDlHistoryAll
+exports.db = db

@@ -13,10 +13,17 @@ const ads_suffix = "Zone.Identifier"
 
 function trimURLData(rawdata) {
 
+    if (rawdata == 'about:blank') {
+        return ''
+    }
+
     var re = /(ReferrerUrl=).*/
     var arr = re.exec(rawdata)
 
-    return arr[0].substring(12)
+    let domain = (new URL(arr[0].substring(12)))
+    domain = domain.hostname;
+
+    return domain
 }
 
 
@@ -38,16 +45,16 @@ const initDlWatcher = function (mainWindow) {
 
         let insert_history = db.prepare(`INSERT INTO dl_history (Filename, URL, Extension, Place) 
         VALUES ('${filepath}', '${url}', '${extenstion}', '어딘가')`)
-        insert_history.run()
+        let id = insert_history.run()
 
         // 데이터 전송
         let payload = {
+            id: id.lastInsertRowid,
             path: filepath,
             URL: url,
             extension: extenstion,
             place: '어딘가'
         }
-
         mainWindow.webContents.send('download-request', payload)
     })
 }
