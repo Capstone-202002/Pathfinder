@@ -59,12 +59,6 @@ export function selectVdir(callback) {
     callback(result)
 }
 
-export function selectVdir(callback) {
-    let select_all = db.prepare(`SELECT * FROM vdirectory`)
-    var result = select_all.all()
-    callback(result)
-}
-
 export function deleteVdir(vdir, filename) {
     // 콜백 없어도 될 듯?
     let del = db.prepare(`DELETE FROM vdirectory WHERE VDir = '${vdir}' AND FileName = '${filename}'`)
