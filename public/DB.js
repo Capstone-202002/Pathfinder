@@ -9,12 +9,14 @@ const dbPath = app.getPath('userData')
 const db = new Database(path.join(dbPath, 'data'), { verbose: console.log })
 
 const create_history_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "dl_history" (
-	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
-	"FIlename"	TEXT,
+    "ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Path" TEXT,
+	"Filename"	TEXT,
 	"URL"	TEXT,
 	"Extension"	TEXT,
 	"Place"	TEXT
 );`)
+
 
 const create_vdirectory_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "vdirectory" (
 	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,

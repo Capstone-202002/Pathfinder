@@ -12,26 +12,27 @@ const dbPath = app.getPath('userData')
 export const db = new Database(path.join(dbPath, 'data'), { verbose: console.log })
 
 
-const create_history_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "dl_history" (
-	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
-	"Filename"	TEXT,
-	"URL"	TEXT,
-	"Extension"	TEXT,
-	"Place"	TEXT
-);`)
+// const create_history_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "dl_history" (
+//     "ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
+//     "Path" TEXT,
+// 	"Filename"	TEXT,
+// 	"URL"	TEXT,
+// 	"Extension"	TEXT,
+// 	"Place"	TEXT
+// );`)
 
-const create_vdirectory_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "vdirectory" (
-	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
-	"VDir"	TEXT,
-	"FileName"	TEXT,
-	"RealPath"	TEXT,
-	"Extension"	TEXT,
-	"Size" TEXT
-);`)
+// const create_vdirectory_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "vdirectory" (
+// 	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
+// 	"VDir"	TEXT,
+// 	"FileName"	TEXT,
+// 	"RealPath"	TEXT,
+// 	"Extension"	TEXT,
+// 	"Size" TEXT
+// );`)
 
-create_history_tables.run()
-create_vdirectory_tables.run()
-console.log("DB 테이블 작성 및 인스턴스 작동")
+// create_history_tables.run()
+// create_vdirectory_tables.run()
+// console.log("DB 테이블 작성 및 인스턴스 작동")
 
 export function SelectDlHistoryAll(callback) {
     let select_all = db.prepare(`SELECT * FROM dl_history`)
