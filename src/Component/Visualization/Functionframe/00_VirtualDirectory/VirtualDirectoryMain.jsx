@@ -5,6 +5,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import {Paper, Typography, Button, Divider } from  '@material-ui/core';
 import Folder from './Folder';
 import RightClickSnackbar from "../../Popup/RightClickSnackbar";
+import {selectVdir} from '../../../API/db';
 
 const useStyles = makeStyles((theme) => ({
     VirtualDirectoryWrapper:{
@@ -41,6 +42,13 @@ export default function VirtualDirectoryMain(props){
         props.systemText('VirtualDirectoryReady');
         console.log(folderOpen);
       });
+    
+    var renderSection;
+    selectVdir((result)=>renderSection=result);
+    var virtualDirectoryRenderer = renderSection.map((renderInfo, index)=>(
+        <Folder constraintsRef={constraintsRef} key={index} info={renderInfo}/>
+    ));
+    
     return (
         <>
             <motion.div className={classes.VirtualDirectoryWrapper}
@@ -50,12 +58,7 @@ export default function VirtualDirectoryMain(props){
             >
                 <Scrollbars>
                     <Paper className={classes.VirtualDirectoryWrapperPaper} elevation={0} ref={constraintsRef}>
-                        <Folder constraintsRef={constraintsRef} />
-                        <Folder constraintsRef={constraintsRef} />
-                        <Folder constraintsRef={constraintsRef} />
-                        <Folder constraintsRef={constraintsRef} />
-                        <Folder constraintsRef={constraintsRef} />
-                        <Folder constraintsRef={constraintsRef} />
+                        {virtualDirectoryRenderer}
                     </Paper>
                 </Scrollbars>
                 <RightClickSnackbar SnackbarType={'VirtualDirectory'} folderOpen={folderOpen}/>

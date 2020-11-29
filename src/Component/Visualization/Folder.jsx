@@ -9,6 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Draggable from 'react-draggable';
+import {addVDirectory} from '../API/db';
 
 import { openDirectorySelectDialog } from '../API/io'
 
@@ -167,6 +168,12 @@ function Folder(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  function handleAddVirtualDirectory(){
+    addVDirectory({VDir:'vdir', FileName:info.name, RealPath:info.absPath, Extension:'dir', Size:'0'});
+    handleClose();
+  }
+
   function PaperComponent(props) {
     return (
       <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
@@ -260,7 +267,7 @@ function Folder(props) {
         <Button color="primary" variant="outlined" size="small" onClick={handleClose}>
                         탐색기에서 열기
         </Button>
-        <Button color="secondary" variant="outlined" size="small" onClick={handleClose}>
+        <Button color="secondary" variant="outlined" size="small" onClick={handleAddVirtualDirectory}>
                         가상 디렉토리에 추가
         </Button>
         </DialogActions>

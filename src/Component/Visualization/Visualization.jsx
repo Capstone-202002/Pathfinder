@@ -2,20 +2,15 @@
 import React, { useState, useEffect, useTheme } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Base from "../Base/Base";
-import Mainframe from "./Mainframe/Mainframe"
 import Section from "./Functionframe/01_DirectoryAnalysis/Section";
 import { getFileList, openDirectorySelectDialog } from "../API/io";
 import SearchAndFilter from './Functionframe/01_DirectoryAnalysis/SearchAndFilter';
 import Scrollbars from "react-custom-scrollbars";
 import { FormatColorTextSharp } from "@material-ui/icons";
 import clsx from 'clsx';
-import DownloadAssistMain from "./Functionframe/02_DownloadAssist/DownloadAssistMain";
 import DownloadPopup from "./Popup/DownloadPopup";
-import SettingsMain from "./Functionframe/04_Settings/SettingsMain";
 import { Typography } from "@material-ui/core";
-import AppliedSortisticsMain from "./Functionframe/03_AppliedSortistics/AppliedSortisticsMain";
 import { motion } from 'framer-motion';
-import VirtualDirectoryMain from "./Functionframe/00_VirtualDirectory/VirtualDirectoryMain";
 import RightClickSnackbar from "./Popup/RightClickSnackbar";
 
 const electron = window.require('electron');

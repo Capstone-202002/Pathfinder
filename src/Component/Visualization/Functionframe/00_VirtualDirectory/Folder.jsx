@@ -191,6 +191,7 @@ function Folder(props) {
     );
   }
   const info = props.info;
+  console.log(info)
   const classes = useStyles();
   // 기타 정보들이
   return (
@@ -208,7 +209,7 @@ function Folder(props) {
               </Paper>
               <Paper className={classes.folderBodyDiv} elevation={0}>
               </Paper>
-          <Typography variant="body2" className={classes.folderNameText}>{''/*info.name*/}</Typography>
+          <Typography variant="body2" className={classes.folderNameText}>{info.FileName}</Typography>
         </motion.div>
       </div>
       <Dialog
@@ -218,7 +219,7 @@ function Folder(props) {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          'DevTitle' 폴더에 대해 어떤 작업을 실행할까요?
+          {info.FileName} 폴더에 대해 어떤 작업을 실행할까요?
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
