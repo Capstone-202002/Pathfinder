@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import { Divider, Typography,Paper,Switch,Button } from "@material-ui/core";
 import {motion} from 'framer-motion';
+import {useTracked} from '../../../../../SettingContext';
+
 const useStyles = makeStyles((theme) => ({
     settingMenuWrapper:{
         width:'100%',
@@ -53,15 +55,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SettingPathfinder(props){
-    const theme = useTheme();
-    const [state, setState] = React.useState({
-        theme: true,
-        background:true,
-        exitButton:true,
-    });
-    const handleChange = (event) =>{
-        setState({...state, [event.target.name]: event.target.checked});
-    };
+    const [settings, setSettings]=useTracked();
+    console.log(settings.pathfinderExitButtonOperation)
+    
+    
+    const handleToggle=(event)=>{
+        const targetName = event.target.name;
+        const targetValue = event.target.checked;
+        setSettings((s)=>({
+            ...s,
+            [targetName]:targetValue
+        }))
+    }
     const classes = useStyles();
 
     function settingInitialize(){
@@ -120,10 +125,10 @@ export default function SettingPathfinder(props){
                                 라이트
                         </Typography>
                         <Switch
-                            checked={state.theme}
-                            onChange={handleChange}
-                            name = "theme"
-                        ></Switch>
+                             checked={settings.pathfinderTheme}
+                             onChange={handleToggle}
+                             name = "pathfinderTheme"
+                         ></Switch>
                         <Typography style={{marginRight:'10px'}}variant='subtitle2' align='left'>
                                 다크
                         </Typography>
@@ -144,9 +149,9 @@ export default function SettingPathfinder(props){
                                 안돼요!
                         </Typography>
                         <Switch
-                            checked={state.background}
-                            onChange={handleChange}
-                            name = "background"
+                            checked={settings.pathfinderBackgroundOperation}
+                            onChange={handleToggle}
+                            name = "pathfinderBackgroundOperation"
                         ></Switch>
                         <Typography style={{marginRight:'10px'}}variant='subtitle2' align='left'>
                                 괜찮아요!
@@ -168,9 +173,9 @@ export default function SettingPathfinder(props){
                                 시스템 트레이
                         </Typography>
                         <Switch
-                            checked={state.exitButton}
-                            onChange={handleChange}
-                            name = "exitButton"
+                            checked={settings.pathfinderExitButtonOperation}
+                            onChange={handleToggle}
+                            name = "pathfinderExitButtonOperation"
                         ></Switch>
                         <Typography style={{marginRight:'10px'}}variant='subtitle2' align='left'>
                                 프로그램 종료

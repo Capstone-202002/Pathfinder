@@ -10,6 +10,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Draggable from 'react-draggable';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 //const folderMinHeight = "80px";
 const folderMinHeight = 80;
@@ -162,6 +164,9 @@ function Folder(props) {
       return;
     }
   }
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
   function componentDidMount(){
     document.addEventListener('click', handleClickOutside, true);
   }
@@ -183,12 +188,24 @@ function Folder(props) {
   const handleClose = () => {
     setOpen(false);
   };
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const handleSnackBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setSnackBarOpen(false);
+      };
   function PaperComponent(props) {
     return (
       <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
         <Paper {...props} />
       </Draggable>
     );
+  }
+  function handleDelete(){
+    setSnackBarOpen(true)
+    handleClose();
   }
   const info = props.info;
   console.log(info)
@@ -230,11 +247,17 @@ function Folder(props) {
         <Button color="primary" size="small" onClick={handleClose}>
                         탐색기에서 열기
         </Button>
-        <Button color="secondary" size="small" onClick={handleClose}>
+        <Button color="secondary" size="small" onClick={handleDelete}>
                         가상 디렉토리에서 삭제
         </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={handleSnackBarClose}>
+                    <Alert onClose={handleSnackBarClose} severity="warning">
+                      {info.name} 폴더가 가상 디렉토리에서 제거되었어요!
+                    </Alert>
+      </Snackbar>
+
     </>
   );
 }

@@ -186,14 +186,17 @@ export default function DownloadAssistMain(props){
                             {/*Applied Sortistics 관련 기능 집어넣기*/}
                         </div>
                     </div>
+                    {/*
                     <div className={classes.baseDownloadDirectoryOutputBusControlWrapper}>
-                        {/*다운로드폴더 자동 삭제 주기 슬라이더*/}
+                        
                         <Typography variant='subtitle2' className={classes.baseDownloadDirectoryText} align='left'> 다운로드 된 파일 중 자동으로 정리되지 않은 파일은 며칠 뒤에 삭제할까요? (0으로 설정할 경우 삭제하지 않습니다.)</Typography>
                         <Divider marginBottom="10px"></Divider>
                         <div className = {classes.downloadedFileAutoDeleteSlider}>
                             <PrettoSlider valueLabelDisplay='on' defaultValue={30} max={365} onChangeCommitted={handleAutoDeleteChange}/>
                         </div>
                     </div>
+                    */}
+                    
                     <div className={classes.willDownloadDirectoryRecommendationWrapper}>
                         <Typography style={{marginRight:'30px'}}variant='subtitle1' align='left'>
                                 PathFinder의 스마트한 다운로드 경로 추천을 받으실래요?
