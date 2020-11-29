@@ -12,7 +12,9 @@ import DownloadPopup from "./Popup/DownloadPopup";
 import { Typography } from "@material-ui/core";
 import { motion } from 'framer-motion';
 import RightClickSnackbar from "./Popup/RightClickSnackbar";
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import SnackbarContext from './VisualizationSnackbarContext';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const path = window.require('path')
@@ -138,14 +140,16 @@ function Visualization(props) {
   }, [searchInfo, isSearching])
 
 
+  //Snackbar 관련 스테이트
+  const [open, setOpen] = useState(false);
 
   var visualizationRenderer = renderSection.map((renderInfo, index) => (
-    <Section sectionInfo={renderInfo}
-      folderClicked={folderClicked}
-      key={index}
-      isSearching={isSearching}
-      searchInfo={searchInfo}
-    />
+      <Section sectionInfo={renderInfo}
+        folderClicked={folderClicked}
+        key={index}
+        isSearching={isSearching}
+        searchInfo={searchInfo}
+      />
   ));
 
   //왼쪽 메뉴로부터 값 읽어오기
@@ -165,7 +169,19 @@ function Visualization(props) {
   function getSystemText(data){
     setSystemState(data);
     props.systemText(systemState);
-}
+  }
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+  
+  
+  const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
   return (
     <>
       {/*Directory Analysis*/}
@@ -174,9 +190,16 @@ function Visualization(props) {
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
+      
         {visualizationRenderer}
+      
       </motion.div>
       <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger} systemText = {getSystemText} />
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success">
+                    This is a success message!
+                    </Alert>
+      </Snackbar>
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from "react";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {motion} from 'framer-motion';
 import Scrollbars from 'react-custom-scrollbars';
+import MuiAlert from '@material-ui/lab/Alert';
 import {Paper, Typography, Button, Divider } from  '@material-ui/core';
 import Folder from './Folder';
 import RightClickSnackbar from "../../Popup/RightClickSnackbar";

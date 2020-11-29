@@ -10,9 +10,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Draggable from 'react-draggable';
 import {addVDirectory} from '../API/db';
-
+import SnackbarContext from './VisualizationSnackbarContext';
 import { openDirectorySelectDialog } from '../API/io'
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 //const folderMinHeight = "80px";
 const folderMinHeight = 80;
@@ -171,9 +172,21 @@ function Folder(props) {
 
   function handleAddVirtualDirectory(){
     addVDirectory({VDir:'vdir', FileName:info.name, RealPath:info.absPath, Extension:'dir', Size:'0'});
+    setSnackBarOpen(true);
     handleClose();
   }
-
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+  
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const handleSnackBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setSnackBarOpen(false);
+      };
   function PaperComponent(props) {
     return (
       <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
@@ -181,7 +194,7 @@ function Folder(props) {
       </Draggable>
     );
   }
-
+  
   return (
     <>
       {/*<div style={divStyle}>이름: {name}, 폴더임</div>*/}
@@ -268,10 +281,15 @@ function Folder(props) {
                         탐색기에서 열기
         </Button>
         <Button color="secondary" variant="outlined" size="small" onClick={handleAddVirtualDirectory}>
-                        가상 디렉토리에 추가
+              가상 디렉토리에 추가
         </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={handleSnackBarClose}>
+                    <Alert onClose={handleSnackBarClose} severity="success">
+                      {info.name} 폴더가 가상 디렉토리에 추가되었어요!
+                    </Alert>
+      </Snackbar>
     </>
   );
 }
