@@ -52,6 +52,24 @@ const useStyles = makeStyles((theme) => ({
 export default function DownloadPopup(props){
     const classes = useStyles();
     const theme = useTheme();
+    function fileInfoRenderer(){
+        if (props.fileInfo == null) {
+            return (<Typography variant='subtitle2'>null</Typography>)
+        }
+        else {
+            return  (<>
+            <Typography variant='subtitle2'>
+                확장자: {props.fileInfo.extension}
+            </Typography>
+            <Typography variant='subtitle2'>
+                다운로드 초기 경로: {props.fileInfo.pathj}
+            </Typography>
+            <Typography variant='subtitle2'>
+                다운로드 URL: {props.fileInfo.URL}
+            </Typography>
+        </>)
+        }
+    }
     return(<>
             <div className={classes.popupRoot}>
                 <Paper className={classes.popupRootPaper}>
@@ -66,7 +84,7 @@ export default function DownloadPopup(props){
                     {/*버튼 온클릭 구현 : 다운로드한 파일 이름 변경*/}
                     <Button className={classes.buttons}>
                                 <Typography variant='subtitle2' align='left'>
-                                    dev.file.name
+                                    {props.fileName}
                                     {/*TODO*/}
                                     {/*버튼내부에 파일명 텍스트 세팅 함수 구현*/}
                                 </Typography>
@@ -78,7 +96,7 @@ export default function DownloadPopup(props){
                     {/*버튼 온클릭 구현 : 다운로드한 파일 저장 디렉토리 변경*/}
                     <Button className={classes.buttons}>
                                 <Typography variant='subtitle2' align='left'>
-                                    dev.file.downloadDirectory
+                                    {props.recommended}
                                     {/*TODO*/}
                                     {/*버튼내부에 다운로드 디렉토리 경로 세팅 함수 구현*/}
                                 </Typography>
@@ -87,10 +105,8 @@ export default function DownloadPopup(props){
                     <Divider marginBottom="10px"></Divider>
                     <Scrollbars>
                         <Paper className={classes.detailPaper} elevation={0} >
+                            {fileInfoRenderer()}
                             {/* 타이포 그래피 안에 파일의 디테일을 보여주는 함수 추가 */}
-                            <Typography variant='subtitle2'>
-                                dev.file.details
-                            </Typography>
                         </Paper>
                     </Scrollbars>
                     <motion.div className={classes.endButtonDiv}
@@ -100,7 +116,7 @@ export default function DownloadPopup(props){
                         {/*TODO*/}
                         {/*버튼 온클릭 구현 : 완료버튼/ 종료하고 메인프로그램에 넘김*/}
                         <div style={{backgroundColor:theme.palette.background.default,borderRadius:'15px'}}>
-                            <Typography variant='button' style={{margin:'20px'}} noWrap={true}> 이대로 저장해주세요 </Typography>
+                            <Typography variant='button' style={{margin:'20px'}} noWrap={true} onClick={props.popupSubmit}> 이대로 저장해주세요 </Typography>
                         </div>
                     </motion.div>
                 </Paper>

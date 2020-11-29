@@ -152,15 +152,15 @@ function Visualization(props) {
   //TODO
   //menu State : Mainframe으로부터 동기화하여 아래 setContents()를 바뀔때마다 콘텐츠 변경
   //UI 개발을 위해 메뉴값을 1로 고정해둠 나중에 바꿀것
-  useEffect(() => {
-    // db 코드 테스트
+  // useEffect(() => {
+  //   // db 코드 테스트
 
-    ipcRenderer.on('download-request', (event, payload) => {
-      console.log("다운로드 요청 ipc로 받기")
-      console.log(event)
-      console.log(payload)
-    })
-  });
+  //   ipcRenderer.on('download-request', (event, payload) => {
+  //     console.log("다운로드 요청 ipc로 받기")
+  //     console.log(event)
+  //     console.log(payload)
+  //   })
+  // });
   const classes = useStyles();
   function getSystemText(data){
     setSystemState(data);

@@ -68,7 +68,7 @@ const createWindow = () => {
 }
 
 app.on('ready', createWindow)
-
+process.noAsar = true
 // app.on('window-all-closed', () => {
 //     if (process.platform !== 'darwin') {
 //         app.quit()
