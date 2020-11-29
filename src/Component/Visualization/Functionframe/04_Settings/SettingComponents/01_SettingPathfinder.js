@@ -56,9 +56,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SettingPathfinder(props){
     const [settings, setSettings]=useTracked();
-    console.log(settings.pathfinderExitButtonOperation)
-    
-    
     const handleToggle=(event)=>{
         const targetName = event.target.name;
         const targetValue = event.target.checked;

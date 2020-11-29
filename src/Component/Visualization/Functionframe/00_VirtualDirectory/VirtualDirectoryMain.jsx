@@ -7,6 +7,7 @@ import {Paper, Typography, Button, Divider } from  '@material-ui/core';
 import Folder from './Folder';
 import RightClickSnackbar from "../../Popup/RightClickSnackbar";
 import {selectVdir} from '../../../API/db';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles((theme) => ({
     VirtualDirectoryWrapper:{
@@ -39,6 +40,17 @@ export default function VirtualDirectoryMain(props){
     function getFolderOpen(data){
         setFolderOpen(data);
     }
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+      }
+    const [open, setOpen] = useState(false);
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
     useEffect(() => {
         props.systemText('VirtualDirectoryReady');
         console.log(folderOpen);
@@ -62,7 +74,11 @@ export default function VirtualDirectoryMain(props){
                         {virtualDirectoryRenderer}
                     </Paper>
                 </Scrollbars>
-                <RightClickSnackbar SnackbarType={'VirtualDirectory'} folderOpen={folderOpen}/>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success">
+                    This is a success message!
+                    </Alert>
+                </Snackbar>
             </motion.div>
         </>
     );

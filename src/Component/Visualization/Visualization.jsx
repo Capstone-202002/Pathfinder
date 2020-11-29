@@ -12,8 +12,7 @@ import DownloadPopup from "./Popup/DownloadPopup";
 import { Typography } from "@material-ui/core";
 import { motion } from 'framer-motion';
 import RightClickSnackbar from "./Popup/RightClickSnackbar";
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+
 import SnackbarContext from './VisualizationSnackbarContext';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -140,8 +139,6 @@ function Visualization(props) {
   }, [searchInfo, isSearching])
 
 
-  //Snackbar 관련 스테이트
-  const [open, setOpen] = useState(false);
 
   var visualizationRenderer = renderSection.map((renderInfo, index) => (
       <Section sectionInfo={renderInfo}
@@ -156,32 +153,21 @@ function Visualization(props) {
   //TODO
   //menu State : Mainframe으로부터 동기화하여 아래 setContents()를 바뀔때마다 콘텐츠 변경
   //UI 개발을 위해 메뉴값을 1로 고정해둠 나중에 바꿀것
-  // useEffect(() => {
-  //   // db 코드 테스트
+  useEffect(() => {
+    // db 코드 테스트
 
-  //   ipcRenderer.on('download-request', (event, payload) => {
-  //     console.log("다운로드 요청 ipc로 받기")
-  //     console.log(event)
-  //     console.log(payload)
-  //   })
-  // });
+    ipcRenderer.on('download-request', (event, payload) => {
+      console.log("다운로드 요청 ipc로 받기")
+      console.log(event)
+      console.log(payload)
+    })
+  });
   const classes = useStyles();
   function getSystemText(data){
     setSystemState(data);
     props.systemText(systemState);
   }
-  function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-  }
   
-  
-  const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-    
-        setOpen(false);
-      };
   return (
     <>
       {/*Directory Analysis*/}
@@ -195,11 +181,6 @@ function Visualization(props) {
       
       </motion.div>
       <SearchAndFilter searchChanger={searchChanger} isSearchingChanger={isSearchingChanger} systemText = {getSystemText} />
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success">
-                    This is a success message!
-                    </Alert>
-      </Snackbar>
     </>
   );
 }

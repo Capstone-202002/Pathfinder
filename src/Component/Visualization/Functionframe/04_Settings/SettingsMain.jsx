@@ -124,7 +124,7 @@ export default function SettingsMain(props){
                             >
                                 <Paper className={classes.settingMenuButtons} elevation={0} onClick={buttonClick3} style={{backgroundColor: buttonBg3}}>
                                     <Typography variant='subtitle2'>
-                                        디렉토리 자동 정리 설정
+                                        자동 폴더 정리 설정
                                     </Typography>
                                 </Paper>
                             </motion.div>

@@ -12,7 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Draggable from 'react-draggable';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+const openExplorer = require('../../FileWindowOpen/OpenExplorer');
 //const folderMinHeight = "80px";
 const folderMinHeight = 80;
 const folderMaxHeight = "180px";
@@ -188,6 +188,7 @@ function Folder(props) {
   const handleClose = () => {
     setOpen(false);
   };
+  
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const handleSnackBarClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -203,11 +204,21 @@ function Folder(props) {
       </Draggable>
     );
   }
+  const info = props.info;
+  function handleOpenExplorer(){
+    handleClose();
+    openExplorer(info.RealPath, err =>{
+      if(err){
+        console.log(err);
+      }
+    })
+    
+  }
   function handleDelete(){
     setSnackBarOpen(true)
     handleClose();
   }
-  const info = props.info;
+  
   console.log(info)
   const classes = useStyles();
   // 기타 정보들이
@@ -244,7 +255,7 @@ function Folder(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-        <Button color="primary" size="small" onClick={handleClose}>
+        <Button color="primary" size="small" onClick={handleOpenExplorer}>
                         탐색기에서 열기
         </Button>
         <Button color="secondary" size="small" onClick={handleDelete}>

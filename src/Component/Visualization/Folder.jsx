@@ -14,7 +14,7 @@ import SnackbarContext from './VisualizationSnackbarContext';
 import { openDirectorySelectDialog } from '../API/io'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+const openExplorer = require('../Visualization/FileWindowOpen/OpenExplorer');
 //const folderMinHeight = "80px";
 const folderMinHeight = 80;
 const folderMaxHeight = "180px";
@@ -175,6 +175,16 @@ function Folder(props) {
     setSnackBarOpen(true);
     handleClose();
   }
+  function handleOpenExplorer(){
+    handleClose();
+    openExplorer(info.RealPath, err =>{
+      if(err){
+        console.log(err);
+      }
+    })
+    
+  }
+  
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
@@ -221,6 +231,7 @@ function Folder(props) {
             </>
           }
           <Typography variant="body2" className={classes.folderNameText}>{info.name}</Typography>
+          {/*
           <div className={classes.APSImportBusDiv}>
             <motion.button className={classes.APSImportBusButton} onClick={() => { isAPSClicked() }}
               initial={{opacity:0}}
@@ -237,7 +248,9 @@ function Folder(props) {
               Export Bus
             </motion.button>
           </div>
+          */}
         </motion.div>
+          
         <div className={classes.rightArrowDiv}>
           {folderClicked
             ? <><motion.div className={classes.rightArrowDiv}
@@ -277,7 +290,7 @@ function Folder(props) {
         <Button color="secondary" variant="outlined" size="small" onClick={handleClose}>
                         폴더 탐색
         </Button>
-        <Button color="primary" variant="outlined" size="small" onClick={handleClose}>
+        <Button color="primary" variant="outlined" size="small" onClick={handleOpenExplorer}>
                         탐색기에서 열기
         </Button>
         <Button color="secondary" variant="outlined" size="small" onClick={handleAddVirtualDirectory}>
