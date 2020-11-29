@@ -42,15 +42,17 @@ const initDlWatcher = function (mainWindow) {
 
         var url = trimURLData(result)
         var extenstion = path.extname(filepath)
+        var filename = path.basename(filepath)
 
-        let insert_history = db.prepare(`INSERT INTO dl_history (Filename, URL, Extension, Place) 
-        VALUES ('${filepath}', '${url}', '${extenstion}', '어딘가')`)
+        let insert_history = db.prepare(`INSERT INTO dl_history (Path, Filename, URL, Extension, Place) 
+        VALUES ('${filepath}','${filename}', '${url}', '${extenstion}', '어딘가')`)
         let id = insert_history.run()
 
         // 데이터 전송
         let payload = {
             id: id.lastInsertRowid,
             path: filepath,
+            filename: filename,
             URL: url,
             extension: extenstion,
             place: '어딘가'

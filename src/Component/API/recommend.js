@@ -14,7 +14,7 @@ export function getRecommendList(url, filename, callback) {
     let candidates = []
     db.SelectDlHistory(url, (result) => {
         result.forEach(element => {
-            let sim = ls.similarity(filename, path.basename(element.Filename))
+            let sim = ls.similarity(filename, element.Filename)
             candidates.push({
                 similarity: sim,
                 name: element.Filename,
