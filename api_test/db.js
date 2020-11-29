@@ -12,7 +12,7 @@ const db = new Database(path.join(dbPath, 'data'), { verbose: console.log })
 
 const create_history_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "dl_history" (
 	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
-	"FIlename"	TEXT,
+	"Filename"	TEXT,
 	"URL"	TEXT,
 	"Extension"	TEXT,
 	"Place"	TEXT
@@ -34,6 +34,12 @@ create_vdirectory_tables.run()
 
 function SelectDlHistoryAll(callback) {
     let select_all = db.prepare(`SELECT * FROM dl_history`)
+    var result = select_all.all()
+    callback(result)
+}
+
+function SelectDlHistory(url, callback) {
+    let select_all = db.prepare(`SELECT * FROM dl_history WHERE URL='${url}'`)
     var result = select_all.all()
     callback(result)
 }
