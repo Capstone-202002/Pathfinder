@@ -30,6 +30,8 @@
     "react-scripts": "3.4.3",
     "recharts": "^1.8.5",
     "sqlite3": "^5.0.0",
+    "string-comparison": "^1.0.9",
+    "string-cosine-similarity": "^2.0.1",
     "wait-on": "^5.2.0"
   },
   "devDependencies": {

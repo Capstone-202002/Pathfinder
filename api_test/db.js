@@ -64,6 +64,12 @@ function selectVdir(callback) {
     callback(result)
 }
 
+function deleteVdir(vdir, filename) {
+    // 콜백 없어도 될 듯?
+    let del = db.prepare(`DELETE FROM vdirectory WHERE VDir = '${vdir}' AND FileName = '${filename}'`)
+    var result = del.run()
+}
+
 // TEST_DATA = {
 //     VDir: '가상 디렉토리',
 //     FileName: '파일 이름',
@@ -81,5 +87,4 @@ function selectVdir(callback) {
 
 // 로컬 테스트용
 
-exports.SelectDlHistoryAll = SelectDlHistoryAll
-exports.db = db
+exports.SelectDlHistory = SelectDlHistory
