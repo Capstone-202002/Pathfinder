@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InsertEmoticon  from "@material-ui/icons/InsertEmoticon";
 import { AnimateSharedLayout, motion } from "framer-motion";
 import pathfinderIcon from '../Asset/img/pathfinder_icon.svg';
-
+import pathfinderIconHos from '../Asset/img/pathfinder_icon_hos.svg';
 
 
 const menuTexts = ['디렉토리 뷰', '다운로드 어시스트', '자동 폴더 정리', '설정','가상 디렉토리']
@@ -86,6 +86,38 @@ export default function LeftMenu(props){
         setSelected(item);
         props.menu(item);
     }
+    const [count, setCount] = useState(0);
+    function increaseCount(){
+        setCount(count+1);
+    }
+    function pathfinderIconReturner(){
+        if(count===0){
+            return pathfinderIcon;
+        }
+        else if((count%20)===0){
+            return pathfinderIconHos;
+        }
+        else{
+            return pathfinderIcon;
+        }
+    }
+    const hosVariants ={
+        rotate:324000
+    }
+    const variants ={
+        rotate:0
+    }
+    function setVariants(){
+        if(count===0){
+            return variants;
+        }
+        else if((count%20)===0){
+            return hosVariants;
+        }
+        else{
+            return variants;
+        }
+    }
 
     const rotateNumber = 0;
     return(
@@ -93,12 +125,15 @@ export default function LeftMenu(props){
             <div>
                 <Paper className={classes.iconSection}>
                     <motion.div style={{marginBottom : '20px'}}
+                        animate={setVariants()}
                         whileHover={{
                             rotate:180
                         }}
-                        transition={{type:'spring', stiffness:300}}                      
+                        transition={{type:'spring', stiffness:300}}
+                        onMouseEnter={increaseCount}
+                                          
                     >
-                        <img src={pathfinderIcon} alt='Logo'/>
+                        <img src={pathfinderIconReturner()} alt='Logo'/>
                     </motion.div>
                     <Typography variant='h5' color={theme.palette.text.primary}>PATHFINDER</Typography>
                 </Paper>
