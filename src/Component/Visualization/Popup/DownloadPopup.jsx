@@ -73,7 +73,7 @@ export default function DownloadPopup(props){
         }
     }
     function setDir(){
-        const _path = require("path");
+        const _path = window.require("path");;
         openDirectorySelectDialog((result) => {
             if (!result.canceled) {
                 console.log(result.filePaths[0]);
@@ -86,7 +86,7 @@ export default function DownloadPopup(props){
     }
 
     function onClickHandler(num){
-        const _path = require("path");
+        const _path = window.require("path");
         updateDlHistoryPlace(props.fileID, props.recList[num].place);
         // 파일 실제적으로 위치 이동시키는 로직 추가하면됨
         changeFileDirectory(_path.dirname(props.fileInfo.path), props.recList[num].place, props.fileName);
