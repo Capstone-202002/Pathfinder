@@ -37,6 +37,7 @@ export default function VirtualDirectoryMain(props){
     const classes = useStyles();
     const constraintsRef = React.createRef();
     const [folderOpen, setFolderOpen] = useState(false);
+    const [somethingUpdated, setSomethingUpdated] = useState(-1);
     function getFolderOpen(data){
         setFolderOpen(data);
     }
@@ -55,11 +56,14 @@ export default function VirtualDirectoryMain(props){
         props.systemText('VirtualDirectoryReady');
         //console.log(folderOpen);
       });
-    
+    function getUpdate(data){
+        setSomethingUpdated(data);
+        setOpen(true);
+    }
     var renderSection;
     selectVdir((result)=>renderSection=result);
     var virtualDirectoryRenderer = renderSection.map((renderInfo, index)=>(
-        <Folder constraintsRef={constraintsRef} key={index} info={renderInfo}/>
+        <Folder constraintsRef={constraintsRef} key={index} info={renderInfo} update={getUpdate}/>
     ));
     
     return (
@@ -75,8 +79,8 @@ export default function VirtualDirectoryMain(props){
                     </Paper>
                 </Scrollbars>
                 <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success">
-                    This is a success message!
+                    <Alert onClose={handleClose} severity="warning">
+                     가상 디렉토리가 폴더에서 제거되었어요!
                     </Alert>
                 </Snackbar>
             </motion.div>

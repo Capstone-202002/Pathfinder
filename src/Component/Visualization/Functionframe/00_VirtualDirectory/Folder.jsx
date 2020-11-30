@@ -13,6 +13,7 @@ import Draggable from 'react-draggable';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import {useTracked} from '../../../../SettingContext';
+import {deleteVdir} from '../../../API/db';
 const openExplorer = require('../../FileWindowOpen/OpenExplorer');
 
 //const folderMinHeight = "80px";
@@ -220,11 +221,13 @@ function Folder(props) {
     
   }
   function handleDelete(){
+    deleteVdir(info.VDir, info.FileName)
     setSnackBarOpen(true)
     handleClose();
+    props.update(info.Id);
   }
   
-  console.log(info)
+  //console.log(info)
   const classes = useStyles();
   // 기타 정보들이
   return (
