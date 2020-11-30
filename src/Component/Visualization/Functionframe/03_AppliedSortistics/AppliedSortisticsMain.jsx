@@ -1,9 +1,16 @@
-import React, {useEffect} from "react";
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import React, {useEffect, useState} from "react";
+import {makeStyles, useTheme, withStyles} from '@material-ui/core/styles';
 import {motion} from 'framer-motion';
 import Scrollbars from 'react-custom-scrollbars';
-import {Paper, Typography, Button, Divider } from  '@material-ui/core';
+import {Paper, Typography, Button, Divider,TextField } from  '@material-ui/core';
 import {DataGrid} from '@material-ui/data-grid';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Draggable from 'react-draggable';
+
 const useStyles = makeStyles((theme) => ({
     APSWrapper:{
         width:'100%',
@@ -47,10 +54,60 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'flex-start',
         alignItems:'center',
     },
+    newAPSDiv:{
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    newAPSSubDiv:{
+        width:'100%',
+        marginBottom:'10px'
+    }
 
 }));
 
 export default function AppliedSortisticsMain(props){
+    const theme = useTheme();
+    const [clicked, setClicked]= useState('흡입기');
+    const CssTextField = withStyles({
+        root:{
+            '& label.Mui-focused': {
+                color: theme.palette.text.primary,
+            },
+            '& .MuiInput-underline:after': {
+                borderBottomColor: theme.palette.text.primary,
+            },
+            '& .MuiOutlinedInput-root': {
+                '&.Mui-focused fieldset': {
+                borderColor: theme.palette.text.primary,
+                },
+            },
+            },
+            
+    })(TextField);
+    const [open, setOpen] = React.useState(false);
+    function handleImportClickOpen(){
+        setClicked('배출기');
+        setOpen(true);
+    }
+    function handleExportClickOpen(){
+        setClicked('흡입기');
+        setOpen(true);
+    }
+    
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    function PaperComponent(props) {
+        return (
+          <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+            <Paper {...props} />
+          </Draggable>
+        );
+    }
+
     const classes = useStyles();
     useEffect(()=>{
         props.systemText('AppliedSortisticsReady');
@@ -109,13 +166,33 @@ export default function AppliedSortisticsMain(props){
         createHistoryRowsData(1,'dev.testData',new Date(2020,11,14),'D:/heplmee','dev.filter')
     ];
 
-    function addExportBus(){
-        //TODO : 흡입기 추가 기능 구현
+    function addDistClicked(){
+        //TODO
+        //DB에 흡입기/배출기 입력
+        //스테이트 값 받아서 구현 
+        //clicked => '흡입기' // '배출기'
+        //searchName, searchExt => 각각 이름, 확장자
+        //구현 완료 후 setAllElementToInitialState 를 불러서 값을 초기화 해줄 것(다이얼로그-스테이트를 이용해서 스테이트 이동 없이 구현)
     }
-    function addImportBus(){
-        //TODO : 배출기 추가 기능 구현
-    }
+    const [state, setState] = React.useState({
+        searchName: '',
+        searchExt: '',
+    });
 
+    function setAllElementToInitialState() {
+        setState({
+            ...state,
+            searchName: '',
+            searchExt: '',
+        });
+    }
+    function handleInputChange(e) {
+        const value = e.target.value;
+        setState({
+            ...state,
+            [e.target.name]: value
+        });
+    }
     return (
         <>
             <motion.div className={classes.APSWrapper}
@@ -128,7 +205,7 @@ export default function AppliedSortisticsMain(props){
                         <div className={classes.APSDataGridWrapper}>
                             <div className={classes.horizonDiv}>
                                 <Typography variant='h6' className={classes.TextMarginRight}> 흡입기 </Typography>
-                                <Button onClick={addExportBus}> 버튼을 눌러 추가 </Button>
+                                <Button onClick={handleExportClickOpen}> 버튼을 눌러 추가 </Button>
                             </div>
                             <Divider/>
                             <Typography variant='caption' className={classes.TextBlankBottom}> 흡입기는 폴더를 지정하여 흡입기가 부착된 폴더 안에 든 파일들을 빼올 수 있습니다. 흡입기에 필터를 지정하면, 더 체계적인 관리를 할 수 있어요</Typography> 
@@ -138,7 +215,7 @@ export default function AppliedSortisticsMain(props){
                         <div className={classes.APSDataGridWrapper}>
                             <div className={classes.horizonDiv}>
                                 <Typography variant='h6' className={classes.TextMarginRight}> 배출기 </Typography>
-                                <Button onClick={addImportBus}> 버튼을 눌러 추가 </Button>
+                                <Button onClick={handleImportClickOpen}> 버튼을 눌러 추가 </Button>
                             </div>
                             <Divider/>
                             <Typography variant='caption' className={classes.TextBlankBottom}> 배출기는 폴더를 지정하여 흡입기로부터 가져온 파일들을 배출기가 부착된 폴더에 넣을 수 있습니다. 배출기에 필터를 지정하면, 더 체계적인 관리를 할 수 있어요</Typography> 
@@ -157,6 +234,53 @@ export default function AppliedSortisticsMain(props){
                     </Paper>
                 </Scrollbars>
             </motion.div>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                PaperComponent={PaperComponent}
+                aria-labelledby="draggable-dialog-title"
+            >
+                <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                    어떤  {clicked}를 추가할까요?
+                </DialogTitle>
+                <DialogContent>
+                <DialogContentText variant={'subtitle2'}>
+                    아래 양식을 입력해주세요.
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions className={classes.newAPSDiv}>
+                    <CssTextField id="searchDisplayNameTextField"
+                                label="이름"
+                                //defaultValue=""
+                                helperText="파일이름으로 필터링 할 수 있어요"
+                                variant="outlined"
+                                
+                                value={state.searchName}
+                                name='searchName'
+                                onChange={handleInputChange}
+                                
+                                className={classes.newAPSSubDiv}
+                                >
+                        </CssTextField>
+                        {/* 파일 확장자 검색 텍스트 필드가 존재하는 곳. 내부값은 id로 검색하는 게 빠름 */}
+                    <CssTextField id="searchDisplayTypeTextField"
+                                label="확장자"
+                                defaultValue=""
+                                helperText="확장자명으로 필터링 할 수 있어요"
+                                variant="outlined"
+                                
+                                value={state.searchExt}
+                                name='searchExt'
+                                onChange={handleInputChange}
+
+                                className={classes.newAPSSubDiv}
+                                >
+                        </CssTextField>
+                        <Button color="primary" size="small" onClick={addDistClicked}>
+                            {clicked} 를 추가!
+                        </Button>
+                </DialogActions>
+            </Dialog>
         </>
     );
 }

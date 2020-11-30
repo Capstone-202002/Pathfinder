@@ -142,8 +142,8 @@ export default function DownloadAssistMain(props){
     //다운로드 히스토리를 DB에 저장해야함
     //다운로드 히스토리를 DB로부터 불러와서 아래와 같은 형태로 내보내야함
     //ID값은 row고유값을 가짐
-    function createData(id, name, type, size, time, dir){
-        return {id, name, type, size, time, dir}
+    function createData(dhid, dhname, dhtype, dhsize, dhtime, dhdir){
+        return {id:dhid, name:dhname, type:dhtype, size:dhsize, time:dhtime, dir:dhdir}
     }
     const rows = [
         {id:1,name:'testData', type:'.jpg', size:'20mb',time:'2020.03.24. 22:00', dir:'D:/helpme/'}
