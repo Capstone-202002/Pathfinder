@@ -11,7 +11,8 @@ const { Hidden } = require('@material-ui/core')
 const { dlwatcher } = require('./DownloadWatcher')
 
 let mainWindow
-let tray
+let tray = null
+let isQuit
 
 const createWindow = () => {
     mainWindow = new BrowserWindow({
@@ -22,7 +23,8 @@ const createWindow = () => {
         transparent: true,
         frame: false,
         titleBarStyle: 'hidden',
-        icon: path.join(__dirname, '../src/Component/Visualization/Asset/img/pathfinder_icon.ico'),
+        // icon: path.join(__dirname, '../src/Component/Visualization/Asset/img/pathfinder_icon.ico'),
+        icon: path.join(__dirname, 'pathfinder_icon.ico'),
 
         webPreferences: {
             nodeIntegration: true,
@@ -39,7 +41,7 @@ const createWindow = () => {
     }
 
     // System Tray에 아이콘 생성
-    const iconPath = path.join(__dirname, '..', 'src', 'Component', 'Visualization', 'Asset', 'img', 'pathfinder_icon.png');
+    const iconPath = path.join(__dirname, 'pathfinder_icon.png');
     tray = new Tray(nativeImage.createFromPath(iconPath))
     const contextMenu = Menu.buildFromTemplate([
         {
@@ -49,6 +51,7 @@ const createWindow = () => {
         },
         {
             label: '종료', click: () => {
+                isQuit = true
                 app.quit()
             }
         },
@@ -60,8 +63,11 @@ const createWindow = () => {
 
 
     mainWindow.on('closed', (event) => {
-        event.preventDefault()
-        mainWindow.hide()
+        if (!isQuit) {
+            event.preventDefault();
+            window.hide();
+            event.returnValue = false;
+        }
     })
 
     mainWindow.on('minimize', (event) => {
@@ -69,6 +75,10 @@ const createWindow = () => {
         mainWindow.hide();
     });
 }
+
+app.on("before-quit", () => {
+    isQuit = true
+})
 
 app.on('ready', createWindow)
 process.noAsar = true

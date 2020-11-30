@@ -45,7 +45,7 @@ const initDlWatcher = function (mainWindow) {
         var filename = path.basename(filepath)
 
         let insert_history = db.prepare(`INSERT INTO dl_history (Path, Filename, URL, Extension, Place) 
-        VALUES ('${filepath}','${filename}', '${url}', '${extenstion}', '어딘가')`)
+        VALUES ('${filepath}','${filename}', '${url}', '${extenstion}', '')`)
         let id = insert_history.run()
 
         // 데이터 전송
