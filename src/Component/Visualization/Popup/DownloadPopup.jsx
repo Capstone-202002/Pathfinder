@@ -5,6 +5,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import Scrollbars from 'react-custom-scrollbars';
 import {motion} from 'framer-motion';
 import { updateDlHistoryPlace } from "../../API/db";
+import { openDirectorySelectDialog, changeFileDirectory } from "../../API/io";
 const useStyles = makeStyles((theme) => ({
     popupRoot:{
         height :'480px',
@@ -71,9 +72,24 @@ export default function DownloadPopup(props){
         </>)
         }
     }
+    function setDir(){
+        const _path = require("path");
+        openDirectorySelectDialog((result) => {
+            if (!result.canceled) {
+                console.log(result.filePaths[0]);
+                console.log(props);
+                updateDlHistoryPlace(props.fileID, result.filePaths[0]);
+                changeFileDirectory(_path.dirname(props.fileInfo.path), result.filePaths[0], props.fileName);
+                props.popupSubmit();
+            }
+        })
+    }
+
     function onClickHandler(num){
+        const _path = require("path");
         updateDlHistoryPlace(props.fileID, props.recList[num].place);
         // 파일 실제적으로 위치 이동시키는 로직 추가하면됨
+        changeFileDirectory(_path.dirname(props.fileInfo.path), props.recList[num].place, props.fileName);
         props.popupSubmit();
     }
     function recListRenderer(){
@@ -143,7 +159,7 @@ export default function DownloadPopup(props){
                         {/*TODO*/}
                         {/*버튼 온클릭 구현 : 완료버튼/ 종료하고 메인프로그램에 넘김*/}
                         <div style={{backgroundColor:theme.palette.background.default,borderRadius:'15px'}}>
-                            <Typography variant='button' style={{margin:'20px'}} noWrap={true} onClick={props.popupSubmit}> 이대로 저장해주세요 </Typography>
+                            <Typography variant='button' style={{margin:'20px'}} noWrap={true} onClick={setDir}> 직접 디렉토리를 지정할게요 </Typography>
                         </div>
                     </motion.div>
                 </Paper>
