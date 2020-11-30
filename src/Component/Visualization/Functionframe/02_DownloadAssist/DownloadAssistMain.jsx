@@ -5,6 +5,13 @@ import {DataGrid} from '@material-ui/data-grid';
 import {Scrollbars} from 'react-custom-scrollbars';
 import FolderIcon from '@material-ui/icons/Folder';
 import {motion} from 'framer-motion';
+import { SelectDlHistoryAll } from "../../../API/db";
+import {useTracked, setValue} from '../../../../SettingContext';
+const path = require('path');
+const { app } = window.require('electron').remote;
+const appPath = app.getPath('userData');
+const storage = window.require('electron-json-storage');
+storage.setDataPath(appPath);
 const useStyles = makeStyles((theme) => ({
     downloadAssistWrapper:{
         width:'100%',
@@ -84,6 +91,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DownloadAssistMain(props){
+    const [settings, setSettings] = useTracked();
+    storeSettings(settings)
+    const handleToggle=(event)=>{
+        const targetName = event.target.name;
+        const targetValue = event.target.checked;
+        setSettings((s)=>(
+            {
+            ...s,
+            [targetName]:targetValue,
+        }
+        ))
+        //storeSettings()
+    }
+    function storeSettings(value){
+        console.log(value)
+        console.log(JSON.stringify(value))
+        setValue(value)
+        storage.set('config',value,function(err){console.log('setValueInSetting'); console.log(err)})
+    }   
     const PrettoSlider = withStyles({
         root: {
           color: '#52af77',
@@ -132,22 +158,25 @@ export default function DownloadAssistMain(props){
     };
 
     const columns = [
-        {field:'name', headerClassName:classes.dataGridHeader, headerName:'이름', width : 130},
+        {field:'name', headerClassName:classes.dataGridHeader, headerName:'이름', width : 170},
         {field:'type', headerClassName:classes.dataGridHeader,headerName:'확장자',width:110},
-        {field:'size', headerClassName:classes.dataGridHeader,headerName:'크기', width : 110},
-        {field:'time', headerClassName:classes.dataGridHeader,headerName:'다운로드 일시', width : 170},
-        {field:'dir', headerClassName:classes.dataGridHeader,headerName:'저장위치', width : 450},
+        {field:'url', headerClassName:classes.dataGridHeader,headerName:'다운로드 URL', width : 190},
+        {field:'dir', headerClassName:classes.dataGridHeader,headerName:'저장위치', width : 350},
     ];
+    var downloadHistory;
+    SelectDlHistoryAll((result)=>downloadHistory=result);
+    console.log(downloadHistory);
+    var dlHistoryRenderer = downloadHistory.map((renderInfo, index)=>(
+        createData(renderInfo.ID, renderInfo.Filename, renderInfo.Extension,renderInfo.URL, renderInfo.Place)
+    ));
     
     //다운로드 히스토리를 DB에 저장해야함
     //다운로드 히스토리를 DB로부터 불러와서 아래와 같은 형태로 내보내야함
     //ID값은 row고유값을 가짐
-    function createData(dhid, dhname, dhtype, dhsize, dhtime, dhdir){
-        return {id:dhid, name:dhname, type:dhtype, size:dhsize, time:dhtime, dir:dhdir}
+    function createData(dhid, dhname, dhtype, dhurl, dhdir){
+        return {id:dhid, name:dhname, type:dhtype, url:dhurl, dir:dhdir}
     }
-    const rows = [
-        {id:1,name:'testData', type:'.jpg', size:'20mb',time:'2020.03.24. 22:00', dir:'D:/helpme/'}
-    ]
+    const rows = dlHistoryRenderer;
     useEffect(()=>{
         props.systemText('DownloadAssistReady');
     })
@@ -176,16 +205,18 @@ export default function DownloadAssistMain(props){
                             </Typography>
                         </Button>
                     </div>
+                    {/*
                     <div className={classes.baseDownloadDirectoryOutputBusControlWrapper}>
-                        {/*다운로드폴더 규칙 지정 섹션*/}
+                        
                         <Typography variant='subtitle2' className={classes.baseDownloadDirectoryText} align='left'> 여기서 기본 다운로드 폴더의 규칙을 지정할 수 있어요. </Typography>
                         <Divider marginBottom="10px"></Divider>
-                        <div className = {classes.baseDownloadDirectoryOutputBusControlSet}>
+                    
+                    <div className = {classes.baseDownloadDirectoryOutputBusControlSet}>
 
-                            {/*TODO*/}
-                            {/*Applied Sortistics 관련 기능 집어넣기*/}
+                            
                         </div>
                     </div>
+                     */}
                     {/*
                     <div className={classes.baseDownloadDirectoryOutputBusControlWrapper}>
                         
@@ -205,9 +236,9 @@ export default function DownloadAssistMain(props){
                                 괜찮아요.
                         </Typography>
                         <Switch
-                            checked={state.assist}
-                            onChange={handleChange}
-                            name = "assist"
+                            checked={settings.downloadPathAssist}
+                            onChange={handleToggle}
+                            name = "downloadPathAssist"
                         ></Switch>
                         <Typography style={{marginRight:'10px'}}variant='subtitle2' align='left'>
                                 좋아요!

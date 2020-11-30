@@ -23,6 +23,7 @@ const initialState = {
   APSNoneFilteredInputButOperation:true,
   personalInformationUsageAgreement:true,
   downloadWatcherActivation:true,
+  downloadPathAssist:true,
 }
 
 
