@@ -240,7 +240,7 @@ export default function Mainframe(props){
                     {/*App's Right Display Section*/}
                     <div className={classes.title}>
                         {/*title bar section*/}
-                        <TopMenu mainText={titleText} onTitleClicked={titleHandler} disable={setTitleButtonDisable()}/>
+                        <TopMenu mainText={titleText} onTitleClicked={titleHandler} disable={setTitleButtonDisable()} menu={menu}/>
                     </div>
                     
                     <div className={classes.display}>

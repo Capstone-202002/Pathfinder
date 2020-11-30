@@ -7,6 +7,16 @@ import {motion} from 'framer-motion';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import helper_aps_1 from '../Asset/helper/helper_APS_1.svg';
+import helper_directory_view_1 from '../Asset/helper/helper_directory_view_1.svg';
+import helper_directory_view_2 from '../Asset/helper/helper_directory_view_2.svg';
+import helper_directory_view_3 from '../Asset/helper/helper_directory_view_3.svg';
+import helper_directory_view_4 from '../Asset/helper/helper_directory_view_4.svg';
+import helper_download_assist_1 from '../Asset/helper/helper_download_assist_1.svg';
+import helper_setting_1 from '../Asset/helper/helper_setting_1.svg';
+import helper_setting_2 from '../Asset/helper/helper_setting_2.svg';
+import helper_virtual_directory_1 from '../Asset/helper/helper_virtual_directory_1.svg';
+import helper_virtual_directory_2 from '../Asset/helper/helper_virtual_directory_2.svg';
 
 const useStyles = makeStyles((theme) => ({
     helpMainWrapper:{
@@ -64,13 +74,15 @@ const useStyles = makeStyles((theme) => ({
     }
 
 }));
-const menuTitles=['디렉토리 뷰 도움말', '다운로드 어시스트 도움말', '자동 폴더 정리 도움말', '설정 도움말']
+const menuTitles=['디렉토리 뷰 도움말', '다운로드 어시스트 도움말', '자동 폴더 정리 도움말', '설정 도움말','가상 디렉토리 도움말']
 const menuSubtitles = [
-    ['디렉토리 뷰 도움말1','디렉토리 뷰 도움말2','디렉토리 뷰 도움말3','디렉토리 뷰 도움말4'],
-    [],
-    [],
-    [],
+    ['디렉토리 바에서는 타이틀 바를 클릭해서 기능을 시작할 수 있어요!','폴더를 클릭해서 다음 폴더로 진행!','폴더를 우클릭해서 메뉴를 선택할 수도 있어요.','오른쪽의 검색 & 필터 팝업을 통해 검색과 필터를 동시에!'],
+    ['다운로드 어시스트의 도움말은 공사중이에요 ;ㅁ;'],
+    ['자동 폴더 정리의 도움말은 공사중이에요 ;ㅁ;'],
+    ['패스파인더의 설정은 다양한 기능을 제공한답니다.', '빨간 버튼을 누를 때에는 주의하세요!'],
+    ['가상 디렉토리에서는 폴더를 자유자재로 움직일 수 있어요.', '가상 디렉토리의 폴더를 우클릭해서 기능을 사용해보세요!']
 ];
+const contents = [[helper_directory_view_1, helper_directory_view_2,helper_directory_view_3,helper_directory_view_4],[helper_download_assist_1],[helper_aps_1],[helper_setting_1, helper_setting_2],[helper_virtual_directory_1,helper_virtual_directory_2]]
 export default function HelpMain(props){
     const [mainContents, setMainContents] = useState(props.menu);
 
@@ -99,9 +111,7 @@ export default function HelpMain(props){
                             <div className={classes.helpMainContentSection}>
                                 <Paper className={classes.helpMainContentSection} elevation={0}>
                                 {/*도움말 메인 콘텐츠 섹션*/}
-                                <Typography>
-                                    helper
-                                </Typography>
+                                    <img src={contents[mainContents][activeStep]} alt='help main contents'/>
                                 </Paper>
                             </div>
                             <div className={classes.helpMainSubtitleSection}>

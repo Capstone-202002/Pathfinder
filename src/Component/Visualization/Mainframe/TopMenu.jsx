@@ -118,7 +118,7 @@ export default function TopMenu(props){
                     </Tooltip>
                     <Dialog open={open} onClose={handleHelpClose} maxWidth={false} PaperProps={classes.helpMain} className={classes.helpMainRoot}>
                             <DialogContent>
-                                <HelpMain menu={0} closeOnClick={handleHelpClose}/>
+                                <HelpMain menu={props.menu} closeOnClick={handleHelpClose}/>
                             </DialogContent>
                         </Dialog>
                 </Paper>

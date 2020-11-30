@@ -292,9 +292,10 @@ function Folder(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+          {/*
         <Button color="secondary" variant="outlined" size="small" onClick={handleClose}>
                         폴더 탐색
-        </Button>
+        </Button>*/}
         <Button color="primary" variant="outlined" size="small" onClick={handleOpenExplorer}>
                         탐색기에서 열기
         </Button>

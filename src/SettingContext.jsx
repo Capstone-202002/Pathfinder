@@ -54,6 +54,13 @@ export const setValue = (value) => {
         storage.get('config', function(error,data){
           //console.log('set file Data');
           //console.log(data);
+          console.log(data.length);
+          if(Object.keys(data).length!==12){
+            storage.remove('config', function(error){})
+            storage.set('config',initialState, function(error){})
+            returnValue=initialState;
+            return;
+          }
           returnValue=Object.assign(returnValue, data);
         })
         //console.log(returnValue);

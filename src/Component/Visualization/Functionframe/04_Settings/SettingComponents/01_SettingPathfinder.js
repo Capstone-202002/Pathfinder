@@ -109,9 +109,10 @@ export default function SettingPathfinder(props){
                             패스파인더 버전 : 
                         </Typography>
                         <Typography variant="h6" >
-                            dev.pathfinderVersion
+                            1.0.0 build 107
                         </Typography>
                     </div>
+                    {/*
                     <div className={classes.headDiv}>
                         <Typography variant="h6" style={{marginRight:'30px'}}>
                             윈도우 버전 : 
@@ -120,6 +121,7 @@ export default function SettingPathfinder(props){
                             dev.clientWindowVersion
                         </Typography>
                     </div>
+                    */}
                 </Paper>
                 {/*
                 패스파인더 테마 지정 스위치 구역
