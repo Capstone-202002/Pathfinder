@@ -11,7 +11,7 @@ const TitlebarMac = ({ className, ...other }) => {
     wind = window.remote.getCurrentWindow();
   }
 
-  const handlerMin = () => wind.minimize();
+  const handlerMin = () => wind.hide();
 
   const handlerMax = () => {
     if (isMaximized === false) {
@@ -20,7 +20,7 @@ const TitlebarMac = ({ className, ...other }) => {
       maximize.current.classList.add(styles['window-unmaximize']);
       maximize.current.classList.remove(styles['window-maximize']);
       return;
-    } else if(isMaximized === true){
+    } else if (isMaximized === true) {
       wind.setFullScreen(false);
       setIsMaximized(false);
       maximize.current.classList.add(styles['window-maximize']);
@@ -29,7 +29,7 @@ const TitlebarMac = ({ className, ...other }) => {
     }
   };
 
-  const handlerClose = () => wind.close();
+  const handlerClose = () => wind.hide();
 
   return (
     <div className={clsx(styles['window-controls-container'], className)} {...other}>

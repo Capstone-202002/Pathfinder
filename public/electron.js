@@ -2,7 +2,8 @@ const {
     app,
     BrowserWindow,
     Tray,
-    Menu
+    Menu,
+    nativeImage
 } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
@@ -21,6 +22,7 @@ const createWindow = () => {
         transparent: true,
         frame: false,
         titleBarStyle: 'hidden',
+        icon: path.join(__dirname, '../src/Component/Visualization/Asset/img/pathfinder_icon.ico'),
 
         webPreferences: {
             nodeIntegration: true,
@@ -37,7 +39,8 @@ const createWindow = () => {
     }
 
     // System Tray에 아이콘 생성
-    tray = new Tray(path.join(__dirname, '../src/Component/Visualization/Asset/img/pathfinder_icon.ico'))
+    const iconPath = path.join(__dirname, '../src/Component/Visualization/Asset/img/pathfinder_icon.png');
+    tray = new Tray(nativeImage.createFromPath(iconPath))
     const contextMenu = Menu.buildFromTemplate([
         {
             label: '열기', click: () => {
@@ -68,7 +71,7 @@ const createWindow = () => {
 }
 
 app.on('ready', createWindow)
-process.noAsar = true
+// process.noAsar = true
 // app.on('window-all-closed', () => {
 //     if (process.platform !== 'darwin') {
 //         app.quit()
