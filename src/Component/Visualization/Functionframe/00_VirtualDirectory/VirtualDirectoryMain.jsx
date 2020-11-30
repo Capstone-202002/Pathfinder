@@ -53,7 +53,7 @@ export default function VirtualDirectoryMain(props){
       };
     useEffect(() => {
         props.systemText('VirtualDirectoryReady');
-        console.log(folderOpen);
+        //console.log(folderOpen);
       });
     
     var renderSection;

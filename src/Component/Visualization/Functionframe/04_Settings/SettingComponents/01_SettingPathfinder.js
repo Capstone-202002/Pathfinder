@@ -2,7 +2,12 @@ import React, {useContext, useState} from "react";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import { Divider, Typography,Paper,Switch,Button } from "@material-ui/core";
 import {motion} from 'framer-motion';
-import {useTracked} from '../../../../../SettingContext';
+import {useTracked, setValue} from '../../../../../SettingContext';
+const path = require('path');
+const { app } = window.require('electron').remote;
+const appPath = app.getPath('userData');
+const storage = window.require('electron-json-storage');
+storage.setDataPath(appPath);
 
 const useStyles = makeStyles((theme) => ({
     settingMenuWrapper:{
@@ -56,14 +61,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SettingPathfinder(props){
     const [settings, setSettings]=useTracked();
+    storeSettings(settings)
     const handleToggle=(event)=>{
         const targetName = event.target.name;
         const targetValue = event.target.checked;
-        setSettings((s)=>({
+        setSettings((s)=>(
+            {
             ...s,
-            [targetName]:targetValue
-        }))
+            [targetName]:targetValue,
+        }
+        ))
+        //storeSettings()
     }
+    function storeSettings(value){
+        console.log(value)
+        console.log(JSON.stringify(value))
+        setValue(value)
+        storage.set('config',value,function(err){console.log('setValueInSetting'); console.log(err)})
+    }   
     const classes = useStyles();
 
     function settingInitialize(){

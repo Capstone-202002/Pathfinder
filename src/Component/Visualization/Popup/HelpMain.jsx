@@ -22,12 +22,17 @@ const useStyles = makeStyles((theme) => ({
     helpMainTitle:{
         height:'50px',
         width:'100%',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
     },
     helpMainMiddleSection:{
         height:'500px',
         width:'100%',
         display:'flex',
-        flexDirection:'column'
+        flexDirection:'column',
+        
     },
     helpMainMiddleWrapperSection:{
         height:'500px',
@@ -40,10 +45,18 @@ const useStyles = makeStyles((theme) => ({
     helpMainContentSection:{
         width:'100%',
         height:'400px',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
     },
     helpMainSubtitleSection:{
         width:'100%',
         height:'100px',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
     },
     helpMainStepperSection:{
         width:'100%',
@@ -51,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     }
 
 }));
+const menuTitles=['디렉토리 뷰 도움말', '다운로드 어시스트 도움말', '자동 폴더 정리 도움말', '설정 도움말']
 const menuSubtitles = [
     ['디렉토리 뷰 도움말1','디렉토리 뷰 도움말2','디렉토리 뷰 도움말3','디렉토리 뷰 도움말4'],
     [],
@@ -74,8 +88,8 @@ export default function HelpMain(props){
             <div className={classes.helpMainWrapper}>
                 <Paper className={classes.helpMainWrapperPaper} elevation={0}>
                     <div className={classes.helpMainTitle}>
-                        <Typography>
-                            도움말
+                        <Typography variant={'h6'}>
+                            {menuTitles[mainContents]}
                         </Typography>
                         <IconButton onClick={props.closeOnClick}>
 

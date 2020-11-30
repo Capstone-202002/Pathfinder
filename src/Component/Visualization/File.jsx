@@ -8,7 +8,10 @@ import ImageIcon from '@material-ui/icons/Image';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import MovieIcon from '@material-ui/icons/Movie';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
+import {useTracked} from '../../SettingContext';
 function File(props) {
+  const theme = useTheme();
+  const [settings, setSettings] = useTracked();
   function searchName(fi, si) {
     if (fi.name.toLowerCase().indexOf(si.searchName.toLowerCase()) !== -1) {
       if (si.searchName === '') {
@@ -74,6 +77,9 @@ function File(props) {
   }
 
   function ChangeFileNameColor(fi, si){
+    if(settings.directoryViewFileTextColorOperation===false){
+      return theme.palette.text.primary
+    }
     const size = fi.size;
     //console.log('파일인포: ', fi);
     if (props.isSearching) {

@@ -101,12 +101,9 @@ export default function LeftMenu(props){
             return pathfinderIcon;
         }
     }
-    const hosVariants ={
-        rotate:324000
-    }
-    const variants ={
-        rotate:0
-    }
+    const hosVariants ={rotate:324000}
+    const variants = {rotate:0}
+    
     function setVariants(){
         if(count===0){
             return variants;

@@ -8,7 +8,7 @@ import TopMenu from './TopMenu';
 import SystemMessage from './SystemMessage';
 import { Scrollbars } from 'react-custom-scrollbars'
 import { SettingsPowerSharp } from "@material-ui/icons";
-
+import {useTracked} from '../../../SettingContext';
 //임시용
 import Visualization from '../Visualization';
 import DownloadAssistMain from '../Functionframe/02_DownloadAssist/DownloadAssistMain';
@@ -91,14 +91,40 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Mainframe(props){
-    
+    const [settings, setSettings] = useTracked();
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [programCount, setProgramCount] = React.useState(0);
     const [systemState, setSystemState]= React.useState('Online');
     //menu State: LeftMenu.jsx 로부터 동기화 하여 visualization.jsx 로 넘겨줘야 함
     const [menu, setMenu] = React.useState(4);
     //왼쪽 메뉴로부터 값 읽어오기
+    function settingInitiation(){
+        if(programCount===0){
+            //setSystemState('ready');
+            setMenu(3);
+            setMenu(4);
+            setSettings((s)=>({
+                ...s,
+                pathfinderTheme : getTheme(settings.pathfinderTheme)
+            }))
+            setSettings((s)=>({
+                ...s,
+                pathfinderTheme : getTheme(settings.pathfinderTheme)
+            }))
+            setProgramCount(9);
+            return;
+        }
+    }
+    function getTheme(bool){
+        if(bool){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
     function getMenu(data){
         
         //console.log(menu)
@@ -110,6 +136,8 @@ export default function Mainframe(props){
     }
     function setSystemText(){
         switch(systemState){
+            case 'ready':
+                return '패스파인더가 시스템을 준비중이에요.'
             case 'Online':
                 return '패스파인더가 준비되었습니다.'
             case 'VirtualDirectoryReady':
@@ -148,6 +176,8 @@ export default function Mainframe(props){
 
     function setContents() {
         //console.log(menu);
+        setTimeout(settingInitiation,600)
+        //setSystemState('Online')
         if (menu === 0) {
           //setSystemState('VisualizationReady');
           return (<>
@@ -196,6 +226,7 @@ export default function Mainframe(props){
             return false;
         }
     }
+    
     return(
         <Paper className={classes.root} color="#0090FF" style={{borderBottomLeftRadius : '160px'}}>
             

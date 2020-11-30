@@ -2,6 +2,12 @@ import React from "react";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import { Divider, Typography,Paper, Switch, Button, Slider } from "@material-ui/core";
 import {motion} from 'framer-motion';
+import {useTracked, setValue} from '../../../../../SettingContext';
+const path = require('path');
+const { app } = window.require('electron').remote;
+const appPath = app.getPath('userData');
+const storage = window.require('electron-json-storage');
+storage.setDataPath(appPath);
 const useStyles = makeStyles((theme) => ({
     settingMenuWrapper:{
         width:'100%',
@@ -49,6 +55,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SettingPrivacy(){
+    const [settings, setSettings]=useTracked();
+    storeSettings(settings)
+    const handleToggle=(event)=>{
+        const targetName = event.target.name;
+        const targetValue = event.target.checked;
+        setSettings((s)=>(
+            {
+            ...s,
+            [targetName]:targetValue,
+        }
+        ))
+        //storeSettings()
+    }
+    function storeSettings(value){
+        console.log(value)
+        console.log(JSON.stringify(value))
+        setValue(value)
+        storage.set('config',value,function(err){console.log('setValueInSetting'); console.log(err)})
+    }   
+
+
     const theme = useTheme();
     const [state, setState] = React.useState({
         userPrivate:true,
@@ -91,9 +118,9 @@ export default function SettingPrivacy(){
                                 안돼요!
                         </Typography>
                         <Switch
-                            checked={state.userPrivate}
-                            onChange={handleChange}
-                            name = "userPrivate"
+                            checked={settings.personalInformationUsageAgreement}
+                            onChange={handleToggle}
+                            name = "personalInformationUsageAgreement"
                         ></Switch>
                         <Typography style={{marginRight:'10px'}}variant='subtitle2' align='left'>
                                 좋아요!
@@ -115,9 +142,9 @@ export default function SettingPrivacy(){
                                 안돼요!
                         </Typography>
                         <Switch
-                            checked={state.networkInbound}
-                            onChange={handleChange}
-                            name = "networkInbound"
+                            checked={settings.downloadWatcherActivation}
+                            onChange={handleToggle}
+                            name = "downloadWatcherActivation"
                         ></Switch>
                         <Typography style={{marginRight:'10px'}}variant='subtitle2' align='left'>
                                 괜찮아요!

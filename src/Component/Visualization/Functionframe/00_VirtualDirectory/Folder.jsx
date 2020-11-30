@@ -12,7 +12,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Draggable from 'react-draggable';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import {useTracked} from '../../../../SettingContext';
 const openExplorer = require('../../FileWindowOpen/OpenExplorer');
+
 //const folderMinHeight = "80px";
 const folderMinHeight = 80;
 const folderMaxHeight = "180px";
@@ -29,12 +31,15 @@ const rightArrowVariants = {
 }
 
 function Folder(props) {
-
+  const [settings, setSettings]=useTracked();
   function setFolderHeight(totalSize, folderSize) {
     //기본80
     //차지하는 용량 1퍼센트당 1픽셀
     //console.log('토탈: ', totalSize);
     //console.log('폴더: ', folderSize);
+    if(settings.directoryViewFolderSizeOperation===false){
+      return folderMinHeight;
+    }
     if (totalSize === 0) {
       return folderMinHeight;
     }
@@ -74,7 +79,7 @@ function Folder(props) {
       position: "relative",
       height: "30px",
       width: "80px",
-      backgroundColor: "#DEF6FF",
+      backgroundColor: settings.directoryViewFolderColor,
       borderRadius: "10px",
       elevation: "0",
       right: "15px"
@@ -82,7 +87,7 @@ function Folder(props) {
     folderBodyDiv: {
       height: '80px',//setFolderHeight(props.totalSize, props.info.size),
       width: "110px",
-      backgroundColor: "#DEF6FF",
+      backgroundColor: settings.directoryViewFolderColor,
       borderTopRightRadius: "10px",
       borderBottomRightRadius: "10px",
       borderBottomLeftRadius: '10px',
