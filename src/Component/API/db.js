@@ -66,3 +66,9 @@ export function deleteAutodist(id) {
     let del = db.prepare(`DELETE FROM auto_dist WHERE id = '${id}'`)
     var result = del.run()
 }
+
+export function SelectDlHistory(url, callback) {
+    let select_all = db.prepare(`SELECT * FROM dl_history WHERE URL='${url}'`)
+    var result = select_all.all()
+    callback(result)
+}

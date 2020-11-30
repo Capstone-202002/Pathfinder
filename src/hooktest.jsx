@@ -9,6 +9,7 @@ import NanumGothicRegular from './Component/Fonts/NanumGothic-Regular.ttf';
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles"
 import { CssBaseline } from "@material-ui/core";
 import {useTracked} from './SettingContext';
+import { getRecommendList } from "./Component/API/recommend";
 const { app } = window.require('electron').remote
 const path = window.require('path')
 const electron = window.require('electron');
@@ -87,6 +88,8 @@ function HookTest() {
   const [downloadedFile, setDownloadedFile] = useState(null);
   const [recommended, setRecommended] = useState(null);
   const [fileInfo, setfileInfo] = useState(null);
+  const [fileID, setfileID] = useState();
+  const [recList, setRecList] = useState([]);
 
   function popupSubmit() {
     setOpen(false);
@@ -97,18 +100,24 @@ function HookTest() {
     // db 코드 테스트
     const _path = require("path");
     ipcRenderer.on('download-request', (event, payload) => {
-      setOpen(true);
-      console.log("다운로드 요청 ipc로 받기")
-      console.log(event)
-      console.log('페이로드: ', payload)
-      setDownloadedFile(_path.basename(payload.path));
-      let name1 = payload.path;
-      console.log('파일명1', name1)
-      let name2 = _path.basename(payload.path);
-      console.log('파일명2', name2)
-      
-      setRecommended(payload.place);
-      setfileInfo(payload);
+      //if (settings.downloadPathAssist) { // 우선 조건 하나만 체크함
+      if (true) { // 우선 조건 하나만 체크함
+        getRecommendList(payload.URL, payload.filename, (data)=>{setRecList(data); console.log(recList)});
+        console.log("추천 리스트: ", recList);
+        setOpen(true);
+        console.log("다운로드 요청 ipc로 받기")
+        console.log(event)
+        console.log('페이로드: ', payload)
+        setDownloadedFile(payload.filename);
+        let name1 = payload.path;
+        console.log('파일명1', name1)
+        let name2 = _path.basename(payload.path);
+        console.log('파일명2', name2)
+        
+        setRecommended(payload.place);
+        setfileInfo(payload);
+        setfileID(payload.id)
+      }
     })
   });
 
@@ -120,7 +129,7 @@ function HookTest() {
         <Dialog
           open={open}
         >
-          <DownloadPopup fileName={downloadedFile} recommended={recommended} fileInfo={fileInfo} popupSubmit={popupSubmit}/>
+          <DownloadPopup fileID={fileID} fileName={downloadedFile} recList={recList} fileInfo={fileInfo} popupSubmit={popupSubmit}/>
         </Dialog>
       </ThemeProvider>
     </>

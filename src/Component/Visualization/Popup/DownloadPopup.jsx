@@ -4,6 +4,7 @@ import {Paper, Typography, Button, Divider} from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import Scrollbars from 'react-custom-scrollbars';
 import {motion} from 'framer-motion';
+import { updateDlHistoryPlace } from "../../API/db";
 const useStyles = makeStyles((theme) => ({
     popupRoot:{
         height :'480px',
@@ -70,6 +71,37 @@ export default function DownloadPopup(props){
         </>)
         }
     }
+    function onClickHandler(num){
+        updateDlHistoryPlace(props.fileID, props.recList[num].place);
+        // 파일 실제적으로 위치 이동시키는 로직 추가하면됨
+        props.popupSubmit();
+    }
+    function recListRenderer(){
+        console.log('askl;dfja;ksldfja;sdfklajsfdl;k', props.recList);
+        if (props.recList == []){
+            return (<><Button className={classes.buttons}>
+                        <Typography variant='subtitle2' align='left'>
+                            추천된 경로값이 없습니다.
+                            {/*TODO*/}
+                            {/*버튼내부에 다운로드 디렉토리 경로 세팅 함수 구현*/}
+                        </Typography>
+                    </Button></>)
+        }
+        else {
+            var recL = props.recList.map((rec, index) => (
+                <>
+                <Button className={classes.buttons} onClick={() => onClickHandler(index)} style={{marginBottom:'0px'}}>
+                <Typography variant='subtitle2' align='left'>
+                    {rec.place}
+                    {/*TODO*/}
+                    {/*버튼내부에 다운로드 디렉토리 경로 세팅 함수 구현*/}
+                </Typography>
+                </Button>
+                </>
+            ))
+            return (recL.slice(0, 3))
+        }
+    }
     return(<>
             <div className={classes.popupRoot}>
                 <Paper className={classes.popupRootPaper}>
@@ -89,19 +121,14 @@ export default function DownloadPopup(props){
                                     {/*버튼내부에 파일명 텍스트 세팅 함수 구현*/}
                                 </Typography>
                     </Button>
-                    <Typography variant='subtitle2' className={classes.initText} align='left'> 저장될 디렉토리 </Typography>
+                    <Typography variant='subtitle2' className={classes.initText} align='left'> 저장될 디렉토리를 클릭하세요 </Typography>
                     <Divider marginBottom="10px"></Divider>
                 
                     {/*TODO*/}
                     {/*버튼 온클릭 구현 : 다운로드한 파일 저장 디렉토리 변경*/}
-                    <Button className={classes.buttons}>
-                                <Typography variant='subtitle2' align='left'>
-                                    {props.recommended}
-                                    {/*TODO*/}
-                                    {/*버튼내부에 다운로드 디렉토리 경로 세팅 함수 구현*/}
-                                </Typography>
-                    </Button>
-                    <Typography variant='subtitle2' className={classes.initText} align='left'> 파일 상세정보 </Typography>
+                    {recListRenderer()}
+
+                    <Typography variant='subtitle2' className={classes.initText} align='left' style={{marginTop:'20px'}}> 파일 상세정보 </Typography>
                     <Divider marginBottom="10px"></Divider>
                     <Scrollbars>
                         <Paper className={classes.detailPaper} elevation={0} >
