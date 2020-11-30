@@ -57,24 +57,10 @@ export default function DownloadPopup(props){
             width  : "100%",
             //color : theme.palette.text.primary
             overflow : 'hidden',
-            '&:hover':{
-              transition: 'text-indent 3s linear',
-              textIndent: returnIndentNumber()
-            }
           }
     }));
     const classes = useStyles();
     const theme = useTheme();
-    function returnIndentNumber(){
-        console.log('downloadPopup::::')
-        console.log(props.fileName)
-        if(props.fileName.length){
-          return -(props.fileName.length);
-        }
-        else{
-          return 0;
-        }
-      }
     function fileInfoRenderer(){
         if (props.fileInfo == null) {
             return (<Typography variant='subtitle2'>null</Typography>)
