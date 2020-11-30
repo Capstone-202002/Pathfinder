@@ -11,29 +11,6 @@ const dbPath = app.getPath('userData')
 // DB 인스턴스 시작
 export const db = new Database(path.join(dbPath, 'data'), { verbose: console.log })
 
-
-// const create_history_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "dl_history" (
-//     "ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
-//     "Path" TEXT,
-// 	"Filename"	TEXT,
-// 	"URL"	TEXT,
-// 	"Extension"	TEXT,
-// 	"Place"	TEXT
-// );`)
-
-// const create_vdirectory_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "vdirectory" (
-// 	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
-// 	"VDir"	TEXT,
-// 	"FileName"	TEXT,
-// 	"RealPath"	TEXT,
-// 	"Extension"	TEXT,
-// 	"Size" TEXT
-// );`)
-
-// create_history_tables.run()
-// create_vdirectory_tables.run()
-// console.log("DB 테이블 작성 및 인스턴스 작동")
-
 export function SelectDlHistoryAll(callback) {
     let select_all = db.prepare(`SELECT * FROM dl_history`)
     var result = select_all.all()
@@ -69,4 +46,23 @@ export function deleteVdir(vdir, filename) {
 export function updateDlHistoryPlace(id, place) {
     let update = db.prepare(`UPDATE dl_history SET Place = '${place}' WHERE id = '${id}'`)
     var result = update.run()
+}
+
+export function selectAutodistAll(callback) {
+    let selectall = db.prepare(`SELECT * FROM auto_dist`)
+    var result = selectall.all()
+    callback(result)
+}
+
+export function createAutodist(type, name, source = '', target = '', filter = '') {
+    let today = new Date()
+
+    let query = db.prepare(`INSERT INTO auto_dist (Type, Name, Date, Source, Target, Filter) 
+    VALUES('${type}', '${name}', '${today.toLocaleDateString('ko-KR')}', '${source}', '${target}', '${filter}')`)
+    let result = query.run()
+}
+
+export function deleteAutodist(id) {
+    let del = db.prepare(`DELETE FROM auto_dist WHERE id = '${id}'`)
+    var result = del.run()
 }

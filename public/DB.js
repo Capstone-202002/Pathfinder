@@ -27,9 +27,23 @@ const create_vdirectory_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "vdirect
 	"Size" TEXT
 );`)
 
+// Type : '흡입' or '배출'
+
+const create_autodist_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "auto_dist" (
+	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"Type"	TEXT,
+	"Name"	TEXT,
+	"Date"	DATE,
+	"Source"	TEXT,
+	"Target" TEXT,
+	"Filter" TEXT
+);`)
+
+
 console.log("DB 시작")
 create_history_tables.run()
 create_vdirectory_tables.run()
+create_autodist_tables.run()
 
 
 exports.db = db

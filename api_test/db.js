@@ -27,9 +27,20 @@ const create_vdirectory_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "vdirect
 	"Size" TEXT
 );`)
 
+const create_autodist_tables = db.prepare(`CREATE TABLE IF NOT EXISTS "auto_dist" (
+	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"Type"	TEXT,
+	"Name"	TEXT,
+	"Date"	DATE,
+	"Source"	TEXT,
+	"Target" TEXT,
+	"Filter" TEXT
+);`)
+
 console.log("DB 시작")
 create_history_tables.run()
 create_vdirectory_tables.run()
+create_autodist_tables.run()
 
 
 function SelectDlHistoryAll(callback) {
@@ -69,6 +80,26 @@ function deleteVdir(vdir, filename) {
     let del = db.prepare(`DELETE FROM vdirectory WHERE VDir = '${vdir}' AND FileName = '${filename}'`)
     var result = del.run()
 }
+
+function selectAutodistAll(callback) {
+    let selectall = db.prepare(`SELECT * FROM auto_dist`)
+    var result = selectall.all()
+    callback(result)
+}
+
+function createAutodist(type, name, source = '', target = '', filter = '') {
+    let today = new Date()
+
+    let query = db.prepare(`INSERT INTO auto_dist (Type, Name, Date, Source, Target, Filter) 
+    VALUES('${type}', '${name}', '${today.toLocaleDateString('ko-KR')}', '${source}', '${target}', '${filter}')`)
+    let result = query.run()
+}
+
+function deleteAutodist(id) {
+    let del = db.prepare(`DELETE FROM auto_dist WHERE id = '${id}'`)
+    var result = del.run()
+}
+
 
 // TEST_DATA = {
 //     VDir: '가상 디렉토리',
