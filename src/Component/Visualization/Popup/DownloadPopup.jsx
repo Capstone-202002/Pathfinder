@@ -6,54 +6,75 @@ import Scrollbars from 'react-custom-scrollbars';
 import {motion} from 'framer-motion';
 import { updateDlHistoryPlace } from "../../API/db";
 import { openDirectorySelectDialog, changeFileDirectory } from "../../API/io";
-const useStyles = makeStyles((theme) => ({
-    popupRoot:{
-        height :'480px',
-        width : '400px',
-        backgroundColor:'#0090FF'
-    },
-    popupRootPaper:{
-        height:'100%',
-        width:'100%',
-        display:'flex',
-        flexDirection :'column',
-        padding:'20px',
-        borderTopRightRadius:'80px',
-        borderTopLeftRadius:'0px',
-        borderBottomRightRadius:'0px',
-        borderBottomLeftRadius:'0px',
-    },
-    initText:{
-        height : '20px',
-        width:'100%',
-    },
-    buttons:{
-        marginTop : '5px',
-        marginBottom:'20px',
-        height : '40px',
-        width : '100%',
-        display : 'flex',
-        flexDirection : 'column',
-        justifyContent : 'flex-start',
-        backgroundColor:theme.palette.background.default,
-    },
-    detailPaper:{
-        height : '180px',
-        width:'100%',
-        backgroundColor:theme.palette.background.default,
-        padding:'10px',
-    },
-    endButtonDiv:{
-        marginTop:'5px',
-        width:'100%',
-        display:'flex',
-        justifyContent :'center',
-    }
-}));
+import { copyFileSync } from "fs";
+
 
 export default function DownloadPopup(props){
+    const useStyles = makeStyles((theme) => ({
+        popupRoot:{
+            height :'480px',
+            width : '400px',
+            backgroundColor:'#0090FF'
+        },
+        popupRootPaper:{
+            height:'100%',
+            width:'100%',
+            display:'flex',
+            flexDirection :'column',
+            padding:'20px',
+            borderTopRightRadius:'80px',
+            borderTopLeftRadius:'0px',
+            borderBottomRightRadius:'0px',
+            borderBottomLeftRadius:'0px',
+        },
+        initText:{
+            height : '20px',
+            width:'100%',
+        },
+        buttons:{
+            marginTop : '5px',
+            marginBottom:'20px',
+            height : '40px',
+            width : '100%',
+            display : 'flex',
+            flexDirection : 'column',
+            justifyContent : 'flex-start',
+            backgroundColor:theme.palette.background.default,
+        },
+        detailPaper:{
+            height : '180px',
+            width:'100%',
+            backgroundColor:theme.palette.background.default,
+            padding:'10px',
+        },
+        endButtonDiv:{
+            marginTop:'5px',
+            width:'100%',
+            display:'flex',
+            justifyContent :'center',
+        },
+        fileName:{
+            width  : "100%",
+            //color : theme.palette.text.primary
+            overflow : 'hidden',
+            '&:hover':{
+              transition: 'text-indent 3s linear',
+              textIndent: returnIndentNumber()
+            }
+          }
+    }));
     const classes = useStyles();
     const theme = useTheme();
+    function returnIndentNumber(){
+        console.log('downloadPopup::::')
+        console.log(props.fileName)
+        if(props.fileName.length){
+          return -(props.fileName.length);
+        }
+        else{
+          return 0;
+        }
+      }
     function fileInfoRenderer(){
         if (props.fileInfo == null) {
             return (<Typography variant='subtitle2'>null</Typography>)
@@ -131,7 +152,8 @@ export default function DownloadPopup(props){
                     {/*TODO*/}
                     {/*버튼 온클릭 구현 : 다운로드한 파일 이름 변경*/}
                     <Button className={classes.buttons}>
-                                <Typography variant='subtitle2' align='left'>
+                                <Typography variant='subtitle2' align='left' className={classes.fileName}>
+                                    
                                     {props.fileName}
                                     {/*TODO*/}
                                     {/*버튼내부에 파일명 텍스트 세팅 함수 구현*/}
@@ -153,8 +175,8 @@ export default function DownloadPopup(props){
                         </Paper>
                     </Scrollbars>
                     <motion.div className={classes.endButtonDiv}
-                        whileHover={{scale:1.2}}
-                        whileTap={{scale:0.9, opacity:0.9}}
+                        whileHover={{scale:1.05}}
+                        whileTap={{scale:0.95, opacity:0.9}}
                     >
                         {/*TODO*/}
                         {/*버튼 온클릭 구현 : 완료버튼/ 종료하고 메인프로그램에 넘김*/}

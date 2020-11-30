@@ -11,6 +11,9 @@ const path = require('path');
 const { app } = window.require('electron').remote;
 const appPath = app.getPath('userData');
 const storage = window.require('electron-json-storage');
+const os = window.require('os');
+var username = os.userInfo().username;
+var DL_URL = "C:/" + path.join("Users", username, "Downloads");
 storage.setDataPath(appPath);
 const useStyles = makeStyles((theme) => ({
     downloadAssistWrapper:{
@@ -199,7 +202,7 @@ export default function DownloadAssistMain(props){
                         <Button className={classes.baseDownloadDirectorySet}>
                             <FolderIcon></FolderIcon>
                             <Typography variant='subtitle2' align='left'>
-                                dev.Directory Name
+                                {DL_URL}
                                 {/*TODO*/}
                                 {/*버튼내부에 기본 다운로드 디렉토리 텍스트 붙여넣기*/}
                             </Typography>
