@@ -182,7 +182,7 @@ function Folder(props) {
   }
   function handleOpenExplorer(){
     handleClose();
-    openExplorer(info.RealPath, err =>{
+    openExplorer(info.absPath, err =>{
       if(err){
         console.log(err);
       }
