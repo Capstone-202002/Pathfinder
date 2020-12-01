@@ -93,11 +93,14 @@ export default function DownloadPopup(props){
     }
 
     function onClickHandler(num){
-        const _path = window.require("path");
-        updateDlHistoryPlace(props.fileID, props.recList[num].place);
-        // 파일 실제적으로 위치 이동시키는 로직 추가하면됨
-        changeFileDirectory(_path.dirname(props.fileInfo.path), props.recList[num].place, props.fileName);
-        props.popupSubmit();
+        if (props.recList[num].place !== '') {
+
+            const _path = window.require("path");
+            updateDlHistoryPlace(props.fileID, props.recList[num].place);
+            // 파일 실제적으로 위치 이동시키는 로직 추가하면됨
+            changeFileDirectory(_path.dirname(props.fileInfo.path), props.recList[num].place, props.fileName);
+            props.popupSubmit();
+        }
     }
     function recListRenderer(){
         console.log('askl;dfja;ksldfja;sdfklajsfdl;k', props.recList);
